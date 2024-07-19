@@ -12,13 +12,15 @@ const reversed = title.split("").reverse().join("");
 const colorClass = primary ? "bg-primary text-white" : "bg-secondary text-surface";
 ---
 
-<div class="min-h-[100vh]">
+<div class="section min-h-[100vh]">
 
   <div class={`p-5 min-h-[100vh] flex flex-col justify-center items-center ${colorClass}`}>
     <div>
-      <h1 class="inter break-words text-9xl tracking-tighter" id={id}>{reversed}</h1>
+      <hr class="my-12 h-0.5 border-t-0 bg-neutral-100 dark:bg-white/10" />
+
+      <h1 class="inter break-words text-9xl tracking-tighter z-10" id={id}>{reversed}</h1>
       
-      <p class="satoshi-light text-3xl">
+      <p class="satoshi-light text-3xl z-10">
           {body}
       </p>
       

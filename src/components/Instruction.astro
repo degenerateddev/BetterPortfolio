@@ -1,0 +1,25 @@
+---
+interface Props {
+    text: string;
+}
+
+const text = Astro.props.text;
+---
+
+<p class="instructions">
+    {text}
+</p>
+
+<style>
+    .instructions {
+		margin-bottom: 2rem;
+		border: 1px solid rgba(var(--accent-light), 25%);
+		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
+		padding: 1.5rem;
+		border-radius: 8px;
+	}
+	
+	.instructions strong {
+		color: rgb(var(--accent-light));
+	}
+</style>

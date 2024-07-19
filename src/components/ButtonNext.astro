@@ -1,11 +1,18 @@
-<button id="nextBtn">
+---
+interface Props {
+    next: string;
+}
+const next = Astro.props.next;
+---
+
+<a id="nextBtn" href={next}>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12">
         <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
     </svg>      
-</button>
+</a>
 
-<script>
-    import gsap from "gsap";
-  
-    gsap.to("#nextBtn", { duration: 1, y: 16, repeat: -1, yoyo: true });
+<script define:vars={{ next }}>
+    document.getElementById("nextBtn").addEventListener("click", () => {
+        smoother.scrollTo(next, true, "center center");
+    });
 </script>
