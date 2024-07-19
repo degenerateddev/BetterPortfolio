@@ -5,14 +5,15 @@ interface Props {
   title: string;
   body: string;
   primary: boolean;
+  className?: string;
 }
 
-const { id, title, body, primary } = Astro.props;
+const { id, title, body, primary, className } = Astro.props;
 const reversed = title.split("").reverse().join("");
 const colorClass = primary ? "bg-primary text-white" : "bg-secondary text-surface";
 ---
 
-<div class="section min-h-[100vh]">
+<div class={`min-h-[100vh] ${className}`}>
 
   <div class={`p-5 min-h-[100vh] flex flex-col justify-center items-center ${colorClass}`}>
     <div>
