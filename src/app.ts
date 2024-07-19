@@ -1,9 +1,8 @@
-import gsap from 'gsap';
+/* import gsap from 'gsap';
 import { Flip } from "gsap/Flip";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { TextPlugin } from "gsap/TextPlugin";
-
 
 gsap.registerPlugin(Flip,ScrollTrigger,ScrollToPlugin,TextPlugin);
 gsap.set(".link-card", { y: 30, opacity: 0 });
@@ -40,3 +39,20 @@ gsap.fromTo(
     stagger: 0.2,
   },
 );
+
+// animate titles on landing page
+let titles = [];
+for (let i = 0; i < 4; i++) {
+  let id = "title" + i;
+  titles.push(document.getElementById(id));
+}
+console.log(titles)
+
+titles.forEach((title) => {
+  // now reverse
+  gsap.to(`#${title.id}`, {
+    duration: 1.5,
+    text: title.innerText.split("").reverse().join(""),
+    ease: "none",
+  });
+}); */

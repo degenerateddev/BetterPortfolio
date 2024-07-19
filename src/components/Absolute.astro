@@ -1,0 +1,15 @@
+---
+import Flex from "./Flex.astro";
+
+interface Props {
+    classes: string;
+}
+
+const classes = Astro.props.classes;
+---
+
+<div class={`absolute inset-0 ${classes}`}>
+    <Flex>
+        <slot />
+    </Flex>
+</div>
