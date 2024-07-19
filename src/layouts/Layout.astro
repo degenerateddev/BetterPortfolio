@@ -1,0 +1,94 @@
+---
+import '@fontsource/inter';
+
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		
+		<title>{title}</title>
+	</head>
+	<body>
+		<main class="bg-surface">
+			<slot />
+		</main>
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--accent: 136, 58, 234;
+		--accent-light: 224, 204, 250;
+		--accent-dark: 49, 10, 101;
+		--accent-gradient: linear-gradient(
+			45deg,
+			rgb(var(--accent)),
+			rgb(var(--accent-light)) 30%,
+			white 60%
+		);
+	}
+
+	@font-face {
+		font-family: 'Inter';
+		font-display: swap;
+		src: url('/fonts/Inter/static/Inter-Black.ttf') format('truetype');
+	}
+
+	@font-face {
+		font-family: 'Satoshi-Regular';
+		font-display: swap;
+		font-weight: 400;
+		font-style: normal;
+		src: url('/fonts/Satoshi/Fonts/WEB/fonts/Satoshi-Regular.ttf') format('truetype');
+	}
+
+	@font-face {
+		font-family: 'Satoshi-Light';
+		font-weight: 300;
+		font-display: swap;
+		font-style: normal;
+		src: url('/fonts/Satoshi/Fonts/WEB/fonts/Satoshi-Light.ttf') format('truetype');
+	}
+
+	.inter {
+		font-family: 'Inter', sans-serif;
+	}
+
+	.satoshi {
+		font-family: 'Satoshi-Regular', sans-serif;
+	}
+
+	.satoshi-light {
+		font-family: 'Satoshi-Light', sans-serif;
+	}
+
+	html {
+		font-family: 'Satoshi-Light', sans-serif;
+		color: #F1F1F1;
+	}
+
+	code {
+		font-family:
+			Menlo,
+			Monaco,
+			Lucida Console,
+			Liberation Mono,
+			DejaVu Sans Mono,
+			Bitstream Vera Sans Mono,
+			Courier New,
+			monospace;
+	}
+</style>
