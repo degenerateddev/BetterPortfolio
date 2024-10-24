@@ -16,16 +16,18 @@ const colorClass = primary ? "bg-primary text-white" : "bg-secondary text-surfac
 <div class={`min-h-[100vh] ${className}`}>
 
   <div class={`p-5 min-h-[100vh] flex flex-col justify-center items-center ${colorClass}`}>
-    <div>
+    <div class="relative">
       <hr class="my-12 h-0.5 border-t-0 bg-neutral-100 dark:bg-white/10" />
 
-      <h1 class="inter break-words text-9xl tracking-tighter z-10" id={id}>{reversed}</h1>
+      <h1 class="inter break-words text-9xl tracking-tighter" id={id}>{reversed}</h1>
       
-      <p class="satoshi-light text-3xl z-10">
+      <p class="satoshi-light text-3xl">
           {body}
       </p>
-      
-      <slot />
+
+      <div class="absolute inset-0">
+        <slot />
+      </div>
 
     </div>
   </div>

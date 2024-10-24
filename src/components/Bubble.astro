@@ -1,0 +1,14 @@
+---
+interface Props {
+    className: string;
+    speed: string;
+    src: string | undefined;
+}
+
+const { className, speed, src } = Astro.props;
+---
+
+<div class=`${className} bubble` data-speed={speed}>
+    {src && <img src={src} width="250" height="250" alt="img" />}
+    <slot />
+</div>
