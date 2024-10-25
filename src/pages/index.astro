@@ -6,8 +6,9 @@ import Next from '../components/Next.astro';
 
 <Layout title="Portfolio">
 	<main>
-		<!-- https://github.com/nemutas/three-template-with-astro/tree/main -->
-		<Cube client:load />
+		<section class="h-screen">
+			<Cube client:load />
+		</section>
 
 		<section class="h-screen">
 			<h1 class="text-9xl ibm-plex-mono-light">Tim Arnold</h1>
@@ -29,7 +30,7 @@ import Next from '../components/Next.astro';
 			<p>Works from my studies at “Technische Hochschule Augsburg”</p>
 
 			<div>
-				<div class="grid gap-y-1 gap-x-0 grid-cols-4 grid-rows-2 shadow-md">
+				<div class="grid gap-y-1 gap-x-0 grid-cols-4 grid-rows-2">
 				  
 				  <div class="col-span-1 row-span-1 shadow-md w-fit h-fit">
 					<img src="https://via.placeholder.com/150" alt="Placeholder" />
