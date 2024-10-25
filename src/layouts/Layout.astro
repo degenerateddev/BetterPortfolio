@@ -1,5 +1,6 @@
 ---
 import '@fontsource/inter';
+import { ViewTransitions } from 'astro:transitions';
 
 interface Props {
 	title: string;
@@ -15,6 +16,7 @@ const { title } = Astro.props;
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
+		<ViewTransitions />
 		
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="sitemap" href="/sitemap-index.xml" />
@@ -22,8 +24,24 @@ const { title } = Astro.props;
 		<title>{title}</title>
 	</head>
 	<body>
-		<main class="bg-surface">
-			<slot />
+		<main class="flex-col gap-10 text-stone-900 ibm-plex-mono">
+			<header class="flex m-2">
+				<div class="flex-grow">Tim Arnold</div>
+
+				<div class="flex items-center gap-20">
+					<a href="#studies">Studies</a>
+					<a href="#free">Free Works</a>
+				</div>
+			</header>
+			
+			<div class="container mx-auto">
+				<slot />
+			</div>
+
+			<script>
+				import gsap from "gsap";
+				window.gsap = gsap;
+			</script>
 		</main>
 	</body>
 </html>
@@ -45,6 +63,20 @@ const { title } = Astro.props;
 		font-family: 'Inter';
 		font-display: swap;
 		src: url('/fonts/Inter/static/Inter-Black.ttf') format('truetype');
+	}
+
+	@font-face {
+		font-family: "IBM Plex Mono Light", monospace;
+		font-weight: 200;
+		font-style: normal;
+		src: url('fonts/IBM/IBM_Plex_Mono/IBMPlexMono-Light.ttf') format('truetype');
+	}
+
+	@font-face {
+		font-family: "IBM Plex Mono", monospace;
+		font-weight: 400;
+		font-style: normal;
+		src: url('fonts/IBM/IBM_Plex_Mono/IBMPlexMono-Regular.ttf') format('truetype');
 	}
 
 	@font-face {
@@ -75,8 +107,14 @@ const { title } = Astro.props;
 		font-family: 'Satoshi-Light', sans-serif;
 	}
 
+	.ibm-plex-mono-light {
+		font-family: 'IBM Plex Mono Light', monospace;
+	}
+	.ibm-plex-mono {
+		font-family: 'IBM Plex Mono', monospace;
+	}
+
 	html {
-		font-family: 'Satoshi-Light', sans-serif;
 		color: #F1F1F1;
 	}
 

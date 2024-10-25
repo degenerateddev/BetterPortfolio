@@ -1,18 +1,86 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Section from '../components/Section.astro';
-import ButtonNext from '../components/ButtonNext.astro';
-import Flex from '../components/Flex.astro';
+import Cube from '../components/Cube.vue'
+import Next from '../components/Next.astro';
 ---
 
-<Layout title="Tim Arnold - Portfolio">
+<Layout title="Portfolio">
 	<main>
+		<!-- https://github.com/nemutas/three-template-with-astro/tree/main -->
+		<Cube client:load />
+
+		<section class="h-screen">
+			<h1 class="text-9xl ibm-plex-mono-light">Tim Arnold</h1>
+			<p>UI/UX Designer, Programmer, Writer</p>
+
+			<div class="grid grid-cols-3">
+				<img src="https://via.placeholder.com/150" alt="Placeholder" />
+				<img src="https://via.placeholder.com/150" alt="Placeholder" />
+				<img src="https://via.placeholder.com/150" alt="Placeholder" />
+			</div>
+
+			<div class="flex justify-end">
+				<Next />
+			</div>
+		</section>
+
+		<section id="studies" class="h-screen">
+			<h1 class="text-8xl ibm-plex-mono-light">Studies</h1>
+			<p>Works from my studies at “Technische Hochschule Augsburg”</p>
+
+			<div>
+				<div class="grid gap-y-1 gap-x-0 grid-cols-4 grid-rows-2 shadow-md">
+				  
+				  <div class="col-span-1 row-span-1 shadow-md w-fit h-fit">
+					<img src="https://via.placeholder.com/150" alt="Placeholder" />
+				  </div>
+			  
+				  <div class="col-span-1 row-span-1 shadow-md w-fit h-fit">
+					<img src="https://via.placeholder.com/150" alt="Placeholder" />
+				  </div>
+				  
+				  <div class="col-span-2 row-span-2 shadow-md w-fit h-fit">
+					<img src="https://via.placeholder.com/300" alt="Placeholder" />
+				  </div>
+				  
+				  <div class="col-span-1 row-span-1 shadow-md w-fit h-fit">
+					<img src="https://via.placeholder.com/150" alt="Placeholder" />
+				  </div>
+				  
+				  <div class="col-span-1 row-span-1 shadow-md w-fit h-fit">
+					<img src="https://via.placeholder.com/150" alt="Placeholder" />
+				  </div>
+				
+				</div>
+			</div>
+
+			<div class="flex justify-end">
+				<Next />
+			</div>
+		</section>
+
+		<section id="free" class="h-screen">
+			<h1 class="text-8xl ibm-plex-mono-light">Free Works</h1>
+			<p>My own works from my free time and freelancing projects</p>
 
 
 
+			<div class="flex justify-end">
+				<Next />
+			</div>
+		</section>
+
+		<script>
+			document.addEventListener(
+				"astro:page-load",
+				() => {
+					const element = document.querySelector('[type="checkbox"]');
+					element?.addEventListener("change", () => {
+						gsap.to(".box", { x: 100 });
+					})
+				},
+				{ once: false }
+			)
+		</script>
 	</main>
 </Layout>
-
-<script>
-	
-</script>
