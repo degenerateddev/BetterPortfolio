@@ -16,18 +16,17 @@ const geometry = new BoxGeometry();
 const textureLoader = new TextureLoader();
 const materials = props.images.map(pic => {
     return new MeshLambertMaterial({
-        map: textureLoader.load("img/cube/" + pic),
-        color: 0xffffff
+        map: textureLoader.load("img/cube/" + pic)
     })
 });
 const cube = new Mesh(geometry, materials);
 scene.add(cube);
 
-const ambientLight = new AmbientLight(0xffffff, 1);
+const ambientLight = new AmbientLight(0xffffff, 1.5);
 scene.add(ambientLight);
 
-const directionalLight = new DirectionalLight(0xffffff, 1.8);
-directionalLight.position.set(5, 5, 5).normalize();
+const directionalLight = new DirectionalLight(0xffffff, 2);
+directionalLight.position.set(-10, 10, 10).normalize();
 scene.add(directionalLight);
 
 function animate() {
