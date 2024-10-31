@@ -1,8 +1,31 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Cube from '../components/Cube.vue'
+import KeyWords from '../components/KeyWords.vue';
 import Next from '../components/Next.astro';
-import Project from '../components/Project.astro';
+import { PROJECTS } from '../lib';
+
+
+const keyWords = () => {
+	const keyWords = [];
+
+	PROJECTS.forEach(project => {
+		project.keyWords.forEach(keyWord => {
+			keyWords.push(keyWord);
+		});
+	});
+
+	const keyWordsCount = keyWords.reduce((acc, keyWord) => {
+		acc[keyWord] = (acc[keyWord] || 0) + 1;
+		return acc;
+	}, {});
+
+	const keyWordsCountSorted = keyWordsCount;
+
+	return keyWordsCountSorted;
+};
+
+const keyWordsCount = keyWords();
 ---
 
 <Layout title="Portfolio">
@@ -59,8 +82,12 @@ import Project from '../components/Project.astro';
 				</div>
 			</div>
 
+			<div class="container mx-auto">
+				<KeyWords keyWords={keyWordsCount} />
+			</div>
+
 			<div class="flex justify-end">
-				<Next />
+				<Next href="/studies" />
 			</div>
 		</section>
 
