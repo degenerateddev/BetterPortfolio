@@ -13,6 +13,25 @@ export const PROJECTS = [
         "title": "Devotee",
         "description": "A platform for sharing and monetizing user created content.",
         "keyWords": ["Tailwind", "SvelteKit", "Docker", "Django", "REST", "S3"]
+    },
+    {
+        "title": "Cookster",
+        "description": "A platform for offering catering services. Either as a catering company or as a private chef.",
+        "keyWords": ["Flutter", "Pocketbase", "Docker"]
+    },
+    {
+        "title": "Abyssal Blog",
+        "description": "My personal writing blog.",
+        "keyWords": ["Tailwind", "SvelteKit", "Docker", "Django", "REST", "TipTap"]
+    },
+    {
+        "title": "TaleBrain",
+        "description": "An AI based writing and storytelling assistant.",
+        "keyWords": ["Tailwind", "SvelteKit", "Docker", "ChatGPT", "Llama"]
+    },
+    {
+        "title": "Analiki",
+        "description": "A recursive Wikipedia analysis platform.",
+        "keyWords": ["Tailwind", "SvelteKit", "Docker"]
     }
-
 ]
