@@ -22,6 +22,7 @@ const selectKeyWord = (keyWord: string) => {
     } else {
         selectedKeyWords.value.push(keyWord);
     }
+    console.log(selectedKeyWords.value);
 };
 </script>
 

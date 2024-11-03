@@ -9,8 +9,9 @@ const props = defineProps<{
 }>();
 
 const scene = new Scene();
-const camera = new PerspectiveCamera(16, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new WebGLRenderer({ antialias: true, alpha: true }); // Set alpha to true
+const factor = window.innerWidth / window.innerHeight
+const camera = new PerspectiveCamera(15, 1.5, 0.1, 1000);
+const renderer = new WebGLRenderer({ antialias: true, alpha: true });
 
 const geometry = new BoxGeometry();
 const textureLoader = new TextureLoader();
@@ -20,6 +21,7 @@ const materials = props.images.map(pic => {
     })
 });
 const cube = new Mesh(geometry, materials);
+cube.scale.set(1, 1, 1);
 scene.add(cube);
 
 const ambientLight = new AmbientLight(0xffffff, 1.5);
@@ -46,8 +48,8 @@ onMounted(() => {
 });
 
 setInterval(() => {
-    gsap.to(cube.rotation, { duration: 1.5, y: cube.rotation.y - Math.PI / 2, ease: "power2.out" });
-}, 4000);
+    gsap.to(cube.rotation, { duration: 1.5, y: cube.rotation.y - Math.PI / 2, ease: "expo.inOut" });
+}, 3000);
 
 scene.background = null;
 </script>
