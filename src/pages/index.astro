@@ -8,6 +8,7 @@ import Bento from '../components/grids/Bento.astro';
 import Button from '../components/Button.astro';
 import Sidebar from '../components/Sidebar.vue';
 import Next from '../components/Next.astro';
+import Equal from '../components/grids/Equal.astro';
 
 
 const keyWords = () => {
@@ -85,7 +86,13 @@ const keyWordsCount = keyWords();
 				<h2 class="text-9xl -ml-32">Programming</h2>
 			</a>
 
-			<Bento></Bento>
+			<Bento data={{
+				0: { src: "/img/cubes/terminal.png" },
+				1: { src: "/img/cubes/docknote.png" },
+				2: { src: "/img/cubes/tiptalk.png" },
+				3: { src: "/img/cubes/daniela.png" },
+				4: { src: "/img/cubes/devotee.png" }
+			}}></Bento>
 
 			<div class="flex justify-end">
 				<Next href="/programming" />
@@ -102,7 +109,13 @@ const keyWordsCount = keyWords();
 				<h2 class="text-9xl -ml-32">Design</h2>
 			</a>
 
-			<Bento></Bento>
+			<Bento data={{
+				0: { src: "/img/cubes/smartnapf.png" },
+				1: { src: "/img/cubes/smartwatching.png" },
+				2: { src: "/img/cubes/cookster.png" },
+				3: { src: "/img/cubes/typo.png" },
+				4: { src: "/img/cubes/echo.png" }
+			}}></Bento>
 
 			<div class="flex justify-end">
 				<Next href="/design" />
@@ -119,7 +132,9 @@ const keyWordsCount = keyWords();
 				<h2 class="text-9xl -ml-32">Cybersecurity</h2>
 			</a>
 
-			<Bento></Bento>
+			<Bento data={{
+				0: { src: "/img/cubes/docknote.png" },
+			}}></Bento>
 
 			<div class="flex justify-end">
 				<Next href="/cybersecurity" />
@@ -136,7 +151,13 @@ const keyWordsCount = keyWords();
 				<h2 class="text-9xl -ml-32">Writing</h2>
 			</a>
 
-			<Bento></Bento>
+			<Bento data={{
+				0: { src: "/img/cubes/s1.png" },
+				1: { src: "/img/cubes/s2.png" },
+				2: { src: "/img/cubes/s3.png" },
+				3: { src: "/img/cubes/s4.png" },
+				4: { src: "/img/cubes/book.png" }
+			}}></Bento>
 
 			<div class="flex justify-end">
 				<Next href="/writing" />
