@@ -1,13 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Cube from '../components/Cube.vue'
 import KeyWords from '../components/KeyWords.vue';
 import { PROJECTS } from '../lib';
 import Section from '../components/Section.astro';
 import Socials from '../components/Socials.astro';
 import Bento from '../components/grids/Bento.astro';
-import Equal from '../components/grids/Equal.astro';
 import Button from '../components/Button.astro';
+import Sidebar from '../components/Sidebar.vue';
+import Next from '../components/Next.astro';
 
 
 const keyWords = () => {
@@ -47,21 +47,25 @@ const keyWordsCount = keyWords();
 			</Cube>
 		</section> -->
 
-		<section id="about" class="h-screen space-y-10">
+		<Sidebar selectedSection={1} />
+
+		<section id="About" class="h-screen space-y-52">
 			<h1 style="line-height: 200px; font-size: 250px; text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);">TIM ARNOLD</h1>
-			<small class="text-base">Programmer, Designer, Writer</small>
+			<small class="text-lg ibm-base">Programmer, Designer, Writer</small>
 
 			<Section>
 				<div class="flex gap-10">
-					<div>
+					<div class="w-2/3">
 						<img src="/img/placeholder.png" />
 					</div>
-					<div class="flex flex-col justify-between flex-grow">
+					<div class="flex flex-col gap-y-20 justify-between flex-grow">
 						<p class="ibm-base">
-							Lorem ipsum
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum, odio non bibendum pretium, est velit venenatis est, vitae lacinia lacus erat sed diam. Maecenas tincidunt vehicula magna pulvinar maximus. Ut at mi a leo ornare pulvinar. Sed ac est dapibus tortor tincidunt feugiat.
 						</p>
-
-						<Socials />
+						
+						<div class="flex justify-end">
+							<Socials />
+						</div>
 					</div>
 				</div>
 			</Section>
@@ -71,59 +75,75 @@ const keyWordsCount = keyWords();
 			</div> -->
 		</section>
 
-		<section id="programming" class="h-screen space-y-10">
-			<div class="flex justify-start items-baseline">
+		<section id="Programming" class="h-screen space-y-10">
+			<a href="/programming" class="flex justify-start items-baseline">
 				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
 					<path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
 					<path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
 				</svg>
 				<h2 class="text-9xl -ml-32">Programming</h2>
-			</div>
+			</a>
 
 			<Bento></Bento>
+
+			<div class="flex justify-end">
+				<Next href="/programming" />
+			</div>
 		</section>
 
-		<section id="design" class="h-screen space-y-10">
-			<div class="flex justify-start items-baseline">
+		<section id="Design" class="h-screen space-y-10">
+			<a href="/design" class="flex justify-start items-baseline">
 				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
 					<path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
 					<path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
 				</svg>
 				<h2 class="text-9xl -ml-32">Design</h2>
-			</div>
+			</a>
 
 			<Bento></Bento>
+
+			<div class="flex justify-end">
+				<Next href="/design" />
+			</div>
 		</section>
 
-		<section id="cybersecurity" class="h-screen space-y-10">
-			<div class="flex justify-start items-baseline">
+		<section id="Cybersecurity" class="h-screen space-y-10">
+			<a href="/cybersecurity" class="flex justify-start items-baseline">
 				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
 					<path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
 					<path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
 				</svg>
 				<h2 class="text-9xl -ml-32">Cybersecurity</h2>
-			</div>
+			</a>
 
 			<Bento></Bento>
+
+			<div class="flex justify-end">
+				<Next href="/cybersecurity" />
+			</div>
 		</section>
 
-		<section id="writing" class="h-screen space-y-10">
-			<div class="flex justify-start items-baseline">
+		<section id="Writing" class="h-screen space-y-10">
+			<a href="/writing" class="flex justify-start items-baseline">
 				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
 					<path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
 					<path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
 				</svg>
 				<h2 class="text-9xl -ml-32">Writing</h2>
-			</div>
+			</a>
 
 			<Bento></Bento>
+
+			<div class="flex justify-end">
+				<Next href="/writing" />
+			</div>
 		</section>
 
-		<section id="programming" class="h-screen space-y-10">
+		<section id="Contact" class="h-screen space-y-10">
 			<div class="flex justify-start items-baseline">
 				<h2 class="text-9xl">Contact</h2>
 			</div>

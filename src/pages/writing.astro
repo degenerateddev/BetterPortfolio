@@ -1,0 +1,23 @@
+---
+import Bento from "../components/grids/Bento.astro";
+import Equal from "../components/grids/Equal.astro";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Programming">
+    <main class="p-20 space-y-16">
+        <div class="flex justify-start items-baseline">
+            <svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
+                <path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
+                <path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
+            </svg>
+            <h2 class="text-9xl -ml-32">Design</h2>
+        </div>
+
+        <div class="flex flex-col gap-4">
+            <Bento></Bento>
+            <Equal></Equal>
+        </div>
+    </main>
+</Layout>

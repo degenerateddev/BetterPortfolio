@@ -1,0 +1,36 @@
+---
+import Next from '../components/Next.astro';
+import Layout from './Layout.astro';
+
+interface Props {
+	title: string;
+    description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Layout title={title}>
+    <h1>{title}</h1>
+    <small>{description}</small>
+
+    <section id="general">
+        <slot name="show-section" />
+
+        <slot name="tell-section" />
+
+        <div class="flex justify-end">
+            <Next href="#technical" />
+        </div>
+    </section>
+
+    <section id="technical">
+        <slot name="detail-section" />
+
+        <slot name="diagram-section" />
+
+        <div class="flex justify-start">
+            <Next href="#general" />
+        </div>
+    </section>
+</Layout>

@@ -1,0 +1,21 @@
+---
+import Section from "../../components/Section.astro";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+
+const project = {
+    name: "Project Name",
+    description: "Project Description"
+}
+---
+
+<ProjectLayout description={project.description} title={project.name}>
+    <div class="grid grid-cols-2 gap-10">
+        <Section slot="show-section">
+            <img src="/img/placeholder.png" />
+        </Section>
+    
+        <Section slot="tell-section">
+    
+        </Section>
+    </div>
+</ProjectLayout>

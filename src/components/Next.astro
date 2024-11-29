@@ -6,10 +6,12 @@ interface props {
 const href = Astro.props.href;
 ---
 
-<a class="hover:animate-pulse">
+<a class="hover:scale-105 duration-100 ease-linear" href={href}>
     <div class="flex">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-16">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-        </svg>          
+        <svg width="67" height="53" viewBox="0 0 67 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M31 1L64 25L31 52" stroke="black" stroke-width="2"/>
+            <path d="M17 1L50 25L17 52" stroke="black" stroke-width="1.5"/>
+            <path d="M3 1L36 25L3 52" stroke="black"/>
+        </svg>            
     </div>
 </a>
