@@ -1,36 +1,108 @@
 ---
-import Next from '../components/Next.astro';
-import Layout from './Layout.astro';
+import Next from "../components/Next.vue";
+import Layout from "./Layout.astro";
 
 interface Props {
-	title: string;
-    description: string;
+  title: string;
+  description: string;
 }
 
 const { title, description } = Astro.props;
 ---
+<script>
+    import gsap from "gsap";
+    let count = 0;
+    let targets;
+
+    document.addEventListener("DOMContentLoaded", () => {
+        targets = document.querySelectorAll(".box");
+        gsap.set(targets, { xPercent: 100 });
+        gsap.set(targets[0], { xPercent: 0 });
+    });
+
+    function slideOneNext() {
+        gsap.fromTo(
+            targets[count],
+            { xPercent: 0, zIndex: 0 },
+            { delay: 0.2, duration: 1.2, xPercent: -100, zIndex: -10 }
+        );
+        count = count < targets.length - 1 ? ++count : 0;
+        gsap.fromTo(
+            targets[count],
+            { xPercent: 100, zIndex: 10 },
+            { duration: 1.2, xPercent: 0, zIndex: 0 }
+        );
+    }
+
+    function slideOnePrev() {
+        gsap.fromTo(
+            targets[count],
+            { xPercent: 0, zIndex: 10 },
+            { xPercent: 100, zIndex: 0 }
+        );
+        count = count > 0 ? --count : targets.length - 1;
+        gsap.fromTo(
+            targets[count],
+            { xPercent: -100, zIndex: 0 },
+            { delay: 0, duration: 1.2, xPercent: 0, zIndex: 10 }
+        );
+    }
+
+    function toggleSection() {
+        slideOneNext();
+    }
+</script>
 
 <Layout title={title}>
-    <h1>{title}</h1>
-    <small>{description}</small>
+    <h1 class="text-9xl">{title}</h1>
+    <small class="text-base ibm-base">{description}</small>
 
-    <section id="general">
-        <slot name="show-section" />
+    <div class="container py-20 box-container">
+        <section id="general" class="w-full space-y-10 box">
+            <div class="grid grid-cols-2 gap-10">
+                <slot name="show-section" />
+                <slot name="tell-section" />
+            </div>
+        </section>
 
-        <slot name="tell-section" />
+        <section id="technical" class="w-full space-y-10 box">
+            <div class="grid grid-cols-2 gap-10">
+                <slot name="detail-section" />
+                <slot name="diagram-section" />
+            </div>
+        </section>
+    </div>
 
-        <div class="flex justify-end">
-            <Next href="#technical" />
-        </div>
-    </section>
-
-    <section id="technical">
-        <slot name="detail-section" />
-
-        <slot name="diagram-section" />
-
+    <div class="container">
         <div class="flex justify-start">
-            <Next href="#general" />
+            <div class="rotate-180">
+            <Next
+                client:only="vue"
+                href="javascript:void(0);"
+                onClick={() => slideOnePrev()}
+            />
+            </div>
         </div>
-    </section>
+    </div>
+
+    <slot name="more" />
 </Layout>
+
+<style>
+  .box {
+    position: absolute;
+    width: 100%; 
+    height: 100%;
+    display: grid;
+    place-items: center;
+    z-index: 0;
+  }
+
+  .box-container {
+    width: 100%;
+    height: 60vh;
+    position: relative;
+    margin: 24px auto;
+    overflow: hidden;
+  }
+</style>

@@ -7,8 +7,7 @@ import Socials from '../components/Socials.astro';
 import Bento from '../components/grids/Bento.astro';
 import Button from '../components/Button.astro';
 import Sidebar from '../components/Sidebar.vue';
-import Next from '../components/Next.astro';
-import Equal from '../components/grids/Equal.astro';
+import Next from '../components/Next.vue';
 
 
 const keyWords = () => {
@@ -33,7 +32,7 @@ const keyWords = () => {
 const keyWordsCount = keyWords();
 ---
 
-<Layout title="Portfolio">
+<Layout title="Tim Arnold">
 	<main class="p-20">
 		<!-- <section class="h-screen hidden md:block">
 			<Cube client:only="vue" images={[
@@ -55,13 +54,16 @@ const keyWordsCount = keyWords();
 			<small class="text-lg ibm-base">Programmer, Designer, Writer</small>
 
 			<Section>
-				<div class="flex gap-10">
-					<div class="w-2/3">
-						<img src="/img/placeholder.png" />
+				<div class="flex items-center gap-10">
+					<div class="flex flex-col justify-center h-[20vh]">
+						<img src="/img/me.png" />
 					</div>
 					<div class="flex flex-col gap-y-20 justify-between flex-grow">
 						<p class="ibm-base">
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec interdum, odio non bibendum pretium, est velit venenatis est, vitae lacinia lacus erat sed diam. Maecenas tincidunt vehicula magna pulvinar maximus. Ut at mi a leo ornare pulvinar. Sed ac est dapibus tortor tincidunt feugiat.
+							I'm a programmer and designer from Germany. 
+							My main focus is web development and design 
+							but I also have experience in cybersecurity and I'm a fiction writer.
+							Currently I'm studying at the Technicaly University of Applied Sciences in Augsburg.
 						</p>
 						
 						<div class="flex justify-end">
@@ -97,7 +99,7 @@ const keyWordsCount = keyWords();
 			</Section>
 
 			<div class="flex justify-end">
-				<Next href="/programming" />
+				<Next client:only="vue" onClick={null} href="/programming" />
 			</div>
 		</section>
 
@@ -122,7 +124,7 @@ const keyWordsCount = keyWords();
 			</Section>
 
 			<div class="flex justify-end">
-				<Next href="/design" />
+				<Next client:only="vue" onClick={null} href="/design" />
 			</div>
 		</section>
 
@@ -143,7 +145,7 @@ const keyWordsCount = keyWords();
 			</Section>
 
 			<div class="flex justify-end">
-				<Next href="/cybersecurity" />
+				<Next client:only="vue" onClick={null} href="/cybersecurity" />
 			</div>
 		</section>
 
@@ -168,7 +170,7 @@ const keyWordsCount = keyWords();
 			</Section>
 
 			<div class="flex justify-end">
-				<Next href="/writing" />
+				<Next client:only="vue" onClick={null} href="/writing" />
 			</div>
 		</section>
 
