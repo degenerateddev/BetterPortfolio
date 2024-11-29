@@ -40,14 +40,14 @@ watch(() => props.selectedSection, (newVal) => {
 </script>
 
 <template>
-    <div class="space-y-4 fixed left-0 top-[50%] -translate-y-[50%]">
-        <div class="flex flex-col items-start gap-10">
+    <div class="hidden md:block space-y-4 fixed top-5 left-[50%] -translate-x-[50%]">
+        <div class="flex flex-col md:flex-row gap-1 md:gap-10 ibm-base text-center items-center">
             <div
                 v-for="(section, index) in sections" 
                 :key="index"
                 :class="[ 
-                    'hover:translate-x-14 hover:scale-125 ease-in-out transition-all duration-200 bg-transparent min-w-[1/4] text-2xl px-3 py-1',
-                    selectedSection === index ? 'translate-x-10 scale-125 ibm-semibold' : ''
+                    'hover:translate-y-1 hover:scale-125 ease-in-out transition-all duration-200 bg-transparent min-w-[1/4] text-2xl px-3 py-1',
+                    selectedSection === index ? 'translate-y-1 scale-125' : ''
                 ]"
             >
                 <a 
@@ -55,7 +55,7 @@ watch(() => props.selectedSection, (newVal) => {
                         'bg-transparent',
                         selectedSection === index ? 'scale-125 ibm-semibold' : ''
                     ]"
-                    :href="'#' + section"
+                    :href="'/#' + section"
                     @click.prevent="scrollToSection(section, index)"
                 >
                     {{ section }}

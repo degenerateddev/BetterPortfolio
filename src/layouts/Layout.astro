@@ -3,6 +3,7 @@ import { ViewTransitions } from 'astro:transitions';
 import '@fontsource/ibm-plex-mono/100.css';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/600.css';
+import Sidebar from '../components/Sidebar.vue';
 
 interface Props {
     title: string;
@@ -26,7 +27,9 @@ const { title } = Astro.props;
         <title>{title}</title>
     </head>
     <body>
-        <main class="flex-col gap-10 text-stone-900 ibm-plex-mono relative">
+        <main class="flex-col gap-10 py-5 md:py-20 text-stone-900 ibm-plex-mono relative">
+            <Sidebar client:only="vue" />
+            
             <div class="container mx-auto min-h-screen">
                 <slot />
             </div>

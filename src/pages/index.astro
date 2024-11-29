@@ -6,64 +6,60 @@ import Section from '../components/Section.astro';
 import Socials from '../components/Socials.astro';
 import Bento from '../components/grids/Bento.astro';
 import Button from '../components/Button.astro';
-import Sidebar from '../components/Sidebar.vue';
 import Next from '../components/Next.vue';
 
-
 const keyWords = () => {
-	const keyWords = [];
+    const keyWords = [];
 
-	PROJECTS.forEach(project => {
-		project.keyWords.forEach(keyWord => {
-			keyWords.push(keyWord);
-		});
-	});
+    PROJECTS.forEach(project => {
+        project.keyWords.forEach(keyWord => {
+            keyWords.push(keyWord);
+        });
+    });
 
-	const keyWordsCount = keyWords.reduce((acc, keyWord) => {
-		acc[keyWord] = (acc[keyWord] || 0) + 1;
-		return acc;
-	}, {});
+    const keyWordsCount = keyWords.reduce((acc, keyWord) => {
+        acc[keyWord] = (acc[keyWord] || 0) + 1;
+        return acc;
+    }, {});
 
-	const keyWordsCountSorted = keyWordsCount;
+    const keyWordsCountSorted = keyWordsCount;
 
-	return keyWordsCountSorted;
+    return keyWordsCountSorted;
 };
 
 const keyWordsCount = keyWords();
 ---
 
 <Layout title="Tim Arnold">
-	<main class="px-20 space-y-20">
-		<!-- <section class="h-screen hidden md:block">
-			<Cube client:only="vue" images={[
-				"devotee.png",
-				"clockwork.png",
-				"degeneracy.png",
-				"tiptalk.png",
-				"terminal.png",
-				"book.png"
-			]}>
-				<div slot="fallback">Loading cube...</div>
-			</Cube>
-		</section> -->
+    <main class="px-4 md:px-20 space-y-10 md:space-y-20">
+        <!-- <section class="h-screen hidden md:block">
+            <Cube client:only="vue" images={[
+                "devotee.png",
+                "clockwork.png",
+                "degeneracy.png",
+                "tiptalk.png",
+                "terminal.png",
+                "book.png"
+            ]}>
+                <div slot="fallback">Loading cube...</div>
+            </Cube>
+        </section> -->
 
-		<Sidebar client:only="vue" />
+        <section id="About" class="min-h-screen space-y-10 md:space-y-52">
+            <h1 class="text-8xl md:text-[300px] leading-none md:leading-[250px] text-shadow-md">TIM ARNOLD</h1>
+            <small class="text-base md:text-lg ibm-base">Programmer, Designer, Writer</small>
 
-		<section id="About" class="min-h-screen space-y-52">
-			<h1 style="line-height: 200px; font-size: 250px; text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);">TIM ARNOLD</h1>
-			<small class="text-lg ibm-base">Programmer, Designer, Writer</small>
-
-			<Section>
-				<div class="flex items-center gap-10">
-					<div class="flex flex-col justify-center h-[20vh]">
-						<img src="/img/me.png" />
+            <Section>
+				<div class="flex flex-col md:flex-row items-center gap-10">
+					<div class="flex justify-center min-h-[20vh] w-full md:w-fit md:min-w-fit md:justify-start">
+						<img src="/img/me.png" class="object-fill w-full md:w-auto md:h-full md:object-cover" />
 					</div>
-					<div class="flex flex-col gap-y-20 justify-between flex-grow">
-						<p class="ibm-base">
+					<div class="flex flex-col gap-y-10 md:gap-y-20 items-center flex-grow p-0 md:p-5">
+						<p class="flex-grow ibm-base p-5">
 							I'm a programmer and designer from Germany. 
 							My main focus is web development and design 
 							but I also have experience in cybersecurity and I'm a fiction writer.
-							Currently I'm studying at the Technicaly University of Applied Sciences in Augsburg.
+							Currently I'm studying at the Technical University of Applied Sciences in Augsburg.
 						</p>
 						
 						<div class="flex justify-end">
@@ -73,148 +69,151 @@ const keyWordsCount = keyWords();
 				</div>
 			</Section>
 
-			<!-- <div class="container mx-auto">
-				<KeyWords keyWords={keyWordsCount} />
-			</div> -->
-		</section>
+            <!-- <div class="container mx-auto">
+                <KeyWords keyWords={keyWordsCount} />
+            </div> -->
+        </section>
 
-		<section id="Programming" class="min-h-screen space-y-10">
-			<div class="flex justify-start items-baseline">
-				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
-					<path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
-					<path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
-				</svg>
-				<a href="/programming">
-					<h2 class="text-9xl -ml-32">Programming</h2>
-				</a>
+        <section id="Programming" class="min-h-screen space-y-10">
+            <div class="flex flex-col md:flex-row justify-start items-baseline">
+                <svg class="md:h-[256px] md:w-[256px] h-[128px] w-[128px]" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
+                    <path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
+                    <path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
+                </svg>
+                <a href="/programming">
+                    <h2 class="text-6xl md:text-9xl md:-ml-32">Programming</h2>
+                </a>
+            </div>
+
+            <Section>
+                <Bento data={{
+                    0: { src: "/img/cubes/terminal.png" },
+                    1: { src: "/img/cubes/docknote.png" },
+                    2: { src: "/img/cubes/tiptalk.png" },
+                    3: { src: "/img/cubes/daniela.png" },
+                    4: { src: "/img/cubes/devotee.png" }
+                }}></Bento>
+            </Section>
+
+            <div class="flex justify-end">
+                <Next client:only="vue" onClick={null} href="/programming" />
+            </div>
+        </section>
+
+        <section id="Design" class="min-h-screen space-y-10">
+            <div class="flex flex-col md:flex-row justify-start items-baseline">
+                <svg class="md:h-[256px] md:w-[256px] h-[128px] w-[128px]" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_181_4330)">
+                    <path d="M151.111 71.111L198.267 12.1669C204.419 4.4767 213.733 0 223.581 0C241.486 0 256 14.5144 256 32.4187C256 42.267 251.523 51.5813 243.834 57.7336L184.89 104.889L195.926 115.926C203.658 123.657 208 134.142 208 145.075C208 154.719 204.619 164.058 198.445 171.466L189.194 182.566L73.4331 66.8058L84.5344 57.5547C91.9429 51.381 101.281 48 110.925 48C121.858 48 132.343 52.3432 140.074 60.0739L151.111 71.111Z" fill="black" fill-opacity="0.25"/>
+                    <path d="M0 128L48.7486 87.3762L168.624 207.251L128 256L0 128Z" fill="black" fill-opacity="0.25"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_181_4330">
+                    <rect width="256" height="256" fill="white"/>
+                    </clipPath>
+                    </defs>
+                </svg>					
+                <a href="/design">
+                    <h2 class="text-6xl md:text-9xl md:-ml-32">Design</h2>
+                </a>
+            </div>
+
+            <Section>
+                <Bento data={{
+                    0: { src: "/img/cubes/smartnapf.png" },
+                    1: { src: "/img/cubes/smartwatching.png" },
+                    2: { src: "/img/cubes/cookster.png" },
+                    3: { src: "/img/cubes/typo.png" },
+                    4: { src: "/img/cubes/echo.png" }
+                }}></Bento>
+            </Section>
+
+            <div class="flex justify-end">
+                <Next client:only="vue" onClick={null} href="/design" />
+            </div>
+        </section>
+
+        <section id="Cybersecurity" class="min-h-screen space-y-10">
+            <div class="flex flex-col md:flex-row justify-start items-baseline">
+                <svg class="md:h-[256px] md:w-[256px] h-[128px] w-[128px]" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12.6836 196.686L81.3699 128L12.6836 59.3139L35.311 36.6866L126.625 128L35.311 219.314L12.6836 196.686Z" fill="black" fill-opacity="0.25"/>
+                    <path d="M112.001 240H240.002V208H112.001V240Z" fill="black" fill-opacity="0.25"/>
+                </svg>					
+                <a href="/cybersecurity">
+                    <h2 class="text-6xl md:text-9xl md:-ml-32">Cybersecurity</h2>
+                </a>
+            </div>
+
+            <Section>
+                <Bento data={{
+                    0: { src: "/img/cubes/docknote.png" },
+                }}></Bento>
+            </Section>
+
+            <div class="flex justify-end">
+                <Next client:only="vue" onClick={null} href="/cybersecurity" />
+            </div>
+        </section>
+
+        <section id="Writing" class="min-h-screen space-y-10">
+            <div class="flex flex-col md:flex-row justify-start items-baseline">
+                <svg class="md:h-[256px] md:w-[256px] h-[128px] w-[128px]" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_181_4396)">
+                    <path d="M176 0L256 80L224 112V192L48 256L35.3138 243.314L103.711 174.917C106.355 175.622 109.133 176 112 176C129.673 176 144 161.674 144 144C144 126.327 129.673 112 112 112C94.3269 112 80 126.327 80 144C80 146.867 80.377 149.645 81.0838 152.289L12.6863 220.686L0 208L64 32H144L176 0Z" fill="black" fill-opacity="0.25"/>
+                    </g>
+                    <defs>
+                    <clipPath id="clip0_181_4396">
+                    <rect width="256" height="256" fill="white"/>
+                    </clipPath>
+                    </defs>
+                </svg>					
+                <a href="/writing">
+                    <h2 class="text-6xl md:text-9xl md:-ml-32">Writing</h2>
+                </a>
+            </div>
+
+            <Section>
+                <Bento data={{
+                    0: { src: "/img/cubes/s1.png" },
+                    1: { src: "/img/cubes/s2.png" },
+                    2: { src: "/img/cubes/s3.png" },
+                    3: { src: "/img/cubes/s4.png" },
+                    4: { src: "/img/cubes/book.png" }
+                }}></Bento>
+            </Section>
+
+            <div class="flex justify-end">
+                <Next client:only="vue" onClick={null} href="/writing" />
+            </div>
+        </section>
+
+        <section id="Contact" class="min-h-screen space-y-10">
+            <div class="flex justify-start items-baseline">
+                <h2 class="text-6xl md:text-9xl">Contact</h2>
+            </div>
+            
+            <div class="flex justify-start">
+				<Socials />
 			</div>
 
-			<Section>
-				<Bento data={{
-					0: { src: "/img/cubes/terminal.png" },
-					1: { src: "/img/cubes/docknote.png" },
-					2: { src: "/img/cubes/tiptalk.png" },
-					3: { src: "/img/cubes/daniela.png" },
-					4: { src: "/img/cubes/devotee.png" }
-				}}></Bento>
-			</Section>
+            <form method="POST">
+                <textarea class="focus:outline-none w-full h-64 border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);"></textarea>
+                <Button text="Submit" />
+            </form>
+        </section>
 
-			<div class="flex justify-end">
-				<Next client:only="vue" onClick={null} href="/programming" />
-			</div>
-		</section>
-
-		<section id="Design" class="min-h-screen space-y-10">
-			<div class="flex justify-start items-baseline">
-				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<g clip-path="url(#clip0_181_4330)">
-					<path d="M151.111 71.111L198.267 12.1669C204.419 4.4767 213.733 0 223.581 0C241.486 0 256 14.5144 256 32.4187C256 42.267 251.523 51.5813 243.834 57.7336L184.89 104.889L195.926 115.926C203.658 123.657 208 134.142 208 145.075C208 154.719 204.619 164.058 198.445 171.466L189.194 182.566L73.4331 66.8058L84.5344 57.5547C91.9429 51.381 101.281 48 110.925 48C121.858 48 132.343 52.3432 140.074 60.0739L151.111 71.111Z" fill="black" fill-opacity="0.25"/>
-					<path d="M0 128L48.7486 87.3762L168.624 207.251L128 256L0 128Z" fill="black" fill-opacity="0.25"/>
-					</g>
-					<defs>
-					<clipPath id="clip0_181_4330">
-					<rect width="256" height="256" fill="white"/>
-					</clipPath>
-					</defs>
-				</svg>					
-				<a href="/design">
-					<h2 class="text-9xl -ml-32">Design</h2>
-				</a>
-			</div>
-
-			<Section>
-				<Bento data={{
-					0: { src: "/img/cubes/smartnapf.png" },
-					1: { src: "/img/cubes/smartwatching.png" },
-					2: { src: "/img/cubes/cookster.png" },
-					3: { src: "/img/cubes/typo.png" },
-					4: { src: "/img/cubes/echo.png" }
-				}}></Bento>
-			</Section>
-
-			<div class="flex justify-end">
-				<Next client:only="vue" onClick={null} href="/design" />
-			</div>
-		</section>
-
-		<section id="Cybersecurity" class="min-h-screen space-y-10">
-			<div class="flex justify-start items-baseline">
-				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path d="M12.6836 196.686L81.3699 128L12.6836 59.3139L35.311 36.6866L126.625 128L35.311 219.314L12.6836 196.686Z" fill="black" fill-opacity="0.25"/>
-					<path d="M112.001 240H240.002V208H112.001V240Z" fill="black" fill-opacity="0.25"/>
-				</svg>					
-				<a href="/cybersecurity">
-					<h2 class="text-9xl -ml-32">Cybersecurity</h2>
-				</a>
-			</div>
-
-			<Section>
-				<Bento data={{
-					0: { src: "/img/cubes/docknote.png" },
-				}}></Bento>
-			</Section>
-
-			<div class="flex justify-end">
-				<Next client:only="vue" onClick={null} href="/cybersecurity" />
-			</div>
-		</section>
-
-		<section id="Writing" class="min-h-screen space-y-10">
-			<div class="flex justify-start items-baseline">
-				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<g clip-path="url(#clip0_181_4396)">
-					<path d="M176 0L256 80L224 112V192L48 256L35.3138 243.314L103.711 174.917C106.355 175.622 109.133 176 112 176C129.673 176 144 161.674 144 144C144 126.327 129.673 112 112 112C94.3269 112 80 126.327 80 144C80 146.867 80.377 149.645 81.0838 152.289L12.6863 220.686L0 208L64 32H144L176 0Z" fill="black" fill-opacity="0.25"/>
-					</g>
-					<defs>
-					<clipPath id="clip0_181_4396">
-					<rect width="256" height="256" fill="white"/>
-					</clipPath>
-					</defs>
-				</svg>					
-				<a href="/writing">
-					<h2 class="text-9xl -ml-32">Writing</h2>
-				</a>
-			</div>
-
-			<Section>
-				<Bento data={{
-					0: { src: "/img/cubes/s1.png" },
-					1: { src: "/img/cubes/s2.png" },
-					2: { src: "/img/cubes/s3.png" },
-					3: { src: "/img/cubes/s4.png" },
-					4: { src: "/img/cubes/book.png" }
-				}}></Bento>
-			</Section>
-
-			<div class="flex justify-end">
-				<Next client:only="vue" onClick={null} href="/writing" />
-			</div>
-		</section>
-
-		<section id="Contact" class="min-h-screen space-y-10">
-			<div class="flex justify-start items-baseline">
-				<h2 class="text-9xl">Contact</h2>
-			</div>
-			
-			<Socials />
-			<form method="POST">
-				<textarea class="focus:outline-none w-full h-64 border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);"></textarea>
-				<Button text="Submit" />
-			</form>
-		</section>
-
-		<script>
-			document.addEventListener(
-				"astro:page-load",
-				() => {
-					const element = document.querySelector('[type="checkbox"]');
-					element?.addEventListener("change", () => {
-						gsap.to(".box", { x: 100 });
-					})
-				},
-				{ once: false }
-			)
-		</script>
-	</main>
+        <script>
+            document.addEventListener(
+                "astro:page-load",
+                () => {
+                    const element = document.querySelector('[type="checkbox"]');
+                    element?.addEventListener("change", () => {
+                        gsap.to(".box", { x: 100 });
+                    })
+                },
+                { once: false }
+            )
+        </script>
+    </main>
 </Layout>
