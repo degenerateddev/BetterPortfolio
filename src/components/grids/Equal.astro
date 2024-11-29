@@ -5,7 +5,8 @@ interface props {
   
 /* data = {
   0: {
-    src: "/img/placeholder.png"
+    src: "/img/placeholder.png",
+    link: "/project/placeholder", (optional)
   },
   1: {
     ...
@@ -16,17 +17,16 @@ const data = Astro.props.data || {};
 
 {Object.entries(data).length > 0 && (
   <div class="grid grid-cols-4 gap-4 px-5">
-    <div class="border">
-      {data[0] ? <img src={data[0].src} /> : <img src="/img/placeholder.png" />}
-    </div>
-    <div class="border">
-      {data[1] ? <img src={data[1].src} /> : <img src="/img/placeholder.png" />}
-    </div>
-    <div class="border">
-      {data[2] ? <img src={data[2].src} /> : <img src="/img/placeholder.png" />}
-    </div>
-    <div class="border">
-      {data[3] ? <img src={data[3].src} /> : <img src="/img/placeholder.png" />}
-    </div>
+    {Object.entries(data).map(([key, value]) => (
+      <div class="border" key={key}>
+        {value.link ? (
+          <a href={value.link}>
+            <img src={value.src} />
+          </a>
+        ) : (
+          <img src={value.src} />
+        )}
+      </div>
+    ))}
   </div>
 )}
