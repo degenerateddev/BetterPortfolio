@@ -2,8 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import Cube from '../components/Cube.vue'
 import KeyWords from '../components/KeyWords.vue';
-import Next from '../components/Next.astro';
 import { PROJECTS } from '../lib';
+import Section from '../components/Section.astro';
+import Socials from '../components/Socials.astro';
+import Bento from '../components/grids/Bento.astro';
+import Equal from '../components/grids/Equal.astro';
+import Button from '../components/Button.astro';
 
 
 const keyWords = () => {
@@ -30,7 +34,7 @@ const keyWordsCount = keyWords();
 
 <Layout title="Portfolio">
 	<main class="p-20">
-		<section class="h-screen hidden md:block">
+		<!-- <section class="h-screen hidden md:block">
 			<Cube client:only="vue" images={[
 				"devotee.png",
 				"clockwork.png",
@@ -41,54 +45,92 @@ const keyWordsCount = keyWords();
 			]}>
 				<div slot="fallback">Loading cube...</div>
 			</Cube>
-		</section>
+		</section> -->
 
 		<section id="about" class="h-screen space-y-10">
-			<h1 class="text-9xl ibm-plex-mono-light">Tim Arnold</h1>
-			<p>UI/UX Designer, Programmer, Writer</p>
+			<h1 style="line-height: 200px; font-size: 250px; text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);">TIM ARNOLD</h1>
+			<small class="text-base">Programmer, Designer, Writer</small>
 
-			<div class="flex gap-10">
-				<div class="bg-zinc-100 shadow-md p-5 w-[150px] h-[150px] hover:scale-[101%] duration-100 ease-in-out">
-					<div class="flex flex-col h-full items-center justify-between">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-16">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
-						</svg>
-						<h2 class="text-xl">Student</h2>
-					</div>				  
-				</div>
-				<div class="bg-zinc-100 shadow-md p-5 w-[150px] h-[150px] hover:scale-[101%] duration-100 ease-in-out">
-					<div class="flex flex-col h-full items-center justify-between">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-16">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" />
-						</svg>
-						<h2 class="text-xl">Programmer</h2>
+			<Section>
+				<div class="flex gap-10">
+					<div>
+						<img src="/img/placeholder.png" />
 					</div>
-				</div>
-				<div class="bg-zinc-100 shadow-md p-5 w-[150px] h-[150px] hover:scale-[101%] duration-100 ease-in-out">
-					<div class="flex flex-col h-full items-center justify-between">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-16">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42" />
-						</svg>					  
-						<h2 class="text-xl">Designer</h2>
-					</div>
-				</div>
-				<div class="bg-zinc-100 shadow-md p-5 w-[150px] h-[150px] hover:scale-[101%] duration-100 ease-in-out">
-					<div class="flex flex-col h-full items-center justify-between">
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-16">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-						</svg>
-						<h2 class="text-xl">Writer</h2>
-					</div>
-				</div>
-			</div>
+					<div class="flex flex-col justify-between flex-grow">
+						<p class="ibm-base">
+							Lorem ipsum
+						</p>
 
-			<div class="container mx-auto">
+						<Socials />
+					</div>
+				</div>
+			</Section>
+
+			<!-- <div class="container mx-auto">
 				<KeyWords keyWords={keyWordsCount} />
+			</div> -->
+		</section>
+
+		<section id="programming" class="h-screen space-y-10">
+			<div class="flex justify-start items-baseline">
+				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
+					<path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
+					<path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
+				</svg>
+				<h2 class="text-9xl -ml-32">Programming</h2>
 			</div>
 
-			<div class="flex justify-end">
-				<Next href="/studies" />
+			<Bento></Bento>
+		</section>
+
+		<section id="design" class="h-screen space-y-10">
+			<div class="flex justify-start items-baseline">
+				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
+					<path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
+					<path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
+				</svg>
+				<h2 class="text-9xl -ml-32">Design</h2>
 			</div>
+
+			<Bento></Bento>
+		</section>
+
+		<section id="cybersecurity" class="h-screen space-y-10">
+			<div class="flex justify-start items-baseline">
+				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
+					<path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
+					<path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
+				</svg>
+				<h2 class="text-9xl -ml-32">Cybersecurity</h2>
+			</div>
+
+			<Bento></Bento>
+		</section>
+
+		<section id="writing" class="h-screen space-y-10">
+			<div class="flex justify-start items-baseline">
+				<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+					<path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
+					<path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
+					<path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
+				</svg>
+				<h2 class="text-9xl -ml-32">Writing</h2>
+			</div>
+
+			<Bento></Bento>
+		</section>
+
+		<section id="programming" class="h-screen space-y-10">
+			<div class="flex justify-start items-baseline">
+				<h2 class="text-9xl">Contact</h2>
+			</div>
+			
+			<Socials />
+			<textarea class="w-full h-64 border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);"></textarea>
+			<Button text="Submit" />
 		</section>
 
 		<script>
