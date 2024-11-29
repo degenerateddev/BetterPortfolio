@@ -1,39 +1,42 @@
 <script setup lang="ts">
-    import { ref, onMounted } from 'vue';
-    import { gsap } from 'gsap';
+import { ref, onMounted, watch } from 'vue';
+import { gsap } from 'gsap';
+import ScrollToPlugin from 'gsap/ScrollToPlugin';
 
-    const props = defineProps<{
-        selectedSection: number;
-    }>();
+const props = withDefaults(defineProps<{
+    selectedSection?: number;
+}>(), {
+    selectedSection: 0
+});
 
-    const sections = {
-        0: "About",
-        1: "Programming",
-        2: "Design",
-        3: "Cybersecurity",
-        4: "Writing"
-    }
-    const selectedSection = ref<number>(props.selectedSection);
+const sections = {
+    0: "About",
+    1: "Programming",
+    2: "Design",
+    3: "Cybersecurity",
+    4: "Writing"
+};
+const selectedSection = ref<number>(props.selectedSection);
 
-    const selectSection = (index: number) => {
-        console.log(index)
-        selectedSection.value = index;
-    }
+const selectSection = (index: number) => {
+    selectedSection.value = index;
+};
 
-    const scrollToSection = (section: string) => {
-        const target = document.getElementById(section);
-        console.log(target)
-        gsap.to(window, { scrollTo: target, duration: 1, ease: "expo.inOut" });
-    }
+const scrollToSection = (section: string, index: number) => {
+    const target = document.getElementById(section);
+    gsap.to(window, { scrollTo: target, duration: 1, ease: "expo.inOut" });
+    
+    selectSection(index);
+};
 
-    onMounted(() => {
-        gsap.registerPlugin(ScrollToPlugin);
-        gsap.registerPlugin(ScrollSmoother);
-        ScrollSmoother.create({
-            smooth: 1,
-            effects: true
-        })
-    });
+onMounted(() => {
+    gsap.registerPlugin(ScrollToPlugin);
+    selectSection(props.selectedSection);
+});
+
+watch(() => props.selectedSection, (newVal) => {
+    selectSection(newVal);
+});
 </script>
 
 <template>
@@ -41,13 +44,13 @@
         <div class="flex flex-col items-start gap-10">
             <a
                 v-for="(section, index) in sections" 
-                :key="index" 
-                :href="'#' + section" 
+                :key="index"
+                :href="'#' + section"
                 :class="[ 
-                    'hover:text-4xl hover:ibm-semibold min-w-[1/4] text-2xl bg-transparent border-t border-b border-black px-3 py-1 transition-all duration-200',
-                    selectedSection.value === index ? 'text-9xl ibm-semibold' : ''
+                    'hover:text-4xl min-w-[1/4] text-2xl bg-transparent border-t border-b border-black px-3 py-1 transition-all duration-200',
+                    selectedSection === index ? 'text-4xl ibm-semibold' : ''
                 ]"
-                @click.prevent="() => { selectSection(index); scrollToSection(section); }"
+                @click="() => scrollToSection(section, index)"
             >
                 {{ section }}
             </a>

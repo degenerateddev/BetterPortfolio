@@ -1,10 +1,11 @@
 ---
 import Bento from "../components/grids/Bento.astro";
 import Equal from "../components/grids/Equal.astro";
+import Section from "../components/Section.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Programming">
+<Layout title="Writing">
     <main class="p-20 space-y-16">
         <div class="flex justify-start items-baseline">
             <svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -12,29 +13,34 @@ import Layout from "../layouts/Layout.astro";
                 <path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
                 <path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
             </svg>
-            <h2 class="text-9xl -ml-32">Design</h2>
+            <h2 class="text-9xl -ml-32">Writing</h2>
         </div>
 
-        <div class="flex flex-col gap-4">
-            <Bento data={{
-                0: { src: "/img/cubes/s1.png" },
-                1: { src: "/img/cubes/s2.png" },
-                2: { src: "/img/cubes/s3.png" },
-                3: { src: "/img/cubes/s4.png" },
-                4: { src: "/img/cubes/book.png" }
-            }}></Bento>
-            <Equal data={{
-                0: { src: "/img/cubes/s5.png" },
-                1: { src: "/img/cubes/s6.png" },
-                2: { src: "/img/cubes/s7.png" },
-                3: { src: "/img/cubes/s8.png" }
-            }}/>
-            <Equal data={{
-                0: { src: "/img/cubes/s9.png" },
-                1: { src: "/img/cubes/s10.png" },
-                2: { src: "/img/cubes/s11.png" },
-                3: { src: "/img/cubes/s12.png" }
-            }}/>
-        </div>
+        <Section>
+            <div class="flex flex-col gap-4">
+                <Bento data={{
+                    0: { src: "/img/cubes/s1.png", link: "https://www.story.one/en/story/die-letzte-entscheidung-64475d90aa25e/" },
+                    1: { src: "/img/cubes/s2.png", link: "https://www.story.one/en/story/der-mann-im-limbus-64475d90edaeb/" },
+                    2: { src: "/img/cubes/s3.png", link: "https://www.story.one/en/story/menschenschmied-64475d912ba6c/" },
+                    3: { src: "/img/cubes/s4.png", link: "https://www.story.one/en/story/denn-ordnung-ist-uns-wichtig-64475d965f3ac/" },
+                    4: { src: "/img/cubes/book.png", link: "https://www.thalia.de/shop/home/artikeldetails/A1065897105" }
+                }}></Bento>
+                <Equal data={{
+                    0: { src: "/img/cubes/s5.png", link: "https://www.story.one/en/story/die-schwanzlose-katze-64475da5f2e79/" },
+                    1: { src: "/img/cubes/s13.png", link: "https://www.story.one/en/story/beobachter-64475db0966b4/" },
+                    2: { src: "/img/cubes/s6.png", link: "https://www.story.one/en/story/das-gemalde-der-madame-rousseau-64475dab54897/" },
+                    3: { src: "/img/cubes/s7.png", link: "https://www.story.one/en/story/mein-kleiner-begleiter-64475dbb6df54/" }
+                }}/>
+                <Equal data={{
+                    0: { src: "/img/cubes/s8.png", link: "https://www.story.one/en/story/die-scharlachrote-tur-64475db5d45be/" },
+                    1: { src: "/img/cubes/s9.png", link: "https://www.story.one/en/story/als-der-himmel-fiel-64475dbb3ddc6/" },
+                    2: { src: "/img/cubes/s10.png", link: "https://www.story.one/en/story/eden-woodpecker/" },
+                    3: { src: "/img/cubes/s11.png", link: "https://www.story.one/en/story/wanderer-64475ddb6037a/" }
+                }}/>
+                <Equal data={{
+                    0: { src: "/img/cubes/s12.png", link: "https://www.story.one/en/story/menschenfresser-64475deb14da4/" }
+                }}/>
+            </div>
+        </Section>
     </main>
 </Layout>

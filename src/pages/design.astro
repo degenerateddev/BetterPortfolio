@@ -1,10 +1,11 @@
 ---
 import Bento from "../components/grids/Bento.astro";
 import Equal from "../components/grids/Equal.astro";
+import Section from "../components/Section.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Programming">
+<Layout title="Design">
     <main class="p-20 space-y-16">
         <div class="flex justify-start items-baseline">
             <svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -15,9 +16,16 @@ import Layout from "../layouts/Layout.astro";
             <h2 class="text-9xl -ml-32">Design</h2>
         </div>
 
-        <div class="flex flex-col gap-4">
-            <Bento></Bento>
-            <Equal></Equal>
-        </div>
+        <Section>
+            <div class="flex flex-col gap-4">
+                <Bento data={{
+					0: { src: "/img/cubes/smartnapf.png" },
+					1: { src: "/img/cubes/smartwatching.png" },
+					2: { src: "/img/cubes/cookster.png" },
+					3: { src: "/img/cubes/typo.png" },
+					4: { src: "/img/cubes/echo.png" }
+				}}></Bento>
+            </div>
+        </Section>
     </main>
 </Layout>

@@ -48,7 +48,7 @@ const keyWordsCount = keyWords();
 			</Cube>
 		</section> -->
 
-		<Sidebar selectedSection={1} />
+		<Sidebar client:only="vue" />
 
 		<section id="About" class="h-screen space-y-52">
 			<h1 style="line-height: 200px; font-size: 250px; text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);">TIM ARNOLD</h1>
@@ -86,13 +86,15 @@ const keyWordsCount = keyWords();
 				<h2 class="text-9xl -ml-32">Programming</h2>
 			</a>
 
-			<Bento data={{
-				0: { src: "/img/cubes/terminal.png" },
-				1: { src: "/img/cubes/docknote.png" },
-				2: { src: "/img/cubes/tiptalk.png" },
-				3: { src: "/img/cubes/daniela.png" },
-				4: { src: "/img/cubes/devotee.png" }
-			}}></Bento>
+			<Section>
+				<Bento data={{
+					0: { src: "/img/cubes/terminal.png" },
+					1: { src: "/img/cubes/docknote.png" },
+					2: { src: "/img/cubes/tiptalk.png" },
+					3: { src: "/img/cubes/daniela.png" },
+					4: { src: "/img/cubes/devotee.png" }
+				}}></Bento>
+			</Section>
 
 			<div class="flex justify-end">
 				<Next href="/programming" />
@@ -109,13 +111,15 @@ const keyWordsCount = keyWords();
 				<h2 class="text-9xl -ml-32">Design</h2>
 			</a>
 
-			<Bento data={{
-				0: { src: "/img/cubes/smartnapf.png" },
-				1: { src: "/img/cubes/smartwatching.png" },
-				2: { src: "/img/cubes/cookster.png" },
-				3: { src: "/img/cubes/typo.png" },
-				4: { src: "/img/cubes/echo.png" }
-			}}></Bento>
+			<Section>
+				<Bento data={{
+					0: { src: "/img/cubes/smartnapf.png" },
+					1: { src: "/img/cubes/smartwatching.png" },
+					2: { src: "/img/cubes/cookster.png" },
+					3: { src: "/img/cubes/typo.png" },
+					4: { src: "/img/cubes/echo.png" }
+				}}></Bento>
+			</Section>
 
 			<div class="flex justify-end">
 				<Next href="/design" />
@@ -132,9 +136,11 @@ const keyWordsCount = keyWords();
 				<h2 class="text-9xl -ml-32">Cybersecurity</h2>
 			</a>
 
-			<Bento data={{
-				0: { src: "/img/cubes/docknote.png" },
-			}}></Bento>
+			<Section>
+				<Bento data={{
+					0: { src: "/img/cubes/docknote.png" },
+				}}></Bento>
+			</Section>
 
 			<div class="flex justify-end">
 				<Next href="/cybersecurity" />
@@ -151,13 +157,15 @@ const keyWordsCount = keyWords();
 				<h2 class="text-9xl -ml-32">Writing</h2>
 			</a>
 
-			<Bento data={{
-				0: { src: "/img/cubes/s1.png" },
-				1: { src: "/img/cubes/s2.png" },
-				2: { src: "/img/cubes/s3.png" },
-				3: { src: "/img/cubes/s4.png" },
-				4: { src: "/img/cubes/book.png" }
-			}}></Bento>
+			<Section>
+				<Bento data={{
+					0: { src: "/img/cubes/s1.png" },
+					1: { src: "/img/cubes/s2.png" },
+					2: { src: "/img/cubes/s3.png" },
+					3: { src: "/img/cubes/s4.png" },
+					4: { src: "/img/cubes/book.png" }
+				}}></Bento>
+			</Section>
 
 			<div class="flex justify-end">
 				<Next href="/writing" />
@@ -170,7 +178,7 @@ const keyWordsCount = keyWords();
 			</div>
 			
 			<Socials />
-			<textarea class="w-full h-64 border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);"></textarea>
+			<textarea class="focus:outline-none w-full h-64 border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);"></textarea>
 			<Button text="Submit" />
 		</section>
 

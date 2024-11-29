@@ -1,6 +1,4 @@
 ---
-import Section from "../Section.astro";
-
 interface props {
   data: Object,
 };
@@ -17,20 +15,18 @@ const data = Astro.props.data || {};
 ---
 
 {Object.entries(data).length > 0 && (
-  <Section>
-    <div class="grid grid-cols-4 grid-rows-2 gap-4 px-5">
-      <div>
-        {data[0] ? <img src={data[0].src} /> : <img src="/img/placeholder.png" />}
-      </div>
-      <div>
-        {data[1] ? <img src={data[1].src} /> : <img src="/img/placeholder.png" />}
-      </div>
-      <div>
-        {data[2] ? <img src={data[2].src} /> : <img src="/img/placeholder.png" />}
-      </div>
-      <div>
-        {data[3] ? <img src={data[3].src} /> : <img src="/img/placeholder.png" />}
-      </div>
+  <div class="grid grid-cols-4 gap-4 px-5">
+    <div class="border">
+      {data[0] ? <img src={data[0].src} /> : <img src="/img/placeholder.png" />}
     </div>
-  </Section> 
+    <div class="border">
+      {data[1] ? <img src={data[1].src} /> : <img src="/img/placeholder.png" />}
+    </div>
+    <div class="border">
+      {data[2] ? <img src={data[2].src} /> : <img src="/img/placeholder.png" />}
+    </div>
+    <div class="border">
+      {data[3] ? <img src={data[3].src} /> : <img src="/img/placeholder.png" />}
+    </div>
+  </div>
 )}
