@@ -1,72 +1,28 @@
 ---
-import Next from "../components/Next.vue";
 import Layout from "./Layout.astro";
 
 interface Props {
-  title: string;
-  description: string;
+    title: string;
+    description: string;
 }
 
 const { title, description } = Astro.props;
 ---
-<script>
-    import gsap from "gsap";
-    let count = 0;
-    let targets;
-
-    document.addEventListener("DOMContentLoaded", () => {
-        targets = document.querySelectorAll(".box");
-        gsap.set(targets, { xPercent: 100 });
-        gsap.set(targets[0], { xPercent: 0 });
-    });
-
-    function slideOneNext() {
-        gsap.fromTo(
-            targets[count],
-            { xPercent: 0, zIndex: 0 },
-            { delay: 0.2, duration: 1.2, xPercent: -100, zIndex: -10 }
-        );
-        count = count < targets.length - 1 ? ++count : 0;
-        gsap.fromTo(
-            targets[count],
-            { xPercent: 100, zIndex: 10 },
-            { duration: 1.2, xPercent: 0, zIndex: 0 }
-        );
-    }
-
-    function slideOnePrev() {
-        gsap.fromTo(
-            targets[count],
-            { xPercent: 0, zIndex: 10 },
-            { xPercent: 100, zIndex: 0 }
-        );
-        count = count > 0 ? --count : targets.length - 1;
-        gsap.fromTo(
-            targets[count],
-            { xPercent: -100, zIndex: 0 },
-            { delay: 0, duration: 1.2, xPercent: 0, zIndex: 10 }
-        );
-    }
-
-    function toggleSection() {
-        slideOneNext();
-    }
-</script>
 
 <Layout title={title}>
     <h1 class="text-9xl">{title}</h1>
     <small class="text-base ibm-base">{description}</small>
 
-    <div class="container py-20 box-container">
-        <section id="general" class="w-full space-y-10 box">
-            <div class="grid grid-cols-2 gap-10">
+    <div class="container py-20 overflow-hidden">
+        <section id="general" class="w-full space-y-10">
+            <div class="grid grid-cols-2 gap-20">
                 <slot name="show-section" />
                 <slot name="tell-section" />
             </div>
         </section>
 
-        <section id="technical" class="w-full space-y-10 box">
-            <div class="grid grid-cols-2 gap-10">
+        <section id="technical" class="w-full space-y-10 absolute top-0 left-full">
+            <div class="grid grid-cols-2 gap-20">
                 <slot name="detail-section" />
                 <slot name="diagram-section" />
             </div>
@@ -75,12 +31,16 @@ const { title, description } = Astro.props;
 
     <div class="container">
         <div class="flex justify-start">
-            <div class="rotate-180">
-            <Next
-                client:only="vue"
-                href="javascript:void(0);"
-                onClick={() => slideOnePrev()}
-            />
+            <div :class="{ 'rotate-180': currentSection === 2 }">
+                <button id="next" class="hover:scale-105 duration-100 ease-linear" onclick="toggleSection">
+                    <div class="flex">
+                        <svg width="67" height="53" viewBox="0 0 67 53" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M31 1L64 25L31 52" stroke="black" stroke-width="2"/>
+                            <path d="M17 1L50 25L17 52" stroke="black" stroke-width="1.5"/>
+                            <path d="M3 1L36 25L3 52" stroke="black"/>
+                        </svg>
+                    </div>
+                </button>
             </div>
         </div>
     </div>
@@ -88,21 +48,23 @@ const { title, description } = Astro.props;
     <slot name="more" />
 </Layout>
 
-<style>
-  .box {
-    position: absolute;
-    width: 100%; 
-    height: 100%;
-    display: grid;
-    place-items: center;
-    z-index: 0;
-  }
+<script>
+    import { gsap } from "gsap";
 
-  .box-container {
-    width: 100%;
-    height: 60vh;
-    position: relative;
-    margin: 24px auto;
-    overflow: hidden;
-  }
-</style>
+    var currentSection = 1;
+
+    function toggleSection() {
+        if (currentSection === 1) {
+            gsap.to("#general", { xPercent: -100, duration: 1.2, zIndex: 0 });
+            gsap.to("#technical", { xPercent: 0, duration: 1.2, zIndex: 10 });
+            currentSection = 2;
+        } else {
+            gsap.to("#technical", { xPercent: -100, duration: 1.2, zIndex: 0 });
+            gsap.to("#general", { xPercent: 0, duration: 1.2, zIndex: 10 });
+            currentSection = 1;
+        }
+    }
+
+    const next = document.querySelector("#next");
+    next.addEventListener("click", toggleSection);
+</script>

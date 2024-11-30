@@ -5,8 +5,10 @@ import ScrollToPlugin from 'gsap/ScrollToPlugin';
 
 const props = withDefaults(defineProps<{
     selectedSection?: number;
+    currentURL?: string;
 }>(), {
-    selectedSection: 0
+    selectedSection: 0,
+    currentURL: ''
 });
 
 const sections = {
@@ -17,12 +19,17 @@ const sections = {
     4: "Writing"
 };
 const selectedSection = ref<number>(props.selectedSection);
+const currentURL = ref<string>(props.currentURL);
 
 const selectSection = (index: number) => {
     selectedSection.value = index;
 };
 
-const scrollToSection = (section: string, index: number) => {
+const scrollToSection = async (section: string, index: number) => {
+    if (currentURL.value !== '/') {
+        window.location.href = '/#' + section;
+    }
+
     const target = document.getElementById(section);
     gsap.to(window, { scrollTo: target, duration: 1, ease: "expo.inOut" });
     
