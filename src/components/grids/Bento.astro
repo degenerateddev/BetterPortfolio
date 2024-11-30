@@ -5,7 +5,7 @@ interface props {
 
 /* data = {
   0: {
-    src: "/img/placeholder.png",
+    src: "/img/placeholder.webp",
     link: "/project/placeholder", (optional)
   },
   1: {
@@ -27,7 +27,7 @@ const data = Astro.props.data || {};
           <img class="h-full w-full" src={data[4].src} />
         )
       ) : (
-        <img class="h-full w-full" src="/img/placeholder.png" />
+        <img class="h-full w-full" src="/img/placeholder.webp" />
       )}
     </div>
     <div class="grid grid-cols-2 grid-rows-2">
