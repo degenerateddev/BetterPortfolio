@@ -31,20 +31,8 @@ const keyWordsCount = keyWords();
 ---
 
 <Layout title="Tim Arnold">
-    <main class="px-4 md:px-20 space-y-10 md:space-y-20">
-        <!-- <section class="h-screen hidden md:block">
-            <Cube client:only="vue" images={[
-                "devotee.webp",
-                "clockwork.webp",
-                "degeneracy.webp",
-                "tiptalk.webp",
-                "terminal.webp",
-                "book.webp"
-            ]}>
-                <div slot="fallback">Loading cube...</div>
-            </Cube>
-        </section> -->
-
+    <main class="px-5 md:px-20 space-y-5 md:space-y-16">
+        
         <section id="About" class="min-h-screen space-y-10 md:space-y-52">
             <h1 class="text-8xl md:text-[300px] leading-none md:leading-[250px] text-shadow-md">TIM ARNOLD</h1>
             <small class="text-base md:text-lg ibm-base">Programmer, Designer, Writer</small>
@@ -134,6 +122,7 @@ const keyWordsCount = keyWords();
             </div>
         </section>
 
+        <!-- THIS SECTION MOVES ENTIRE PAGES' CONTENTS TO THE SIDE  -->
         <section id="Cybersecurity" class="min-h-screen space-y-10">
             <div class="flex flex-col md:flex-row justify-start items-baseline">
                 <svg class="md:h-[256px] md:w-[256px] h-[128px] w-[128px]" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -141,13 +130,13 @@ const keyWordsCount = keyWords();
                     <path d="M112.001 240H240.002V208H112.001V240Z" fill="black" fill-opacity="0.25"/>
                 </svg>					
                 <a href="/cybersecurity">
-                    <h2 class="text-6xl md:text-9xl md:-ml-32">Cybersecurity</h2>
+                    <h2 class="text-6xl md:text-9xl md:-ml-32">Cybersec</h2>
                 </a>
             </div>
 
             <Section>
                 <Bento data={{
-                    0: { src: "/img/cubes/docknote.webp" },
+                    0: { src: "/img/cubes/docknote.webp" }
                 }}></Bento>
             </Section>
 
@@ -189,8 +178,8 @@ const keyWordsCount = keyWords();
         </section>
 
         <section id="Contact" class="min-h-screen space-y-10">
-            <div class="flex justify-start items-baseline">
-                <h2 class="text-6xl md:text-9xl">Contact</h2>
+            <div class="flex justify-center md:justify-start items-baseline">
+                <h2 class="text-7xl md:text-9xl">Contact</h2>
             </div>
             
             <div class="flex justify-start">
