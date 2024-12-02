@@ -1,0 +1,33 @@
+---
+import Section from "../../components/Section.astro";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+
+const project = {
+    name: "Docknote",
+    description: "Project Description"
+}
+---
+
+<ProjectLayout description={project.description} title={project.name}>
+    <Section slot="show-section">
+        <img class="mx-auto" src="/img/cubes/docknote.webp" />
+    </Section>
+
+    <Section slot="tell-section">
+        <p class="ibm-base text-lg p-8">
+            The idea was having a way to setup a way to share private notes that delete on opening them.
+
+            By using Docker to setup frontend, backend and the Redis database, everyone can run their own private and secure notes sharing platform using just a single Docker command.
+        </p>
+    </Section>
+
+    <Section slot="detail-section">
+        <p class="ibm-base text-lg p-8">
+            
+        </p>
+    </Section>
+
+    <Section slot="diagram-section">
+        <img class="mx-auto" src="/img/placeholder.webp" />
+    </Section>
+</ProjectLayout>

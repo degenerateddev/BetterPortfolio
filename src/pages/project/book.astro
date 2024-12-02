@@ -3,21 +3,25 @@ import Section from "../../components/Section.astro";
 import ProjectLayout from "../../layouts/ProjectLayout.astro";
 
 const project = {
-    name: "Typography",
+    name: "Abgründe der Melancholie",
     description: "Project Description"
 }
 ---
 
 <ProjectLayout description={project.description} title={project.name}>
     <Section slot="show-section">
-        <img class="mx-auto" src="/img/cubes/typo.webp" />
+        <img class="mx-auto" src="/img/cubes/book.webp" />
     </Section>
 
     <Section slot="tell-section">
         <p class="ibm-base text-lg p-8">
-            I was trying to find interesting ways to combine hypothetical captions and film stills.
+            For the 2022 Young Storyteller awards, I wrote a collection of short stories on the website “story.one”.
 
-            This work was for my first semester “Grundlagen visueller Gestaltung” Course.
+            Story.one is a website specifically designed for writing and publishing short stories with a max amount of 2500 characters.
+
+            “Abgründe der Melancholie” consists of a few selected stories of mine. It contains around 70 pages and 14 stories in total.
+
+            It’s also possible to read my stories (including those from the book) on my public story.one profile.
         </p>
     </Section>
 

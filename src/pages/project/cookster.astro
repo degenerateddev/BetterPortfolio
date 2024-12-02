@@ -1,0 +1,35 @@
+---
+import Section from "../../components/Section.astro";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+
+const project = {
+    name: "Cookster",
+    description: "Project Description"
+}
+---
+
+<ProjectLayout description={project.description} title={project.name}>
+    <Section slot="show-section">
+        <img class="mx-auto" src="/img/cubes/cookster.webp" />
+    </Section>
+
+    <Section slot="tell-section">
+        <p class="ibm-base text-lg p-8">
+            At first my goal was mainly getting more experience with mobile app design and development technology.
+
+            I planned out the first few interfaces using Figma and put them into action with Flutter.
+
+            After getting familiar with Pocketbase, I implemented basic authentication, a profile page as well as fundamental database presets for later use.
+        </p>
+    </Section>
+
+    <Section slot="detail-section">
+        <p class="ibm-base text-lg p-8">
+            
+        </p>
+    </Section>
+
+    <Section slot="diagram-section">
+        <img class="mx-auto" src="/img/placeholder.webp" />
+    </Section>
+</ProjectLayout>

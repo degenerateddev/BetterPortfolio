@@ -1,0 +1,33 @@
+---
+import Section from "../../components/Section.astro";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+
+const project = {
+    name: "Echo-Inator",
+    description: "Project Description"
+}
+---
+
+<ProjectLayout description={project.description} title={project.name}>
+    <Section slot="show-section">
+        <img class="mx-auto" src="/img/cubes/echoinator.webp" />
+    </Section>
+
+    <Section slot="tell-section">
+        <p class="ibm-base text-lg p-8">
+            The idea was a physical interface, using Arduinos, that is capable of recognizing and mimicking movements made by users.
+
+            Users move the orange lever upwards or downwards which leads to the blue lever being moved upwards or downwards as well, depending on the users’ input.
+        </p>
+    </Section>
+
+    <Section slot="detail-section">
+        <p class="ibm-base text-lg p-8">
+            
+        </p>
+    </Section>
+
+    <Section slot="diagram-section">
+        <img class="mx-auto" src="/img/placeholder.webp" />
+    </Section>
+</ProjectLayout>

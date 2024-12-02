@@ -1,0 +1,37 @@
+---
+import Section from "../../components/Section.astro";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+
+const project = {
+    name: "Writer Portfolio",
+    description: "Project Description"
+}
+---
+
+<ProjectLayout description={project.description} title={project.name}>
+    <Section slot="show-section">
+        <img class="mx-auto" src="/img/cubes/daniela.webp" />
+    </Section>
+
+    <Section slot="tell-section">
+        <p class="ibm-base text-lg p-8">
+            My mother is a professional writer here in germany and needed a portfolio page exhibiting all her works and a small “About me” section. 
+
+            She had multiple bestseller books so far and the list is growing month by month. 
+
+            At first I implemented the backend using Django Restframework and managed new books via the default django admin interface. 
+
+            Later on, I figured it wasn’t worth the hassle of getting Docker to work with Django so I rolled back to a JSON-file based approach and simply used a single JSON file to store all the books in.
+        </p>
+    </Section>
+
+    <Section slot="detail-section">
+        <p class="ibm-base text-lg p-8">
+            
+        </p>
+    </Section>
+
+    <Section slot="diagram-section">
+        <img class="mx-auto" src="/img/placeholder.webp" />
+    </Section>
+</ProjectLayout>

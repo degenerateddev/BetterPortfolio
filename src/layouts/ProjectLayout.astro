@@ -16,15 +16,23 @@ const { title, description } = Astro.props;
     <div class="flex py-20 overflow-x-hidden overflow-y-visible">
         <section id="general" class="w-full space-y-10 flex-shrink-0">
             <div class="grid grid-cols-2 gap-10">
-                <slot name="show-section" />
-                <slot name="tell-section" />
+                <div class="flex justify-center items-center">
+                    <slot name="show-section" />
+                </div>
+                <div class="flex justify-center items-center">
+                    <slot name="tell-section" />
+                </div>
             </div>
         </section>
     
         <section id="technical" class="w-full space-y-10 flex-shrink-0">
             <div class="grid grid-cols-2 gap-10">
-                <slot name="detail-section" />
-                <slot name="diagram-section" />
+                <div class="flex justify-center items-center">
+                    <slot name="detail-section" />
+                </div>
+                <div class="flex justify-center items-center">
+                    <slot name="diagram-section" />
+                </div>
             </div>
         </section>
     </div>
@@ -53,12 +61,12 @@ const { title, description } = Astro.props;
 
     function toggleSection() {
         if (currentSection === 1) {
-            gsap.to("#general", { xPercent: -100, duration: 1.2, zIndex: 0 });
+            gsap.to("#general", { xPercent: -150, duration: 1.2, zIndex: 0 });
             gsap.to("#technical", { xPercent: -100, duration: 1.2, zIndex: 10 });
             gsap.to("#next", { rotate: 180, duration: 1.2 });
             currentSection = 2;
         } else {
-            gsap.to("#technical", { xPercent: 100, duration: 1.2, zIndex: 0 });
+            gsap.to("#technical", { xPercent: 150, duration: 1.2, zIndex: 0 });
             gsap.to("#general", { xPercent: 0, duration: 1.2, zIndex: 10 });
             gsap.to("#next", { rotate: 0, duration: 1 });
             currentSection = 1;
