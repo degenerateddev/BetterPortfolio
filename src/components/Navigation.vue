@@ -15,7 +15,6 @@ const sections = {
     0: "About",
     1: "Programming",
     2: "Design",
-    3: "Cybersecurity",
     4: "Writing"
 };
 const selectedSection = ref<number>(props.selectedSection);
@@ -47,8 +46,8 @@ watch(() => props.selectedSection, (newVal) => {
 </script>
 
 <template>
-    <div class="hidden md:block space-y-4 fixed top-5 left-[50%] -translate-x-[50%] glassmorphism p-5">
-        <div class="flex flex-col md:flex-row gap-1 md:gap-10 ibm-base text-center items-center">
+    <div class="hidden md:block space-y-4 fixed top-5 left-[50%] w-[90vw] -translate-x-[50%] border border-black glassmorphism p-5">
+        <div class="flex flex-col md:flex-row gap-1 md:gap-10 ibm-base text-center items-center justify-center">
             <div
                 v-for="(section, index) in sections" 
                 :key="index"
@@ -75,10 +74,8 @@ watch(() => props.selectedSection, (newVal) => {
 <style scoped>
     .glassmorphism {
         background: rgba(255, 255, 255, 0.2);
-        border-radius: 100px;
-        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
     }
 </style>

@@ -20,18 +20,53 @@ export const PROJECTS = [
         "keyWords": ["Flutter", "Pocketbase", "Docker"]
     },
     {
-        "title": "Abyssal Blog",
-        "description": "My personal writing blog.",
-        "keyWords": ["Tailwind", "SvelteKit", "Docker", "Django", "REST", "TipTap"]
+        "title": "Docknote",
+        "description": "A note taking app that allows users to create and share notes.",
+        "keyWords": ["Tailwind", "SvelteKit", "Docker", "Django", "REST"]
     },
     {
-        "title": "TaleBrain",
-        "description": "An AI based writing and storytelling assistant.",
-        "keyWords": ["Tailwind", "SvelteKit", "Docker", "ChatGPT", "Llama"]
-    },
-    {
-        "title": "Analiki",
-        "description": "A recursive Wikipedia analysis platform.",
+        "title": "Writer Portfolio",
+        "description": "A portfolio for the german author 'Daniela Arnold'.",
         "keyWords": ["Tailwind", "SvelteKit", "Docker"]
+    },
+    {
+        "title": "Echo-Inator",
+        "description": "",
+        "keyWords": []
+    },
+    {
+        "title": "Sinners' Lair",
+        "description": "",
+        "keyWords": []
+    },
+    {
+        "title": "Smart Napf",
+        "description": "",
+        "keyWords": []
+    },
+    {
+        "title": "Degeneracy",
+        "description": "",
+        "keyWords": []
+    },
+    {
+        "title": "Book",
+        "description": "My first book, published in 2022.",
+        "keyWords": []
     }
+    // {
+    //     "title": "Abyssal Blog",
+    //     "description": "My personal writing blog.",
+    //     "keyWords": ["Tailwind", "SvelteKit", "Docker", "Django", "REST", "TipTap"]
+    // },
+    // {
+    //     "title": "TaleBrain",
+    //     "description": "An AI based writing and storytelling assistant.",
+    //     "keyWords": ["Tailwind", "SvelteKit", "Docker", "ChatGPT", "Llama"]
+    // },
+    // {
+    //     "title": "Analiki",
+    //     "description": "A recursive Wikipedia analysis platform.",
+    //     "keyWords": ["Tailwind", "SvelteKit", "Docker"]
+    // }
 ]

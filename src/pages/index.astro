@@ -6,7 +6,6 @@ import Section from '../components/Section.astro';
 import Socials from '../components/Socials.astro';
 import Bento from '../components/grids/Bento.astro';
 import Button from '../components/Button.astro';
-import Next from '../components/Next.vue';
 
 const keyWords = () => {
     const keyWords = [];
@@ -34,7 +33,11 @@ const keyWordsCount = keyWords();
     <main class="px-5 md:px-20 space-y-5 md:space-y-16">
         
         <section id="About" class="min-h-screen space-y-10 md:space-y-52">
-            <h1 class="text-8xl md:text-[300px] leading-none md:leading-[250px] text-shadow-md">TIM ARNOLD</h1>
+            <h1 class="text-8xl md:text-[225px] leading-none md:leading-[225px] text-shadow-md">
+                HI!
+                <br />
+                I'M TIM
+            </h1>
             <small class="text-base md:text-lg ibm-base">Programmer, Designer, Writer</small>
 
             <Section>
@@ -76,17 +79,13 @@ const keyWordsCount = keyWords();
 
             <Section>
                 <Bento data={{
-                    0: { src: "/img/cubes/terminal.webp" },
-                    1: { src: "/img/cubes/docknote.webp" },
-                    2: { src: "/img/cubes/tiptalk.webp" },
-                    3: { src: "/img/cubes/daniela.webp" },
-                    4: { src: "/img/cubes/devotee.webp" }
+                    0: { src: "/img/cubes/clockwork.webp", link: "/project/clockwork" },
+                    1: { src: "/img/cubes/docknote.webp", link: "/project/docknote" },
+                    2: { src: "/img/cubes/tiptalk.webp", link: "/project/tiptalk" },
+                    3: { src: "/img/cubes/daniela.webp", link: "/project/daniela" },
+                    4: { src: "/img/cubes/devotee.webp", link: "/project/devotee" }
                 }}></Bento>
             </Section>
-
-            <div class="flex justify-end">
-                <Next client:only="vue" href="/programming" />
-            </div>
         </section>
 
         <section id="Design" class="min-h-screen space-y-10">
@@ -109,40 +108,13 @@ const keyWordsCount = keyWords();
 
             <Section>
                 <Bento data={{
-                    0: { src: "/img/cubes/smartnapf.webp" },
-                    1: { src: "/img/cubes/smartwatching.webp" },
-                    2: { src: "/img/cubes/cookster.webp" },
-                    3: { src: "/img/cubes/typo.webp" },
-                    4: { src: "/img/cubes/echo.webp" }
+                    0: { src: "/img/cubes/smartnapf.webp", link: "/project/smart-napf" },
+                    1: { src: "/img/cubes/degeneracy.webp", link: "/project/degeneracy" },
+                    2: { src: "/img/cubes/cookster.webp", link: "/project/cookster" },
+                    3: { src: "/img/cubes/sinnerslair.webp", link: "/project/sinners-lair" },
+                    4: { src: "/img/cubes/echo.webp", link: "/project/echo-inator" }
                 }}></Bento>
             </Section>
-
-            <div class="flex justify-end">
-                <Next client:only="vue" href="/design" />
-            </div>
-        </section>
-
-        <!-- THIS SECTION MOVES ENTIRE PAGES' CONTENTS TO THE SIDE  -->
-        <section id="Cybersecurity" class="min-h-screen space-y-10">
-            <div class="flex flex-col md:flex-row justify-start items-baseline">
-                <svg class="md:h-[256px] md:w-[256px] h-[128px] w-[128px]" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12.6836 196.686L81.3699 128L12.6836 59.3139L35.311 36.6866L126.625 128L35.311 219.314L12.6836 196.686Z" fill="black" fill-opacity="0.25"/>
-                    <path d="M112.001 240H240.002V208H112.001V240Z" fill="black" fill-opacity="0.25"/>
-                </svg>					
-                <a href="/cybersecurity">
-                    <h2 class="text-6xl md:text-9xl md:-ml-32">Cybersec</h2>
-                </a>
-            </div>
-
-            <Section>
-                <Bento data={{
-                    0: { src: "/img/cubes/docknote.webp" }
-                }}></Bento>
-            </Section>
-
-            <div class="flex justify-end">
-                <Next client:only="vue" href="/cybersecurity" />
-            </div>
         </section>
 
         <section id="Writing" class="min-h-screen space-y-10">
@@ -164,17 +136,13 @@ const keyWordsCount = keyWords();
 
             <Section>
                 <Bento data={{
-                    0: { src: "/img/cubes/s1.webp" },
-                    1: { src: "/img/cubes/s2.webp" },
-                    2: { src: "/img/cubes/s3.webp" },
-                    3: { src: "/img/cubes/s4.webp" },
-                    4: { src: "/img/cubes/book.webp" }
+                    0: { src: "/img/cubes/s1.webp", link: "https://www.story.one/en/story/die-letzte-entscheidung-64475d90aa25e/" },
+                    1: { src: "/img/cubes/s2.webp", link: "https://www.story.one/en/story/der-mann-im-limbus-64475d90edaeb/" },
+                    2: { src: "/img/cubes/s3.webp", link: "https://www.story.one/en/story/menschenschmied-64475d912ba6c/" },
+                    3: { src: "/img/cubes/s4.webp", link: "https://www.story.one/en/story/denn-ordnung-ist-uns-wichtig-64475d965f3ac/" },
+                    4: { src: "/img/cubes/book.webp", link: "/project/book" }
                 }}></Bento>
             </Section>
-
-            <div class="flex justify-end">
-                <Next client:only="vue" href="/writing" />
-            </div>
         </section>
 
         <section id="Contact" class="min-h-screen space-y-10">
