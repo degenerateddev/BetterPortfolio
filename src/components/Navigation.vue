@@ -12,10 +12,10 @@ const props = withDefaults(defineProps<{
 });
 
 const sections = {
-    0: "About",
-    1: "Programming",
-    2: "Design",
-    4: "Writing"
+    0: "ABOUT",
+    1: "PROGRAMMING",
+    2: "DESIGN",
+    4: "WRITING"
 };
 const selectedSection = ref<number>(props.selectedSection);
 const currentURL = ref<string>(props.currentURL);
