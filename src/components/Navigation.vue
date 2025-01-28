@@ -19,6 +19,8 @@ const sections = {
 };
 const selectedSection = ref<number>(props.selectedSection);
 const currentURL = ref<string>(props.currentURL);
+const menuExpanded = ref<boolean>(false);
+const lowerSectionRef = ref<HTMLElement | null>(null);
 
 const selectSection = (index: number) => {
     selectedSection.value = index;
@@ -30,9 +32,28 @@ const scrollToSection = async (section: string, index: number) => {
     }
 
     const target = document.getElementById(section);
-    gsap.to(window, { scrollTo: target, duration: 1, ease: "expo.inOut" });
+    if (target) {
+        gsap.to(window, { scrollTo: target, duration: 1, ease: "expo.inOut" });
+    } else {
+        console.error(`Element with ID ${section} not found.`);
+    }
     
+    closeMenu();
     selectSection(index);
+};
+
+const expandMenu = () => {
+    if (!menuExpanded.value) {
+        gsap.to(lowerSectionRef.value, { height: '85vh', duration: 0.2, ease: "power3.inOut" });
+        menuExpanded.value = true;
+    } else {
+        closeMenu();
+    }
+};
+
+const closeMenu = () => {
+    gsap.to(lowerSectionRef.value, { height: "0", duration: 0.2, ease: "power3.inOut" });
+    menuExpanded.value = false;
 };
 
 onMounted(() => {
@@ -46,23 +67,32 @@ watch(() => props.selectedSection, (newVal) => {
 </script>
 
 <template>
-    <div class="hidden md:block space-y-4 fixed top-5 left-[50%] w-[90vw] -translate-x-[50%] border border-black glassmorphism p-5">
-        <div class="flex flex-col md:flex-row gap-1 md:gap-10 ibm-base text-center items-center justify-center">
+    <div class="block space-y-4 fixed top-5 left-[50%] w-[90vw] -translate-x-[50%] border border-black glassmorphism p-5 h-auto">
+        <div class="flex justify-between items-center">
+            <div class="text-2xl font-bold">TIM ARNOLD</div>
+            <div>
+                <a @click.prevent="expandMenu()" class="bg-transparent hover:cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div ref="lowerSectionRef" class="flex flex-col gap-1 md:gap-10 ibm-base text-center items-center justify-center h-0 overflow-hidden transition-all duration-100">
             <div
                 v-for="(section, index) in sections" 
                 :key="index"
                 :class="[ 
-                    'hover:translate-y-1 hover:scale-125 ease-in-out transition-all duration-200 bg-transparent min-w-[1/4] text-2xl px-3 py-1',
-                    selectedSection === index ? 'translate-y-1 scale-125' : ''
+                    'bg-transparent min-w-[1/4] text-2xl px-3 py-1'
                 ]"
             >
                 <a 
                     :class="[ 
                         'bg-transparent',
-                        selectedSection === index ? 'scale-125 ibm-semibold' : ''
+                        selectedSection === index ? 'ibm-semibold underline' : ''
                     ]"
                     :href="'/#' + section"
-                    @click.prevent="scrollToSection(section, index)"
+                    @click.prevent="scrollToSection(section.toLowerCase(), index)"
                 >
                     {{ section }}
                 </a>

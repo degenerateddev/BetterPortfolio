@@ -31,7 +31,7 @@ export const PROJECTS = [
     },
     {
         "title": "Echo-Inator",
-        "description": "",
+        "description": "A physical interface that mimics human movements.",
         "keyWords": []
     },
     {

@@ -1,6 +1,9 @@
 ---
+import Bento from "../../components/grids/Bento.astro";
 import Section from "../../components/Section.astro";
 import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import Django from "../../components/icons/Django.astro";
+import SvelteKit from "../../components/icons/SvelteKit.astro";
 
 const project = {
     name: "DEVOTEE",
@@ -21,14 +24,35 @@ const project = {
         </p>
     </Section>
 
-    <Section slot="detail-section">
+    <div slot="large-img-section">
+        <Section>
+            <img class="mx-auto object-fit" src="img/cubes/devotee/large.png" />
+        </Section>
         <p class="ibm-base text-lg p-8">
-            DEVOTEE consists of a Django Restframework API as the backend and a SvelteKit frontend. 
-            We are using JWT Authentication for managing API access and permissions. 
+            DEVOTEE waitlist page for signing up to receive updates about the development.
         </p>
+    </div>
+
+    <Section slot="bento-section">
+        <Bento data={{
+            0: { src: "/img/cubes/devotee/1.png" },
+            1: { src: "/img/cubes/devotee/2.png" },
+            2: { src: "/img/cubes/devotee/3.png" },
+            3: { src: "/img/cubes/devotee/4.png" },
+            4: { src: "/img/cubes/devotee/5.png" }
+        }}></Bento>
     </Section>
 
-    <Section slot="diagram-section">
-        <img class="mx-auto" src="/img/placeholder.webp" />
+    <Section slot="detail-section">
+        <div class="flex flex-col h-full p-10">
+            <p class="ibm-base text-lg">
+                DEVOTEE consists of a Django Restframework API as the backend and a SvelteKit frontend. 
+                We are using JWT Authentication for managing API access and permissions. 
+            </p>
+            <div class="mt-auto flex gap-10">
+                <SvelteKit />
+                <Django />
+            </div>
+        </div>
     </Section>
 </ProjectLayout>

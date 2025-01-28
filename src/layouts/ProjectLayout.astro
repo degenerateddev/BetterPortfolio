@@ -1,5 +1,6 @@
 ---
 import Layout from "./Layout.astro";
+import Section from "../components/Section.astro";
 
 interface Props {
     title: string;
@@ -13,45 +14,38 @@ const { title, description } = Astro.props;
     <h1 class="text-9xl">{title}</h1>
     <small class="text-base ibm-base">{description}</small>
 
-    <div class="flex py-20 overflow-x-hidden overflow-y-visible">
-        <section id="general" class="w-full space-y-10 flex-shrink-0">
-            <div class="grid grid-cols-2 gap-10">
-                <div class="flex justify-center items-center">
-                    <slot name="show-section" />
+    <div class="flex flex-col gap-28">
+        <div class="flex py-10">
+            <section class="w-full space-y-10 flex-shrink-0">
+                <div class="grid grid-cols-2 gap-10">
+                    <div class="flex justify-center items-center">
+                        <slot name="show-section" />
+                    </div>
+                    <div class="flex justify-center items-center">
+                        <slot name="tell-section" />
+                    </div>
                 </div>
-                <div class="flex justify-center items-center">
-                    <slot name="tell-section" />
-                </div>
-            </div>
-        </section>
+            </section>
+        </div>
     
-        <section id="technical" class="w-full space-y-10 flex-shrink-0">
-            <div class="grid grid-cols-2 gap-10">
-                <div class="flex justify-center items-center">
-                    <slot name="detail-section" />
-                </div>
-                <div class="flex justify-center items-center">
-                    <slot name="diagram-section" />
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div class="container">
-        <div class="flex justify-start">
-            <button id="next" class="hover:scale-105 duration-100 ease-linear" onclick="toggleSection">
-                <div class="flex">
-                    <svg width="67" height="53" viewBox="0 0 67 53" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M31 1L64 25L31 52" stroke="black" stroke-width="2"/>
-                        <path d="M17 1L50 25L17 52" stroke="black" stroke-width="1.5"/>
-                        <path d="M3 1L36 25L3 52" stroke="black"/>
-                    </svg>
-                </div>
-            </button>
+        <div class="flex py-10">
+            <section class="w-full space-y-10">
+                <slot name="large-img-section" />
+            </section>
+        </div>
+    
+        <div class="flex py-10">
+            <section class="w-full space-y-10">
+                <slot name="bento-section" />
+            </section>
+        </div>
+    
+        <div class="flex py-10">
+            <section class="w-full space-y-10 min-h-80">
+                <slot name="detail-section" />
+            </section>
         </div>
     </div>
-
-    <slot name="more" />
 </Layout>
 
 <script>
