@@ -30,54 +30,40 @@ const keyWordsCount = keyWords();
 ---
 
 <Layout title="Tim Arnold">
-    <main class="px-5 md:px-20 space-y-5 md:space-y-16">
+    <main class="px-5 md:px-20">
         
-        <section id="about" class="min-h-screen space-y-10 md:space-y-52">
-            <h1 class="text-8xl md:text-[225px] leading-none md:leading-[225px] text-shadow-md">
-                HI!
-                <br />
-                I'M TIM
-            </h1>
-            <small class="text-base md:text-lg ibm-base">Programmer, Designer, Writer</small>
-
-            <Section>
-				<div class="flex flex-col md:flex-row items-center gap-10">
-					<div class="flex justify-center min-h-[20vh] w-full md:w-fit md:min-w-fit md:justify-start">
-						<img src="/img/me.webp" class="object-fill w-full md:w-auto md:h-full md:object-cover" />
-					</div>
-					<div class="flex flex-col gap-y-10 md:gap-y-20 items-center flex-grow p-0 md:p-5">
-						<p class="flex-grow ibm-base p-5">
-							I'm a programmer and designer from Germany. 
-							My main focus is web development and design 
-							but I also have experience in cybersecurity and I'm a fiction writer.
-							Currently I'm studying at the Technical University of Applied Sciences in Augsburg.
-						</p>
-						
-						<div class="flex justify-end">
-							<Socials />
-						</div>
-					</div>
-				</div>
-			</Section>
-
-            <!-- <div class="container mx-auto">
-                <KeyWords keyWords={keyWordsCount} />
-            </div> -->
-        </section>
-
-        <section id="programming" class="min-h-screen space-y-10">
-            <div class="flex flex-col md:flex-row justify-start items-baseline">
-                <svg class="md:h-[256px] md:w-[256px] h-[128px] w-[128px]" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M128.161 13.7373L96.1609 237.738L127.839 242.262L159.839 18.2627L128.161 13.7373Z" fill="black" fill-opacity="0.25"/>
-                    <path d="M200 184L177.373 161.373L210.746 128L177.373 94.6275L200 72L256 128L200 184Z" fill="black" fill-opacity="0.25"/>
-                    <path d="M45.2549 128L78.6274 161.373L56 184L0 128L56 72L78.6274 94.6275L45.2549 128Z" fill="black" fill-opacity="0.25"/>
-                </svg>
-                <a href="/programming">
-                    <h2 class="text-6xl md:text-9xl md:-ml-32">Programming</h2>
-                </a>
-            </div>
-
-            <Section>
+        <div class="flex flex-col gap-y-96">
+            <section id="about" class="min-h-screen space-y-10 md:space-y-52">
+                <h1 class="text-8xl md:text-[225px] leading-none md:leading-[225px] text-shadow-md">
+                    HI!
+                    <br />
+                    I'M TIM
+                </h1>
+                <small class="text-base md:text-lg ibm-base">Programmer, Designer, Writer</small>
+    
+                <Section>
+                    <div class="flex flex-col md:flex-row items-center gap-10">
+                        <div class="flex justify-center min-h-[20vh] w-full md:w-fit md:min-w-fit md:justify-start">
+                            <img src="/img/me.webp" class="object-fill w-full md:w-auto md:h-full md:object-cover" />
+                        </div>
+                        <div class="p-0 md:p-10">
+                            <p class="flex-grow ibm-base">
+                                I'm a <b>programmer</b> and <b>designer</b> from Germany. 
+                                My main focus is <b>web & game development</b> and design but I also have experience in cybersecurity and I'm a fiction writer.
+                                Currently I'm studying at the Technical University of Applied Sciences in Augsburg.
+                            </p>
+                        </div>
+                    </div>
+                </Section>
+    
+                <!-- <div class="container mx-auto">
+                    <KeyWords keyWords={keyWordsCount} />
+                </div> -->
+            </section>
+    
+            <section id="programming" class="min-h-screen space-y-10">
+                <h2 class="text-6xl md:text-9xl">Programming</h2>
+    
                 <Bento data={{
                     0: { src: "/img/cubes/clockwork.webp", link: "/project/clockwork" },
                     1: { src: "/img/cubes/docknote.webp", link: "/project/docknote" },
@@ -85,28 +71,11 @@ const keyWordsCount = keyWords();
                     3: { src: "/img/cubes/daniela.webp", link: "/project/daniela" },
                     4: { src: "/img/cubes/devotee.webp", link: "/project/devotee" }
                 }}></Bento>
-            </Section>
-        </section>
-
-        <section id="design" class="min-h-screen space-y-10">
-            <div class="flex flex-col md:flex-row justify-start items-baseline">
-                <svg class="md:h-[256px] md:w-[256px] h-[128px] w-[128px]" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_181_4330)">
-                    <path d="M151.111 71.111L198.267 12.1669C204.419 4.4767 213.733 0 223.581 0C241.486 0 256 14.5144 256 32.4187C256 42.267 251.523 51.5813 243.834 57.7336L184.89 104.889L195.926 115.926C203.658 123.657 208 134.142 208 145.075C208 154.719 204.619 164.058 198.445 171.466L189.194 182.566L73.4331 66.8058L84.5344 57.5547C91.9429 51.381 101.281 48 110.925 48C121.858 48 132.343 52.3432 140.074 60.0739L151.111 71.111Z" fill="black" fill-opacity="0.25"/>
-                    <path d="M0 128L48.7486 87.3762L168.624 207.251L128 256L0 128Z" fill="black" fill-opacity="0.25"/>
-                    </g>
-                    <defs>
-                    <clipPath id="clip0_181_4330">
-                    <rect width="256" height="256" fill="white"/>
-                    </clipPath>
-                    </defs>
-                </svg>					
-                <a href="/design">
-                    <h2 class="text-6xl md:text-9xl md:-ml-32">Design</h2>
-                </a>
-            </div>
-
-            <Section>
+            </section>
+    
+            <section id="design" class="min-h-screen space-y-10">
+                <h2 class="text-6xl md:text-9xl">Design</h2>
+    
                 <Bento data={{
                     0: { src: "/img/cubes/smartnapf.webp", link: "/project/smart-napf" },
                     1: { src: "/img/cubes/degeneracy.webp", link: "/project/degeneracy" },
@@ -114,27 +83,11 @@ const keyWordsCount = keyWords();
                     3: { src: "/img/cubes/sinnerslair.webp", link: "/project/sinners-lair" },
                     4: { src: "/img/cubes/echo.webp", link: "/project/echo-inator" }
                 }}></Bento>
-            </Section>
-        </section>
-
-        <section id="writing" class="min-h-screen space-y-10">
-            <div class="flex flex-col md:flex-row justify-start items-baseline">
-                <svg class="md:h-[256px] md:w-[256px] h-[128px] w-[128px]" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <g clip-path="url(#clip0_181_4396)">
-                    <path d="M176 0L256 80L224 112V192L48 256L35.3138 243.314L103.711 174.917C106.355 175.622 109.133 176 112 176C129.673 176 144 161.674 144 144C144 126.327 129.673 112 112 112C94.3269 112 80 126.327 80 144C80 146.867 80.377 149.645 81.0838 152.289L12.6863 220.686L0 208L64 32H144L176 0Z" fill="black" fill-opacity="0.25"/>
-                    </g>
-                    <defs>
-                    <clipPath id="clip0_181_4396">
-                    <rect width="256" height="256" fill="white"/>
-                    </clipPath>
-                    </defs>
-                </svg>					
-                <a href="/writing">
-                    <h2 class="text-6xl md:text-9xl md:-ml-32">Writing</h2>
-                </a>
-            </div>
-
-            <Section>
+            </section>
+    
+            <section id="writing" class="min-h-screen space-y-10">
+                <h2 class="text-6xl md:text-9xl">Writing</h2>
+    
                 <Bento data={{
                     0: { src: "/img/cubes/s1.webp", link: "https://www.story.one/en/story/die-letzte-entscheidung-64475d90aa25e/" },
                     1: { src: "/img/cubes/s2.webp", link: "https://www.story.one/en/story/der-mann-im-limbus-64475d90edaeb/" },
@@ -142,23 +95,29 @@ const keyWordsCount = keyWords();
                     3: { src: "/img/cubes/s4.webp", link: "https://www.story.one/en/story/denn-ordnung-ist-uns-wichtig-64475d965f3ac/" },
                     4: { src: "/img/cubes/book.webp", link: "/project/book" }
                 }}></Bento>
-            </Section>
-        </section>
-
-        <section id="contact" class="min-h-screen space-y-10">
-            <div class="flex justify-center md:justify-start items-baseline">
-                <h2 class="text-7xl md:text-9xl">Contact</h2>
-            </div>
-            
-            <div class="flex justify-start">
-				<Socials />
-			</div>
-
-            <form method="POST">
-                <textarea class="focus:outline-none w-full h-64 border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);"></textarea>
-                <Button text="Submit" />
-            </form>
-        </section>
+            </section>
+    
+            <section id="contact" class="min-h-screen space-y-10">
+                <div class="flex justify-center md:justify-start items-baseline">
+                    <h2 class="text-7xl md:text-9xl">Contact</h2>
+                </div>
+                
+                <div class="flex justify-start">
+                    <Socials />
+                </div>
+    
+                <form method="POST">
+                    <div class="flex flex-col gap-10">
+                        <div class="flex gap-10">
+                            <input type="text" placeholder="Full name" class="focus:outline-none w-full border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);" />
+                            <input type="email" placeholder="E-Mail" class="focus:outline-none w-full border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);" />
+                        </div>
+                        <textarea placeholder="Request" class="focus:outline-none w-full h-64 border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);"></textarea>
+                        <Button text="Submit" />
+                    </div>
+                </form>
+            </section>
+        </div>
 
         <script>
             document.addEventListener(

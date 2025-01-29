@@ -1,6 +1,5 @@
 ---
 import Layout from "./Layout.astro";
-import Section from "../components/Section.astro";
 
 interface Props {
     title: string;
@@ -11,66 +10,44 @@ const { title, description } = Astro.props;
 ---
 
 <Layout title={title}>
-    <h1 class="text-9xl">{title}</h1>
-    <small class="text-base ibm-base">{description}</small>
+    <div class="px-5 md:px-20">
+        
+        <div class="flex flex-col gap-y-10">
+            <div class="flex flex-col gap-10 py-10">
+                <h1 class="text-9xl">{title}</h1>
+                <small class="text-base ibm-base">{description}</small>
+            </div>
 
-    <div class="flex flex-col gap-28">
-        <div class="flex py-10">
-            <section class="w-full space-y-10 flex-shrink-0">
-                <div class="grid grid-cols-2 gap-10">
-                    <div class="flex justify-center items-center">
-                        <slot name="show-section" />
+            <div class="flex py-10 justify-center">
+                <section class="w-full space-y-10 flex-shrink-0">
+                    <div class="grid grid-cols-2 gap-10">
+                        <div class="flex justify-center items-center">
+                            <slot name="show-section" />
+                        </div>
+                        <div class="flex justify-center items-center ibm-base text-lg">
+                            <slot name="tell-section" />
+                        </div>
                     </div>
-                    <div class="flex justify-center items-center">
-                        <slot name="tell-section" />
-                    </div>
-                </div>
-            </section>
-        </div>
-    
-        <div class="flex py-10">
-            <section class="w-full space-y-10">
-                <slot name="large-img-section" />
-            </section>
-        </div>
-    
-        <div class="flex py-10">
-            <section class="w-full space-y-10">
-                <slot name="bento-section" />
-            </section>
-        </div>
-    
-        <div class="flex py-10">
-            <section class="w-full space-y-10 min-h-80">
-                <slot name="detail-section" />
-            </section>
+                </section>
+            </div>
+        
+            <div class="flex py-10 justify-center">
+                <section class="w-full space-y-10">
+                    <slot name="large-img-section" />
+                </section>
+            </div>
+        
+            <div class="flex py-10 justify-center">
+                <section class="w-full space-y-10">
+                    <slot name="bento-section" />
+                </section>
+            </div>
+        
+            <div class="flex py-10 justify-center">
+                <section class="w-full space-y-10 min-h-[50vh] ibm-base text-lg">
+                    <slot name="detail-section" />
+                </section>
+            </div>
         </div>
     </div>
 </Layout>
-
-<script>
-    import { gsap } from "gsap";
-
-    let currentSection = 1;
-
-    function toggleSection() {
-        if (currentSection === 1) {
-            gsap.to("#general", { xPercent: -150, duration: 1.2, zIndex: 0 });
-            gsap.to("#technical", { xPercent: -100, duration: 1.2, zIndex: 10 });
-            gsap.to("#next", { rotate: 180, duration: 1.2 });
-            currentSection = 2;
-        } else {
-            gsap.to("#technical", { xPercent: 150, duration: 1.2, zIndex: 0 });
-            gsap.to("#general", { xPercent: 0, duration: 1.2, zIndex: 10 });
-            gsap.to("#next", { rotate: 0, duration: 1 });
-            currentSection = 1;
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-        const next = document.querySelector("#next");
-        if (next) {
-            next.addEventListener("click", toggleSection);
-        }
-    });
-</script>

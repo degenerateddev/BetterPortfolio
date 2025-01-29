@@ -79,30 +79,6 @@ let url = Astro.url.href;
         );
     }
 
-    @font-face {
-        font-family: 'Satoshi-Regular';
-        font-display: swap;
-        font-weight: 400;
-        font-style: normal;
-        src: url('/fonts/Satoshi/Fonts/WEB/fonts/Satoshi-Regular.ttf') format('truetype');
-    }
-
-    @font-face {
-        font-family: 'Satoshi-Light';
-        font-weight: 300;
-        font-display: swap;
-        font-style: normal;
-        src: url('/fonts/Satoshi/Fonts/WEB/fonts/Satoshi-Light.ttf') format('truetype');
-    }
-
-    .satoshi-regular {
-        font-family: 'Satoshi-Regular', sans-serif;
-    }
-
-    .satoshi-light {
-        font-family: 'Satoshi-Light', sans-serif;
-    }
-
     .ibm-base {
         font-family: 'IBM Plex Mono', monospace;
         font-weight: 400;
@@ -110,7 +86,7 @@ let url = Astro.url.href;
 
     .ibm-semibold {
         font-family: 'IBM Plex Mono', monospace;
-        font-weight: 600;
+        font-weight: 500;
     }
 
     html {
@@ -157,5 +133,11 @@ let url = Astro.url.href;
 
     a:hover {
         text-decoration: underline;
+    }
+
+    .retro-shadow {
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 </style>

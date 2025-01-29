@@ -44,7 +44,7 @@ const scrollToSection = async (section: string, index: number) => {
 
 const expandMenu = () => {
     if (!menuExpanded.value) {
-        gsap.to(lowerSectionRef.value, { height: '85vh', duration: 0.2, ease: "power3.inOut" });
+        gsap.to(lowerSectionRef.value, { height: '85vh', duration: 0.1, ease: "elastic" });
         menuExpanded.value = true;
     } else {
         closeMenu();
@@ -52,7 +52,7 @@ const expandMenu = () => {
 };
 
 const closeMenu = () => {
-    gsap.to(lowerSectionRef.value, { height: "0", duration: 0.2, ease: "power3.inOut" });
+    gsap.to(lowerSectionRef.value, { height: "0", duration: 0.1, ease: "elastic" });
     menuExpanded.value = false;
 };
 
@@ -67,9 +67,11 @@ watch(() => props.selectedSection, (newVal) => {
 </script>
 
 <template>
-    <div class="block space-y-4 fixed top-5 left-[50%] w-[90vw] -translate-x-[50%] border border-black glassmorphism p-5 h-auto">
-        <div class="flex justify-between items-center">
-            <div class="text-2xl font-bold">TIM ARNOLD</div>
+    <div class="block z-50 fixed top-5 left-[50%] w-[90vw] -translate-x-[50%] border border-black glassmorphism px-5 py-2">
+        <div class="flex justify-between items-center h-16">
+            <a href="/">
+                <span class="text-2xl font-medium">TIM ARNOLD</span>
+            </a>
             <div>
                 <a @click.prevent="expandMenu()" class="bg-transparent hover:cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
@@ -104,7 +106,7 @@ watch(() => props.selectedSection, (newVal) => {
 <style scoped>
     .glassmorphism {
         background: rgba(255, 255, 255, 0.2);
-        box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+        box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
     }

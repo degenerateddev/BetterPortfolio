@@ -4,10 +4,11 @@ import Section from "../../components/Section.astro";
 import ProjectLayout from "../../layouts/ProjectLayout.astro";
 import Django from "../../components/icons/Django.astro";
 import SvelteKit from "../../components/icons/SvelteKit.astro";
+import AWS from "../../components/icons/AWS.astro";
 
 const project = {
     name: "DEVOTEE",
-    description: "Project Description"
+    description: "A social media platform for content creators and content montetization we’ve been developing over the course of 3 years."
 }
 ---
 
@@ -17,23 +18,32 @@ const project = {
     </Section>
 
     <Section slot="tell-section">
-        <p class="ibm-base text-lg p-8">
-            DEVOTEE is a platform for managing digital and physical content created by our creators. 
-            It is a platform that allows creators to upload their content and monetize it in a few different ways.
-            We offer a subscription model, a pay-per-view model, and a tipping model, depending on the specific situation.
-        </p>
+        <div class="p-10">
+            <p>
+                DEVOTEE is a platform for managing digital and physical content created by our creators.
+            <p>
+            <br>
+                It allows creators to upload their content and monetize it in a few different ways.
+            <p>
+            <br>
+                We offer a subscription model, a pay-per-view model, and a tipping model, depending on the specific situation.
+            <p>
+            <br>
+                In return for providing a secure and anonymous space for these kinds of transactions, we take a small fee of 15% on each transaction through our platform.
+            </p>
+        </div>
     </Section>
 
     <div slot="large-img-section">
         <Section>
-            <img class="mx-auto object-fit" src="img/cubes/devotee/large.png" />
+            <img class="mx-auto w-full h-full object-fill" src="/img/cubes/devotee/large.png" />
+            <p class="ibm-base text-lg text-center py-2">
+                DEVOTEE waitlist page for signing up to receive updates about the development.
+            </p>
         </Section>
-        <p class="ibm-base text-lg p-8">
-            DEVOTEE waitlist page for signing up to receive updates about the development.
-        </p>
     </div>
 
-    <Section slot="bento-section">
+    <div slot="bento-section">
         <Bento data={{
             0: { src: "/img/cubes/devotee/1.png" },
             1: { src: "/img/cubes/devotee/2.png" },
@@ -41,17 +51,27 @@ const project = {
             3: { src: "/img/cubes/devotee/4.png" },
             4: { src: "/img/cubes/devotee/5.png" }
         }}></Bento>
-    </Section>
+    </div>
 
     <Section slot="detail-section">
         <div class="flex flex-col h-full p-10">
-            <p class="ibm-base text-lg">
-                DEVOTEE consists of a Django Restframework API as the backend and a SvelteKit frontend. 
-                We are using JWT Authentication for managing API access and permissions. 
+            <p>
+                DEVOTEE has been an enormous group effort.
+            <p>
+            <br>
+                My partner developed certain parts of the frontend (login & profile pages) and I mainly worked on the other parts of the frontend, the backend and our own admin panel “Valhalla”.
+            <p>
+            <br>
+                The backend consists of multiple different parts that work separated from one another, primarily the “main” part handling basic logic and database actions and the “worker” part that handles media conversion to save storage space on our S3 bucket.
             </p>
-            <div class="mt-auto flex gap-10">
+
+            <hr class="my-10">
+            <h3 class="font-semibold text-2xl">Technologies</h3>
+            <br>
+            <div class="flex gap-10">
                 <SvelteKit />
                 <Django />
+                <AWS />
             </div>
         </div>
     </Section>
