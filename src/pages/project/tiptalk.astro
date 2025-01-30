@@ -1,10 +1,11 @@
 ---
 import Section from "../../components/Section.astro";
 import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import SvelteKit from "../../components/icons/SvelteKit.astro";
 
 const project = {
     name: "TipTalk",
-    description: "Project Description"
+    description: "A service for asking and answering questions made by the community while earning money."
 }
 ---
 
@@ -14,22 +15,46 @@ const project = {
     </Section>
 
     <Section slot="tell-section">
-        <p class="ibm-base text-lg p-8">
-            TipTalk.me is a platform specifically designed for growing ones’ social media community by getting to know your followers and sharing knowledge about yourself.
-
-            Future plans for TipTalk.me include adding a payment gateway for allowing fans to tip social media creators for receiving an answer more briefly.
-
-            Creators will then be able to cashout all their earnings from within their profile panel.
-        </p>
+        <div class="p-10">
+            <p>
+                TipTalk.me is a platform specifically designed for growing ones’ social media community by getting to know your followers and sharing knowledge about yourself.
+            <p>
+            <br>
+                Future plans for TipTalk.me include adding a payment gateway for allowing fans to tip social media creators for receiving an answer more briefly.
+            <p>
+            <br>
+                Creators will then be able to cashout all their earnings from within their profile panel.
+            </p>
+        </div>
     </Section>
+
+    <div slot="large-img-section">
+        <Section>
+            <img class="mx-auto w-full h-full object-fill" src="/img/cubes/tiptalk/large.png" />
+            <p class="ibm-base text-lg text-center py-2">
+                TipTalk.me landing page displaying goals and benefits of using the service.
+            </p>
+        </Section>
+    </div>
 
     <Section slot="detail-section">
-        <p class="ibm-base text-lg p-8">
-            
-        </p>
-    </Section>
+        <div class="flex flex-col h-full p-10">
+            <p>
+                I used a variation of different technologies for this project.
+            <p>
+            <br>
+                For the frontend, I used SvelteKit as it provids an easy way of integrating most backend functionality directly within the same repository.
+            <p>
+            <br>
+                Additionally I added another layer containing Pocketbase for easier authentication implementation and bare necessities to save some time.
+            </p>
 
-    <Section slot="diagram-section">
-        <img class="mx-auto" src="/img/placeholder.webp" />
+            <hr class="my-10">
+            <h3 class="font-semibold text-2xl">Technologies</h3>
+            <br>
+            <div class="flex gap-10">
+                <SvelteKit />
+            </div>
+        </div>
     </Section>
 </ProjectLayout>

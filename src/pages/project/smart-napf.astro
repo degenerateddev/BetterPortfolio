@@ -4,7 +4,7 @@ import ProjectLayout from "../../layouts/ProjectLayout.astro";
 
 const project = {
     name: "Smart Napf",
-    description: "Project Description"
+    description: "A smart home mobile application for controlling pet food bowls. (Design only) "
 }
 ---
 
@@ -14,22 +14,25 @@ const project = {
     </Section>
 
     <Section slot="tell-section">
-        <p class="ibm-base text-lg p-8">
-            My goal was designing a mobile application that had something to do with smart homes generally. 
-
-            After contemplating a few ideas, I chose an app that would let pet owners control their smart bowl for automated feedings, analysing pet feeding behaviour, etc.
-
-            I also used the “Smart Napf” to get more familiar with designing and prototyping using Figma.
-        </p>
+        <div class="p-10">
+            <p>
+                My goal was designing a mobile application that had something to do with smart homes generally. 
+            <p>
+            <br>
+                After contemplating a few ideas, I chose an app that would let pet owners control their smart bowl for automated feedings, analysing pet feeding behaviour, etc.
+            <p>
+            <br>
+                I also used the “Smart Napf” to get more familiar with designing and prototyping using Figma.
+            </p>
+        </div>
     </Section>
 
-    <Section slot="detail-section">
-        <p class="ibm-base text-lg p-8">
-            
-        </p>
-    </Section>
-
-    <Section slot="diagram-section">
-        <img class="mx-auto" src="/img/placeholder.webp" />
-    </Section>
+    <div slot="large-img-section">
+        <Section>
+            <img class="mx-auto w-full h-full object-fill" src="/img/cubes/smartnapf/large.png" />
+            <p class="ibm-base text-lg text-center py-2">
+                Poster design for the rough “Smart Napf” design.
+            </p>
+        </Section>
+    </div>
 </ProjectLayout>

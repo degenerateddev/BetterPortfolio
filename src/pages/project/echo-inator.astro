@@ -1,33 +1,62 @@
 ---
 import Section from "../../components/Section.astro";
 import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import Flutter from "../../components/icons/Flutter.astro";
+import Figma from "../../components/icons/Figma.astro";
+import Arduino from "../../components/icons/Arduino.astro";
 
 const project = {
     name: "Echo-Inator",
-    description: "Project Description"
+    description: "A physical interface that mimics human movements."
 }
 ---
 
 <ProjectLayout description={project.description} title={project.name}>
     <Section slot="show-section">
-        <img class="mx-auto" src="/img/cubes/echoinator.webp" />
+        <img class="mx-auto" src="/img/cubes/echo.webp" />
     </Section>
 
     <Section slot="tell-section">
-        <p class="ibm-base text-lg p-8">
-            The idea was a physical interface, using Arduinos, that is capable of recognizing and mimicking movements made by users.
-
-            Users move the orange lever upwards or downwards which leads to the blue lever being moved upwards or downwards as well, depending on the users’ input.
-        </p>
+        <div class="p-10">
+            <p>
+                The idea was a physical interface, using Arduinos, that is capable of recognizing and mimicking movements made by users.
+            <p>
+            <br>
+                Users move the orange lever upwards or downwards which leads to the blue lever being moved upwards or downwards as well, depending on the users’ input.
+            </p>
+        </div>
     </Section>
+
+    <div slot="large-img-section">
+        <Section>
+            <img class="mx-auto w-full h-full object-fill" src="/img/cubes/echo-inator/large.png" />
+            <p class="ibm-base text-lg text-center py-2">
+                Poster design about the functionality of the “Echo-Inator”. 
+            </p>
+        </Section>
+    </div>
 
     <Section slot="detail-section">
-        <p class="ibm-base text-lg p-8">
-            
-        </p>
-    </Section>
+        <div class="flex flex-col h-full p-10">
+            <p>
+                This project was a group effort by my group partner and me. 
+            <p>
+            <br>
+                My job was writing the necessary Arduino code, building a mechanism for the sensor to detect motion and the servo motors to change the position of the levers and finally creating the first version of our project trailer.
+            <p>
+            <br>
+                His job was building a box prototype, creating the final trailer for our submission and designing the introduction poster.
+            <p>
+            <br>
+                Finally, both of us built the final box together and presented our work.
+            </p>
 
-    <Section slot="diagram-section">
-        <img class="mx-auto" src="/img/placeholder.webp" />
+            <hr class="my-10">
+            <h3 class="font-semibold text-2xl">Technologies</h3>
+            <br>
+            <div class="flex gap-10">
+                <Arduino />
+            </div>
+        </div>
     </Section>
 </ProjectLayout>

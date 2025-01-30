@@ -1,56 +1,56 @@
 ---
-import Bento from "../../components/grids/Bento.astro";
 import Section from "../../components/Section.astro";
 import ProjectLayout from "../../layouts/ProjectLayout.astro";
-import Django from "../../components/icons/Django.astro";
-import SvelteKit from "../../components/icons/SvelteKit.astro";
-import AWS from "../../components/icons/AWS.astro";
-import Redis from "../../components/icons/Redis.astro";
+import Next from "../../components/icons/Next.astro";
 
 const project = {
-    name: "Docknote",
-    description: "Docker based implementation of the service “Privnote”."
+    name: "Clockwork Systems",
+    description: "A relatively simple company website for Clockwork Systems UG (haftungsbeschränkt). "
 }
 ---
 
 <ProjectLayout description={project.description} title={project.name}>
     <Section slot="show-section">
-        <img class="mx-auto" src="/img/cubes/docknote.webp" />
+        <img class="mx-auto" src="/img/cubes/clockwork.webp" />
     </Section>
 
     <Section slot="tell-section">
         <div class="p-10">
             <p>
-                The idea was having a way to setup a way to share private notes that delete on opening them. 
+                We needed a small and simple website for our company.
             <p>
             <br>
-                By using Docker to setup frontend, backend and the Redis database, everyone can run their own private and secure notes sharing platform using just a single Docker command.
+                I decided on using NextJS which I first needed to get familiar with.
+            <p>
+            <br>
+                It’s statically deployed using Nginx and Docker.
             </p>
         </div>
     </Section>
 
+    <div slot="large-img-section">
+        <Section>
+            <img class="mx-auto w-full h-full object-fill" src="/img/cubes/clockwork/large.png" />
+            <p class="ibm-base text-lg text-center py-2">
+                A simple landing page with an overview over the companies’ goals.
+            </p>
+        </Section>
+    </div>
+
     <Section slot="detail-section">
         <div class="flex flex-col h-full p-10">
             <p>
-                The application can be set up with a single command <b>“docker compose up -d”</b>.
+                I first planned out a base design and decided which font I wanted to use.
             <p>
             <br>
-                Once running it’s very ease to create new notes, generate a link and have that note destroy itself after being read.
-            <p>
-            <br>
-                For the future I contemplated implementing customization options like auto deletion after a certain amount of time if the note has not been read.
-            </p>
-            <br>
-            <p>
-                Notes are only being stored inside a “Redis In-Memory-Database” so they are not actually stored on the drive which makes them basically unrecoverable in case of a system breach for maximum anonymity.
+                As for my portfolio, I decided I’d use IBM Plex Mono since I believe it’s very readable, not too heavy on the eyes when reading long texts and it feels relatively technical.
             </p>
 
             <hr class="my-10">
             <h3 class="font-semibold text-2xl">Technologies</h3>
             <br>
             <div class="flex gap-10">
-                <SvelteKit />
-                <Redis />
+                <Next />
             </div>
         </div>
     </Section>
