@@ -135,12 +135,14 @@ let url = Astro.url.href;
         text-decoration: underline;
     }
 
-    h2 {
+    h1, h2 {
         font-size: 121px;
+        font-weight: 300;
     }
 
     p {
         font-size: 20px;
+        font-weight: 400;
     }
 
     b {
@@ -149,9 +151,9 @@ let url = Astro.url.href;
     }
 
     @media screen and (max-width: 1024px) {
-        h2 {
+        h1, h2 {
             font-size: 49px;
-            font-weight: 400;
+            /* font-weight: 400; */
         }
 
         p {
