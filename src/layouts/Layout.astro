@@ -1,5 +1,5 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import '@fontsource/ibm-plex-mono/100.css';
 import '@fontsource/ibm-plex-mono/400.css';
 import '@fontsource/ibm-plex-mono/600.css';
@@ -35,7 +35,7 @@ let url = Astro.url.href;
         <meta property="twitter:description" content="I'm a programmer and designer from Germany. My main focus is web development and design but I also have experience in cybersecurity and I'm a fiction writer. Currently I'm studying at the Technical University of Applied Sciences in Augsburg." />
         <meta property="twitter:image" content="https://degenerated.dev/img/bg.webp" />
 
-        <ViewTransitions />
+        <ClientRouter />
         
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="sitemap" href="/sitemap-index.xml" />
@@ -133,6 +133,34 @@ let url = Astro.url.href;
 
     a:hover {
         text-decoration: underline;
+    }
+
+    h2 {
+        font-size: 121px;
+    }
+
+    p {
+        font-size: 20px;
+    }
+
+    b {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    @media screen and (max-width: 1024px) {
+        h2 {
+            font-size: 49px;
+            font-weight: 400;
+        }
+
+        p {
+            font-size: 15px;
+        }
+        
+        b {
+            font-size: 15px;
+        }
     }
 
     .retro-shadow {

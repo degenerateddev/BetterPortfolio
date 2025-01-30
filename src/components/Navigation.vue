@@ -67,7 +67,7 @@ watch(() => props.selectedSection, (newVal) => {
 </script>
 
 <template>
-    <div class="block z-50 fixed top-5 left-[50%] w-[90vw] -translate-x-[50%] border border-black glassmorphism px-5 py-2">
+    <div class="block z-50 fixed top-2 md:top-5 left-[50%] w-[95vw] md:w-[90vw] -translate-x-[50%] border border-black glassmorphism px-5 py-2">
         <div class="flex justify-between items-center h-16">
             <a href="/">
                 <span class="text-2xl font-medium">TIM ARNOLD</span>
