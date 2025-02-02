@@ -6,11 +6,12 @@ import Redis from "../../components/icons/Redis.astro";
 
 const project = {
     name: "Docknote",
-    description: "Docker based implementation of the service “Privnote”."
+    description: "Docker based implementation of the service “Privnote”.",
+    url: "https://github.com/degenerateddev/Docknote"
 }
 ---
 
-<ProjectLayout description={project.description} title={project.name}>
+<ProjectLayout description={project.description} title={project.name} url={project.url}>
     <Section slot="show-section">
         <img class="mx-auto" src="/img/cubes/docknote.webp" />
     </Section>

@@ -8,11 +8,12 @@ import AWS from "../../components/icons/AWS.astro";
 
 const project = {
     name: "DEVOTEE",
-    description: "A social media platform for content creators and content montetization we’ve been developing over the course of 3 years."
+    description: "A social media platform for content creators and content montetization we’ve been developing over the course of 3 years.",
+    url: "https://devotee.fans"
 }
 ---
 
-<ProjectLayout description={project.description} title={project.name}>
+<ProjectLayout description={project.description} title={project.name} url={project.url}>
     <Section slot="show-section">
         <img class="mx-auto" src="/img/cubes/devotee.webp" />
     </Section>

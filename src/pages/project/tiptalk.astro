@@ -5,11 +5,12 @@ import SvelteKit from "../../components/icons/SvelteKit.astro";
 
 const project = {
     name: "TipTalk",
-    description: "A service for asking and answering questions made by the community while earning money."
+    description: "A service for asking and answering questions made by the community while earning money.",
+    url: "https://tiptalk.me"
 }
 ---
 
-<ProjectLayout description={project.description} title={project.name}>
+<ProjectLayout description={project.description} title={project.name} url={project.url}>
     <Section slot="show-section">
         <img class="mx-auto" src="/img/cubes/tiptalk.webp" />
     </Section>

@@ -5,11 +5,12 @@ import Next from "../../components/icons/Next.astro";
 
 const project = {
     name: "Clockwork Systems",
-    description: "A relatively simple company website for Clockwork Systems UG (haftungsbeschränkt). "
+    description: "A relatively simple company website for Clockwork Systems UG (haftungsbeschränkt).",
+    url: "https://clockworksystems.de"
 }
 ---
 
-<ProjectLayout description={project.description} title={project.name}>
+<ProjectLayout description={project.description} title={project.name} url={project.url}>
     <Section slot="show-section">
         <img class="mx-auto" src="/img/cubes/clockwork.webp" />
     </Section>
@@ -41,9 +42,14 @@ const project = {
         <div class="flex flex-col h-full p-10">
             <p>
                 I first planned out a base design and decided which font I wanted to use.
-            <p>
+            </p>
             <br>
-                As for my portfolio, I decided I’d use IBM Plex Mono since I believe it’s very readable, not too heavy on the eyes when reading long texts and it feels relatively technical.
+            <p>
+                Since we only needed a page that displays our companies’ goals, project and contact information, I decided on a relatively simple design. The website is very small and only serves as a simple landing page.
+            </p>
+            <br>
+            <p>
+                I decided on using NextJS & ShadCDN for the UI and the "IBM Plex Mono" font since I believe it’s very readable, not too heavy on the eyes when reading long texts and it feels relatively technical.
             </p>
 
             <hr class="my-10">
