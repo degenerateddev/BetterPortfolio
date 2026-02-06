@@ -1,0 +1,81 @@
+---
+import Section from "../../components/Section.astro";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import SvelteKit from "../../components/icons/SvelteKit.astro";
+import Bento from "../../components/grids/Bento.astro";
+import Unreal from "../../components/icons/Unreal.astro";
+import Audacity from "../../components/icons/Audacity.astro";
+import Blender from "../../components/icons/Blender.astro";
+
+const project = {
+    name: "Sinners' Lair",
+    description: "A horror game developed using the unreal engine."
+}
+---
+
+<ProjectLayout description={project.description} title={project.name}>
+    <Section slot="show-section">
+        <img class="mx-auto" src="/img/cubes/sinnerslair.webp" />
+    </Section>
+
+    <Section slot="tell-section">
+        <div class="p-10">
+            <p>
+                Sinners’ Lair is a game about surviving an epidemic of skinwalkers.
+            <p>
+            <br>
+                The player has to interrogate people through their door to separate humans from non-humans pretending to be of our kind.
+            <p>
+            <br>
+                The challenge lies in the need for the player to manually type out their answers quickly enough to gather as much information as possible from interrogation suspects.
+            </p>
+        </div>
+    </Section>
+
+    <div slot="large-img-section">
+        <Section>
+            <div class="w-full">
+                <img class="mx-auto h-auto object-fill" src="/img/cubes/sinnerslair/large.webp" />
+            </div>
+            <p class="text-center py-2">
+                Screenshot from within the game.
+            </p>
+        </Section>
+    </div>
+
+    <div slot="bento-section">
+        <Bento data={{
+            0: { src: "/img/cubes/sinnerslair/1.png" },
+            1: { src: "/img/cubes/sinnerslair/2.png" },
+            2: { src: "/img/cubes/sinnerslair/3.png" },
+            3: { src: "/img/cubes/sinnerslair/4.png" },
+            4: { src: "/img/cubes/sinnerslair/5.png" }
+        }}></Bento>
+    </div>
+
+    <Section slot="detail-section">
+        <div class="flex flex-col h-full p-10">
+            <p>
+                I used the Unreal Engine for developing “Sinners’ Lair”.
+            <p>
+            <br>
+                In retrospect, most other engines would’ve been a good fit as well. Since this started out as a university submission which lead to me developing the idea further, I was bound to course restrictions which made us use UE 5.4.4.
+            <p>
+            <br>
+                All sound effects and music were either created or altered by me, using Audacity, to fit the games’ theme.
+            <p>
+            <br>
+                3D assets are mostly from itch.io or self made / altered as well.
+            </p>
+
+            <hr class="my-10">
+            <h3 class="font-semibold text-2xl">Technologies</h3>
+            <br>
+            <div class="flex gap-10">
+                <Unreal />
+                <Audacity />
+                <Blender />
+            </div>
+        </div>
+    </Section>
+</ProjectLayout>

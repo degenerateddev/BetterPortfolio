@@ -1,94 +1,173 @@
 ---
-import '@fontsource/inter';
+import { ClientRouter } from 'astro:transitions';
+import '@fontsource/ibm-plex-mono/100.css';
+import '@fontsource/ibm-plex-mono/400.css';
+import '@fontsource/ibm-plex-mono/600.css';
+import Navigation from '../components/Navigation.vue';
 
 interface Props {
-	title: string;
+    title: string;
 }
 
 const { title } = Astro.props;
+
+let url = Astro.url.href;
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="sitemap" href="/sitemap-index.xml" />
-		
-		<title>{title}</title>
-	</head>
-	<body>
-		<main class="bg-surface">
-			<slot />
-		</main>
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content="I'm a programmer and designer from Germany. My main focus is web development and design but I also have experience in cybersecurity and I'm a fiction writer. Currently I'm studying at the Technical University of Applied Sciences in Augsburg." />
+        <meta name="viewport" content="width=device-width" />
+        <meta name="generator" content={Astro.generator} />
+
+        <meta property="og:title" content="Tim Arnold - Portfolio" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://degenerated.dev" />
+        <meta property="og:image" content="https://degenerated.dev/img/bg.webp" />
+        <meta property="og:description" content="I'm a programmer and designer from Germany. My main focus is web development and design but I also have experience in cybersecurity and I'm a fiction writer. Currently I'm studying at the Technical University of Applied Sciences in Augsburg." />
+        <meta name="theme-color" content="#FFFFFF">
+
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://degenerated.dev" />
+        <meta property="twitter:title" content="Tim Arnold - Portfolio" />
+        <meta property="twitter:description" content="I'm a programmer and designer from Germany. My main focus is web development and design but I also have experience in cybersecurity and I'm a fiction writer. Currently I'm studying at the Technical University of Applied Sciences in Augsburg." />
+        <meta property="twitter:image" content="https://degenerated.dev/img/bg.webp" />
+
+        <ClientRouter />
+        
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="sitemap" href="/sitemap-index.xml" />
+        
+        <title>{title}</title>
+    </head>
+    <body>
+        <main class="flex-col gap-10 py-5 md:pt-20 md:pb-5 text-stone-900 ibm-plex-mono relative">
+            <Navigation client:only="vue" currentURL={url} />
+            
+            <div class="container mx-auto min-h-screen">
+                <slot />
+            </div>
+
+            <div class="flex justify-end">
+                <div class="flex flex-col gap-2 text-end p-5 text-xl ibm-base">
+                    <a href="/#Contact">CONTACT</a>
+                    <a href="/#About">ABOUT</a>
+                    <a href="/legal">LEGAL</a>
+                </div>
+            </div>
+
+            <script>
+                import gsap from "gsap";
+                window.gsap = gsap;
+            </script>
+        </main>
+    </body>
 </html>
 
 <style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
+    :root {
+        --accent: 136, 58, 234;
+        --accent-light: 224, 204, 250;
+        --accent-dark: 49, 10, 101;
+        --accent-gradient: linear-gradient(
+            45deg,
+            rgb(var(--accent)),
+            rgb(var(--accent-light)) 30%,
+            white 60%
+        );
+    }
+
+    .ibm-base {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 400;
+    }
+
+    .ibm-semibold {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 500;
+    }
+
+    html {
+        color: #F1F1F1;
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: 100;
+    }
+
+    code {
+        font-family:
+            Menlo,
+            Monaco,
+            Lucida Console,
+            Liberation Mono,
+            DejaVu Sans Mono,
+            Bitstream Vera Sans Mono,
+            Courier New,
+            monospace;
+    }
+
+    body {
+		position: relative;
+		z-index: 0;
 	}
 
-	@font-face {
-		font-family: 'Inter';
-		font-display: swap;
-		src: url('/fonts/Inter/static/Inter-Black.ttf') format('truetype');
+	body::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: url('/img/bg.webp');
+		background-size: contain;
+		background-repeat: repeat-y;
+		opacity: .5;
+		z-index: -1;
 	}
 
-	@font-face {
-		font-family: 'Satoshi-Regular';
-		font-display: swap;
-		font-weight: 400;
-		font-style: normal;
-		src: url('/fonts/Satoshi/Fonts/WEB/fonts/Satoshi-Regular.ttf') format('truetype');
-	}
+    a {
+        text-transform: uppercase;
+        text-decoration: none;
+    }
 
-	@font-face {
-		font-family: 'Satoshi-Light';
-		font-weight: 300;
-		font-display: swap;
-		font-style: normal;
-		src: url('/fonts/Satoshi/Fonts/WEB/fonts/Satoshi-Light.ttf') format('truetype');
-	}
+    a:hover {
+        text-decoration: underline;
+    }
 
-	.inter {
-		font-family: 'Inter', sans-serif;
-	}
+    h1, h2 {
+        font-size: 121px;
+        font-weight: 300;
+    }
 
-	.satoshi {
-		font-family: 'Satoshi-Regular', sans-serif;
-	}
+    p {
+        font-size: 20px;
+        font-weight: 400;
+    }
 
-	.satoshi-light {
-		font-family: 'Satoshi-Light', sans-serif;
-	}
+    b {
+        font-size: 20px;
+        font-weight: 600;
+    }
 
-	html {
-		font-family: 'Satoshi-Light', sans-serif;
-		color: #F1F1F1;
-	}
+    @media screen and (max-width: 1024px) {
+        h1, h2 {
+            font-size: 49px;
+            /* font-weight: 400; */
+        }
 
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
+        p {
+            font-size: 15px;
+        }
+        
+        b {
+            font-size: 15px;
+        }
+    }
+
+    .retro-shadow {
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
 </style>

@@ -1,0 +1,63 @@
+---
+import Section from "../../components/Section.astro";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import Next from "../../components/icons/Next.astro";
+
+const project = {
+    name: "Clockwork Systems",
+    description: "A relatively simple company website for Clockwork Systems UG (haftungsbeschränkt).",
+    url: "https://clockworksystems.de"
+}
+---
+
+<ProjectLayout description={project.description} title={project.name} url={project.url}>
+    <Section slot="show-section">
+        <img class="mx-auto" src="/img/cubes/clockwork.webp" />
+    </Section>
+
+    <Section slot="tell-section">
+        <div class="p-10">
+            <p>
+                We needed a small and simple website for our company.
+            <p>
+            <br>
+                I decided on using NextJS which I first needed to get familiar with.
+            <p>
+            <br>
+                It’s statically deployed using Nginx and Docker.
+            </p>
+        </div>
+    </Section>
+
+    <div slot="large-img-section">
+        <Section>
+            <img class="mx-auto h-full object-fill" src="/img/cubes/clockwork/large.webp" />
+            <p class="text-center py-2">
+                A simple landing page with an overview over the companies’ goals.
+            </p>
+        </Section>
+    </div>
+
+    <Section slot="detail-section">
+        <div class="flex flex-col h-full p-10">
+            <p>
+                I first planned out a base design and decided which font I wanted to use.
+            </p>
+            <br>
+            <p>
+                Since we only needed a page that displays our companies’ goals, project and contact information, I decided on a relatively simple design. The website is very small and only serves as a simple landing page.
+            </p>
+            <br>
+            <p>
+                I decided on using NextJS & ShadCDN for the UI and the "IBM Plex Mono" font since I believe it’s very readable, not too heavy on the eyes when reading long texts and it feels relatively technical.
+            </p>
+
+            <hr class="my-10">
+            <h3 class="font-semibold text-2xl">Technologies</h3>
+            <br>
+            <div class="flex gap-10">
+                <Next />
+            </div>
+        </div>
+    </Section>
+</ProjectLayout>

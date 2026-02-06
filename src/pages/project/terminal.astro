@@ -1,0 +1,35 @@
+---
+import Section from "../../components/Section.astro";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+
+const project = {
+    name: "Terminal Portfolio",
+    description: "A vanilla JS - pure frontend - solution to an old school terminal web interface."
+}
+---
+
+<ProjectLayout description={project.description} title={project.name}>
+    <Section slot="show-section">
+        <img class="mx-auto" src="/img/cubes/terminal.webp" />
+    </Section>
+
+    <Section slot="tell-section">
+        <p class="ibm-base text-lg p-8">
+            For my second semester university course “Grundlagen der Webtechnologien”, I implemented a vanilla Javascript solution to a terminal interface.
+
+            Looking back, the implementation definitely could need some improvements. 
+
+            However, I was struggling with implementing a similar idea in the past and that gave me the chance to try out different ways of implementing a command based interface using just native HTML and Javascript.
+        </p>
+    </Section>
+
+    <Section slot="detail-section">
+        <p class="ibm-base text-lg p-8">
+            
+        </p>
+    </Section>
+
+    <Section slot="diagram-section">
+        <img class="mx-auto" src="/img/placeholder.webp" />
+    </Section>
+</ProjectLayout>

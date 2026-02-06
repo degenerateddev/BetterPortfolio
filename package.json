@@ -1,5 +1,5 @@
 {
-  "name": "better_portfolio",
+  "name": "portfolio",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -11,10 +11,18 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",
-    "@astrojs/tailwind": "^5.1.2",
-    "@fontsource/inter": "^5.0.19",
-    "astro": "^4.16.7",
+    "@astrojs/tailwind": "^5.1.5",
+    "@astrojs/vue": "^5.0.6",
+    "@fontsource/ibm-plex-mono": "^5.1.0",
+    "@tresjs/cientos": "^4.0.3",
+    "@tresjs/core": "^4.3.1",
+    "astro": "^5.1.10",
     "gsap": "^3.12.5",
-    "tailwindcss": "^3.4.6"
+    "tailwindcss": "^3.4.6",
+    "three": "^0.169.0",
+    "vue": "^3.5.12"
+  },
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2"
   }
 }

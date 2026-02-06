@@ -1,0 +1,55 @@
+---
+import Section from "../../components/Section.astro";
+import ProjectLayout from "../../layouts/ProjectLayout.astro";
+import SvelteKit from "../../components/icons/SvelteKit.astro";
+import Redis from "../../components/icons/Redis.astro";
+
+const project = {
+    name: "Docknote",
+    description: "Docker based implementation of the service “Privnote”.",
+    url: "https://github.com/degenerateddev/Docknote"
+}
+---
+
+<ProjectLayout description={project.description} title={project.name} url={project.url}>
+    <Section slot="show-section">
+        <img class="mx-auto" src="/img/cubes/docknote.webp" />
+    </Section>
+
+    <Section slot="tell-section">
+        <div class="p-10">
+            <p>
+                The idea was having a way to setup a way to share private notes that delete on opening them. 
+            <p>
+            <br>
+                By using Docker to setup frontend, backend and the Redis database, everyone can run their own private and secure notes sharing platform using just a single Docker command.
+            </p>
+        </div>
+    </Section>
+
+    <Section slot="detail-section">
+        <div class="flex flex-col h-full p-10">
+            <p>
+                The application can be set up with a single command <b>“docker compose up -d”</b>.
+            <p>
+            <br>
+                Once running it’s very ease to create new notes, generate a link and have that note destroy itself after being read.
+            <p>
+            <br>
+                For the future I contemplated implementing customization options like auto deletion after a certain amount of time if the note has not been read.
+            </p>
+            <br>
+            <p>
+                Notes are only being stored inside a “Redis In-Memory-Database” so they are not actually stored on the drive which makes them basically unrecoverable in case of a system breach for maximum anonymity.
+            </p>
+
+            <hr class="my-10">
+            <h3 class="font-semibold text-2xl">Technologies</h3>
+            <br>
+            <div class="flex gap-10">
+                <SvelteKit />
+                <Redis />
+            </div>
+        </div>
+    </Section>
+</ProjectLayout>
