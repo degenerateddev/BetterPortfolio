@@ -1,0 +1,65 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page",
+    "description": "Individual project pages with dynamic content"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "slug": {
+      "type": "uid",
+      "required": true
+    },
+    "category": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "programming",
+        "design",
+        "writing"
+      ]
+    },
+    "header": {
+      "type": "component",
+      "component": "content.header",
+      "repeatable": false,
+      "required": true
+    },
+    "thumbnail": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "keywords": {
+      "type": "component",
+      "component": "content.keywords",
+      "repeatable": true
+    },
+    "icons": {
+      "type": "component",
+      "component": "content.icon",
+      "repeatable": true
+    },
+    "content": {
+      "type": "dynamiczone",
+      "components": [
+        "container.bento",
+        "container.2x2",
+        "content.text-block",
+        "content.image-block",
+        "content.video-embed",
+        "content.icon",
+        "content.cube",
+        "content.image"
+      ]
+    }
+  }
+}

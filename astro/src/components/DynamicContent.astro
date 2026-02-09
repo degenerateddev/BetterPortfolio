@@ -1,0 +1,121 @@
+---
+/**
+ * Renders a Strapi dynamic zone array into the corresponding Astro components.
+ * Used on individual project pages to render the `content` dynamic zone.
+ */
+import type { DynamicZoneItem } from '../lib/types/components';
+import DynamicBento from './grids/DynamicBento.astro';
+import DynamicEqual from './grids/DynamicEqual.astro';
+import IconResolver from './IconResolver.astro';
+import Section from './Section.astro';
+import { strapiImageUrl } from '../lib/helpers';
+import Text from './Text.vue';
+
+interface Props {
+  content: DynamicZoneItem[];
+}
+
+const { content } = Astro.props;
+---
+
+{content.map((block) => {
+  if (block.__component === 'container.bento') {
+    return (
+      <DynamicBento cubes={block.cubes} />
+    );
+  }
+
+  if (block.__component === 'container.2x2') {
+    return (
+      <DynamicEqual cubes={block.cubes} />
+    );
+  }
+
+  if (block.__component === 'content.icon') {
+    return (
+      <IconResolver iconKey={block.key} />
+    );
+  }
+
+  if (block.__component === 'content.image-block') {
+    return (
+      <div class="grid space-x-10 grid-cols-1 md:grid-cols-2">
+        <Section>
+          <img class="mx-auto h-full object-fill" src={strapiImageUrl(block.image)} alt={block.caption || ''} />
+        </Section>
+        
+        <Section>
+          <div class="p-10 ibm-base text-lg">
+            <Text text={block.caption} />
+          </div>
+        </Section>
+      </div>
+    );
+  }
+
+  if (block.__component === 'content.image') {
+    return (
+      <Section>
+        <div>
+          <img 
+            class="w-full h-auto" 
+            src={strapiImageUrl(block.image)} 
+            alt={block.image.alternativeText || ''} 
+          />
+          {block.image.caption && (
+            <p class="text-center py-4 ibm-base text-sm">
+              {block.image.caption}
+            </p>
+          )}
+        </div>
+      </Section>
+    );
+  }
+
+  if (block.__component === 'content.video-embed') {
+    return (
+      <div class="w-full aspect-video">
+        <iframe
+          src={block.url}
+          class="w-full h-full"
+          allowfullscreen
+          loading="lazy"
+        />
+        <Text text={block.caption && `<p class="text-center py-2">${block.caption}</p>`} />
+      </div>
+    );
+  }
+
+  if (block.__component === 'content.text-block') {
+    return (
+      <Section>
+        <div class="p-10 ibm-base text-lg" set:html={
+          /* Strapi Blocks JSON - render as HTML paragraphs */
+          Array.isArray(block.body) 
+            ? block.body.map((b: any) => {
+                if (b.type === 'paragraph') {
+                  const text = b.children?.map((c: any) => {
+                    let t = c.text || '';
+                    if (c.bold) t = `<b>${t}</b>`;
+                    if (c.italic) t = `<em>${t}</em>`;
+                    if (c.underline) t = `<u>${t}</u>`;
+                    if (c.code) t = `<code>${t}</code>`;
+                    return t;
+                  }).join('') || '';
+                  return `<p>${text}</p>`;
+                }
+                if (b.type === 'heading') {
+                  const level = b.level || 3;
+                  const text = b.children?.map((c: any) => c.text || '').join('') || '';
+                  return `<h${level} class="font-semibold text-2xl">${text}</h${level}>`;
+                }
+                return '';
+              }).join('<br>')
+            : ''
+        } />
+      </Section>
+    );
+  }
+
+  return null;
+})}

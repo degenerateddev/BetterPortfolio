@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_content_cubes",
+  "info": {
+    "displayName": "Cube",
+    "icon": "dashboard"
+  },
+  "options": {},
+  "attributes": {
+    "page": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::page.page"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    },
+    "externalLink": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

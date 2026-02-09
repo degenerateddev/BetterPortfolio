@@ -1,0 +1,52 @@
+---
+import type { IconKey } from '../lib/types/components';
+import Arduino from './icons/Arduino.astro';
+import Aseprite from './icons/Aseprite.astro';
+import AstroIcon from './icons/Astro.astro';
+import Audacity from './icons/Audacity.astro';
+import AWS from './icons/AWS.astro';
+import Blender from './icons/Blender.astro';
+import Django from './icons/Django.astro';
+import Figma from './icons/Figma.astro';
+import Flutter from './icons/Flutter.astro';
+import Godot from './icons/Godot.astro';
+import Maya from './icons/Maya.astro';
+import Next from './icons/Next.astro';
+import Pocketbase from './icons/Pocketbase.astro';
+import Postgres from './icons/Postgres.astro';
+import Redis from './icons/Redis.astro';
+import SvelteKit from './icons/SvelteKit.astro';
+import Tailwind from './icons/Tailwind.astro';
+import Unreal from './icons/Unreal.astro';
+
+interface Props {
+  iconKey: IconKey;
+}
+
+const { iconKey } = Astro.props;
+
+const iconMap: Record<string, any> = {
+  arduino: Arduino,
+  aseprite: Aseprite,
+  astro: AstroIcon,
+  audacity: Audacity,
+  aws: AWS,
+  blender: Blender,
+  django: Django,
+  figma: Figma,
+  flutter: Flutter,
+  godot: Godot,
+  maya: Maya,
+  next: Next,
+  pocketbase: Pocketbase,
+  postgres: Postgres,
+  redis: Redis,
+  sveltekit: SvelteKit,
+  tailwind: Tailwind,
+  unreal: Unreal,
+};
+
+const IconComponent = iconMap[iconKey];
+---
+
+{IconComponent && <IconComponent />}
