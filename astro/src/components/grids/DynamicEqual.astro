@@ -1,0 +1,22 @@
+---
+import type { ContentCube } from '../../lib/types/components';
+import { strapiImageUrl, cubeLink } from '../../lib/helpers';
+import Equal from './Equal.astro';
+
+interface Props {
+  cubes: ContentCube[];
+}
+
+const { cubes } = Astro.props;
+
+const data: Record<number, { src: string; link?: string }> = {};
+
+cubes.forEach((cube, index) => {
+  data[index] = {
+    src: strapiImageUrl(cube.image),
+    link: cubeLink(cube),
+  };
+});
+---
+
+<Equal data={data} />

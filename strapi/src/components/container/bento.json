@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_container_bentos",
+  "info": {
+    "displayName": "Bento",
+    "icon": "dashboard"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "cubes": {
+      "type": "component",
+      "component": "content.cube",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

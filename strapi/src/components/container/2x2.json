@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_container_2x2s",
+  "info": {
+    "displayName": "2x2",
+    "icon": "dashboard"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "cubes": {
+      "type": "component",
+      "component": "content.cube",
+      "repeatable": true
+    }
+  },
+  "config": {}
+}

@@ -1,0 +1,172 @@
+---
+import Layout from '../layouts/Layout.astro';
+import KeyWords from '../components/KeyWords.vue';
+import Section from '../components/Section.astro';
+import Highlight from '../components/Highlight.astro';
+import Socials from '../components/Socials.astro';
+import Text from '../components/Text.vue';
+import DynamicBento from '../components/grids/DynamicBento.astro';
+import DynamicEqual from '../components/grids/DynamicEqual.astro';
+import Button from '../components/Button.astro';
+import { fetchHome, fetchAllPages } from '../lib/strapi';
+import type { Home } from '../lib/types/pages';
+import type { ContainerBento, Container2x2 } from '../lib/types/components';
+import { strapiImageUrl } from '../lib/helpers';
+
+// ── Fetch data from Strapi ──────────────────────────────────
+let home: Home | null = null;
+let sections: (ContainerBento | Container2x2)[] = [];
+let aboutImage = null;
+
+try {
+    home = await fetchHome();
+    sections = home?.sections || [];
+    
+    aboutImage = strapiImageUrl(home?.aboutImage);
+    console.log(aboutImage)
+} catch (e) {
+    console.warn('Could not fetch Home from Strapi, falling back to static layout.', e);
+}
+
+let keyWordsCount: Record<string, number> = {};
+try {
+    const allPages = await fetchAllPages();
+    allPages.forEach(page => {
+        page.keywords?.forEach(kw => {
+            keyWordsCount[kw.keyword] = (keyWordsCount[kw.keyword] || 0) + 1;
+        });
+    });
+} catch (e) {
+    console.warn('Could not fetch pages for keywords.', e);
+}
+
+const programmingSections = sections.filter(s => s.title?.toLowerCase() === 'programming');
+const designSections = sections.filter(s => s.title?.toLowerCase() === 'design');
+const writingSections = sections.filter(s => s.title?.toLowerCase() === 'writing');
+---
+
+<Layout title="Tim Arnold">
+    <main>
+        <div class="flex flex-col gap-y-24 md:gap-y-96">
+            <section id="about" class="space-y-16 md:space-y-32">
+                <h1 class="text-[90px] md:text-[225px] leading-none md:leading-[225px] text-shadow-md mt-20">
+                    HI!
+                    <br />
+                    I'M TIM
+                </h1>
+                <Highlight text="Programmer, Designer, Writer" />
+    
+                <Section>
+                    <div class="flex flex-col md:flex-row items-center gap-10">
+                        { aboutImage && (
+                            <div class="hidden md:flex justify-center min-h-[20vh] w-full md:w-fit md:min-w-fit md:justify-start">
+                                <img src={aboutImage} alt={home?.aboutImage?.alternativeText || 'About Image'} class="object-fill w-full md:w-auto md:h-full md:object-cover" />
+                            </div>
+                        )}
+                        <div class="p-10">
+                            <p class="flex-grow ibm-base">
+                                <Text text={home?.aboutText} />
+                            </p>
+                            <div class="flex gap-5 md:gap-20 justify-start md:justify-center items-center mt-10">
+                                <a href="/pdf/Portfolio_PDF_Version.pdf" target="_blank" download="Portfolio_Tim_Arnold.pdf">
+                                    <div class="flex flex-col gap-2 items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                        </svg>
+                                        <small class="ibm-base">Portfolio PDF</small>
+                                    </div>
+                                </a>
+
+                                <a href="/pdf/Resume.pdf" target="_blank" download="Resume_Tim_Arnold.pdf">
+                                    <div class="flex flex-col gap-2 items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                                        </svg>
+                                        <small class="ibm-base">Resume</small>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </Section>
+            </section>
+
+            <section id="programming" class="space-y-10">
+                <div class="flex justify-center md:justify-start items-baseline">
+                    <h2>Programming</h2>
+                </div>
+
+                {programmingSections.length > 0 && (
+                    programmingSections.map((section) => (
+                        section.__component === 'container.bento'
+                            ? <DynamicBento cubes={section.cubes} />
+                            : <DynamicEqual cubes={section.cubes} />
+                    ))
+                )}
+            </section>
+
+            <section id="design" class="space-y-10">
+                <div class="flex justify-center md:justify-start items-baseline">
+                    <h2>Design</h2>
+                </div>
+
+                {designSections.length > 0 && (
+                    designSections.map((section) => (
+                        section.__component === 'container.bento'
+                            ? <DynamicBento cubes={section.cubes} />
+                            : <DynamicEqual cubes={section.cubes} />
+                    ))
+                )}
+            </section>
+
+            <section id="writing" class="space-y-10">
+                <div class="flex justify-center md:justify-start items-baseline">
+                    <h2>Writing</h2>
+                </div>
+
+                {writingSections.length > 0 && (
+                    writingSections.map((section) => (
+                        section.__component === 'container.bento'
+                            ? <DynamicBento cubes={section.cubes} />
+                            : <DynamicEqual cubes={section.cubes} />
+                    ))
+                )}
+            </section>
+    
+            <section id="contact" class="space-y-10">
+                <div class="flex flex-wrap justify-center md:justify-between items-center">
+                    <h2>Contact</h2>
+                    <Socials />
+                </div>
+                
+                <div class="flex justify-start">
+                    
+                </div>
+    
+                <form method="POST">
+                    <div class="flex flex-col gap-10">
+                        <div class="flex gap-10">
+                            <input type="text" placeholder="Full name" class="focus:outline-none w-full border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);" />
+                            <input type="email" placeholder="E-Mail" class="focus:outline-none w-full border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);" />
+                        </div>
+                        <textarea placeholder="Request" class="focus:outline-none w-full h-64 border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);"></textarea>
+                        <Button text="Submit" />
+                    </div>
+                </form>
+            </section>
+        </div>
+
+        <script>
+            document.addEventListener(
+                "astro:page-load",
+                () => {
+                    const element = document.querySelector('[type="checkbox"]');
+                    element?.addEventListener("change", () => {
+                        gsap.to(".box", { x: 100 });
+                    })
+                },
+                { once: false }
+            )
+        </script>
+    </main>
+</Layout>

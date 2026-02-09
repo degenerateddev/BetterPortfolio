@@ -1,0 +1,37 @@
+{
+  "collectionName": "components_content_icons",
+  "info": {
+    "displayName": "Icon",
+    "icon": "landscape"
+  },
+  "options": {},
+  "attributes": {
+    "key": {
+      "type": "enumeration",
+      "required": true,
+      "enum": [
+        "arduino",
+        "aseprite",
+        "astro",
+        "audacity",
+        "aws",
+        "blender",
+        "django",
+        "figma",
+        "flutter",
+        "godot",
+        "maya",
+        "next",
+        "pocketbase",
+        "postgres",
+        "redis",
+        "sveltekit",
+        "tailwind",
+        "unreal",
+        "strapi",
+        "nuxt"
+      ]
+    }
+  },
+  "config": {}
+}

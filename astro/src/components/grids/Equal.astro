@@ -1,0 +1,23 @@
+---
+interface props {
+  data: Object,
+};
+  
+const data = Astro.props.data || {};
+---
+
+{Object.entries(data).length > 0 && (
+  <div class="grid grid-cols-2 md:grid-cols-4">
+    {Object.entries(data).map(([key, value]) => (
+      <div class="border" key={key}>
+        {value.link ? (
+          <a href={value.link}>
+            <img src={value.src} />
+          </a>
+        ) : (
+          <img src={value.src} />
+        )}
+      </div>
+    ))}
+  </div>
+)}
