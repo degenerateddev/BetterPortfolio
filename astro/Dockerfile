@@ -1,29 +1,30 @@
-# using staged builds
-FROM node:18-buster as builder
-# make the directory where the project files will be stored
-RUN mkdir -p /usr/src/next
-# set it as the working directory so that we don't need to keep referencing it
-WORKDIR /usr/src/next
-# Copy the package.json file
-COPY package.json package.json
-# install project dependencies
-RUN npm install
-# copy project files 
-# make sure to set up .dockerignore to copy only necessary files
-COPY . .
-# run the build command which will build and export html files
-RUN npm run build
+FROM node:20-alpine as deps
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci
 
-# bundle static assets with nginx
+FROM node:20-alpine as builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+# Install curl for healthcheck script
 FROM nginx:1.21.0-alpine as production
-ENV NODE_ENV production
-# remove existing files from nginx directory
-RUN rm -rf /usr/share/nginx/html/*
-# copy built assets from 'builder' stage
-COPY --from=builder /usr/src/next/dist /usr/share/nginx/html
-# add nginx config
+RUN apk add --no-cache nodejs npm curl bash
+
+WORKDIR /app
+
+# Copy dependencies and source
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=builder /app ./
+
+# Copy nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-# expose port 80 for nginx
+
+# Create entrypoint script
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
 EXPOSE 80
-# start nginx
-CMD ["nginx", "-g", "daemon off;"]
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
