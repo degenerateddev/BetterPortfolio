@@ -1,25 +1,27 @@
-FROM node:20-alpine as builder
+FROM node:20-alpine AS deps
 
 WORKDIR /app
-
 COPY package.json package-lock.json* ./
+RUN npm ci
 
-RUN npm ci --only=production
+# ---
 
 FROM node:20-alpine
 
-# Install wget for healthcheck
+# wget is needed for the healthcheck
 RUN apk add --no-cache wget
 
 WORKDIR /app
-
 ENV NODE_ENV=production
 
-EXPOSE 1337
-
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 RUN npm run build
+
+EXPOSE 1337
+
+HEALTHCHECK --interval=10s --timeout=5s --retries=5 --start-period=30s \
+  CMD wget --no-verbose --tries=1 --spider http://localhost:1337/admin || exit 1
 
 CMD ["npm", "start"]

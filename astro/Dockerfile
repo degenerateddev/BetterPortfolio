@@ -1,30 +1,25 @@
-FROM node:20-alpine as deps
+FROM node:20-bullseye AS builder
+
 WORKDIR /app
+
+# strapi URL at build time for static site generation
+ARG STRAPI_URL
+ARG STRAPI_TOKEN
+
+ENV STRAPI_URL=$STRAPI_URL
+ENV STRAPI_TOKEN=$STRAPI_TOKEN
+
 COPY package.json package-lock.json* ./
 RUN npm ci
 
-FROM node:20-alpine as builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+RUN npm run build
 
-# Install curl for healthcheck script
-FROM nginx:1.21.0-alpine as production
-RUN apk add --no-cache nodejs npm curl bash
 
-WORKDIR /app
+FROM nginx:stable-alpine
 
-# Copy dependencies and source
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=builder /app ./
-
-# Copy nginx config
+COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Create entrypoint script
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
-
 EXPOSE 80
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]
