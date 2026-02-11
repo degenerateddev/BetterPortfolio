@@ -1,0 +1,8 @@
+# Ensure shell scripts always use LF line endings (required for Docker/Linux)
+*.sh text eol=lf
+
+# Ensure batch files use CRLF on Windows
+*.bat text eol=crlf
+
+# Auto-detect text files
+* text=auto

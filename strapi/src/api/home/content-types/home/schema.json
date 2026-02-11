@@ -19,16 +19,31 @@
     "subheadline": {
       "type": "string"
     },
-    "aboutText": {
-      "type": "richtext",
-      "required": true
-    },
     "aboutImage": {
       "type": "media",
       "multiple": false,
       "required": true,
       "allowedTypes": [
         "images"
+      ]
+    },
+    "aboutText": {
+      "type": "richtext",
+      "required": true
+    },
+    "portfolio": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "files"
+      ]
+    },
+    "resume": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": [
+        "files"
       ]
     },
     "sections": {

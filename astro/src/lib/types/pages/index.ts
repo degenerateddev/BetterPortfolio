@@ -33,8 +33,8 @@ export interface Home extends BaseStrapiResponse {
   headline: string;
   subheadline?: string;
   aboutText?: string;
-  aboutImage?: StrapiImage | null;
-  sections?: (ContainerBento | Container2x2)[];
+  aboutImage?: StrapiImage | null;  portfolio?: StrapiImage | null;
+  resume?: StrapiImage | null;  sections?: (ContainerBento | Container2x2)[];
 }
 
 // ── Strapi list response wrapper ───────────────────────────
