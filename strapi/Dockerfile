@@ -21,7 +21,7 @@ RUN npm run build
 
 EXPOSE 1337
 
-HEALTHCHECK --interval=10s --timeout=5s --retries=5 --start-period=30s \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:1337/admin || exit 1
+HEALTHCHECK --interval=15s --timeout=5s --retries=8 --start-period=120s \
+  CMD wget -qO /dev/null http://127.0.0.1:1337/admin || exit 1
 
 CMD ["npm", "start"]
