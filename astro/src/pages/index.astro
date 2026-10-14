@@ -47,6 +47,8 @@ try {
 const programmingSections = sections.filter(s => s.title?.toLowerCase() === 'programming');
 const designSections = sections.filter(s => s.title?.toLowerCase() === 'design');
 const writingSections = sections.filter(s => s.title?.toLowerCase() === 'writing');
+
+const contactEndpoint = `${import.meta.env.PUBLIC_STRAPI_URL || import.meta.env.STRAPI_URL}/api/contact-requests`;
 ---
 
 <Layout title="Tim Arnold">
@@ -151,20 +153,67 @@ const writingSections = sections.filter(s => s.title?.toLowerCase() === 'writing
                     
                 </div>
     
-                <form method="POST">
+                <form id="contact-form" method="POST" action={contactEndpoint} data-endpoint={contactEndpoint} novalidate>
                     <div class="flex flex-col gap-10">
-                        <div class="flex gap-10">
-                            <input type="text" placeholder="Full name" class="focus:outline-none w-full border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);" />
-                            <input type="email" placeholder="E-Mail" class="focus:outline-none w-full border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);" />
+                        <div class="flex flex-col md:flex-row gap-10">
+                            <input type="text" name="name" required maxlength="200" autocomplete="name" placeholder="Full name" aria-label="Full name" class="focus:outline-none w-full border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);" />
+                            <input type="email" name="email" required autocomplete="email" placeholder="E-Mail" aria-label="E-Mail" class="focus:outline-none w-full border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);" />
                         </div>
-                        <textarea placeholder="Request" class="focus:outline-none w-full h-64 border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);"></textarea>
-                        <Button text="Submit" />
+                        <!-- honeypot: hidden from humans, bots tend to fill it -->
+                        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+                        <textarea name="message" required maxlength="5000" placeholder="Request" aria-label="Request" class="focus:outline-none w-full h-64 border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);"></textarea>
+                        <Button text="Submit" type="submit" />
+                        <p id="contact-status" class="ibm-base text-lg min-h-[1.75rem]" role="status" aria-live="polite"></p>
                     </div>
                 </form>
             </section>
         </div>
 
         <script>
+            const form = document.getElementById('contact-form') as HTMLFormElement | null;
+            const status = document.getElementById('contact-status');
+
+            form?.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                if (!status) return;
+
+                if (!form.checkValidity()) {
+                    status.textContent = 'Please fill in your name, a valid e-mail address and your request.';
+                    form.reportValidity();
+                    return;
+                }
+
+                const button = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+                const fields = new FormData(form);
+                const data = {
+                    name: String(fields.get('name') || '').trim(),
+                    email: String(fields.get('email') || '').trim(),
+                    message: String(fields.get('message') || '').trim(),
+                    website: String(fields.get('website') || ''),
+                };
+
+                button?.setAttribute('disabled', '');
+                status.textContent = 'Sending...';
+
+                try {
+                    const res = await fetch(form.dataset.endpoint!, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ data }),
+                    });
+                    if (!res.ok) {
+                        const body = await res.json().catch(() => null);
+                        throw new Error(body?.error?.message || `Request failed (${res.status})`);
+                    }
+                    form.reset();
+                    status.textContent = 'Thanks! Your request has been sent.';
+                } catch (e) {
+                    status.textContent = e instanceof Error ? e.message : 'Something went wrong. Please try again later.';
+                } finally {
+                    button?.removeAttribute('disabled');
+                }
+            });
+
             document.addEventListener(
                 "astro:page-load",
                 () => {

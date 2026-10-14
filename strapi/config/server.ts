@@ -4,4 +4,8 @@ export default ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
+  // trust X-Forwarded-For when running behind a reverse proxy (needed for per-IP rate limiting)
+  proxy: {
+    koa: env.bool('IS_PROXIED', false),
+  },
 });

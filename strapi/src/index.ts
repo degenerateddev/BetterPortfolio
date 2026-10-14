@@ -1,4 +1,4 @@
-// import type { Core } from '@strapi/strapi';
+import type { Core } from '@strapi/strapi';
 
 export default {
   /**
@@ -16,5 +16,21 @@ export default {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/* { strapi }: { strapi: Core.Strapi } */) {},
+  async bootstrap({ strapi }: { strapi: Core.Strapi }) {
+    // allow the public role to submit the contact form (create only, never read)
+    const action = 'api::contact-request.contact-request.create';
+    const publicRole = await strapi
+      .query('plugin::users-permissions.role')
+      .findOne({ where: { type: 'public' } });
+    if (!publicRole) return;
+
+    const existing = await strapi
+      .query('plugin::users-permissions.permission')
+      .findOne({ where: { action, role: publicRole.id } });
+    if (!existing) {
+      await strapi
+        .query('plugin::users-permissions.permission')
+        .create({ data: { action, role: publicRole.id } });
+    }
+  },
 };

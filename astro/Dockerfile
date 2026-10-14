@@ -5,9 +5,11 @@ WORKDIR /app
 # strapi URL at build time for static site generation
 ARG STRAPI_URL
 ARG STRAPI_TOKEN
+ARG PUBLIC_STRAPI_URL
 
 ENV STRAPI_URL=$STRAPI_URL
 ENV STRAPI_TOKEN=$STRAPI_TOKEN
+ENV PUBLIC_STRAPI_URL=$PUBLIC_STRAPI_URL
 
 COPY package.json package-lock.json ./
 RUN npm ci

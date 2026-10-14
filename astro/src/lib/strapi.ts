@@ -32,7 +32,15 @@ export default async function fetchApi<T>({
       url.searchParams.append(key, value);
     });
   }
-  const res = await fetch(url.toString());
+  const headers: Record<string, string> = {};
+  if (import.meta.env.STRAPI_TOKEN) {
+    headers.Authorization = `Bearer ${import.meta.env.STRAPI_TOKEN}`;
+  }
+
+  const res = await fetch(url.toString(), { headers });
+  if (!res.ok) {
+    throw new Error(`Strapi request failed: ${res.status} ${res.statusText} (${url.pathname})`);
+  }
   let data = await res.json();
 
   if (wrappedByKey) {
