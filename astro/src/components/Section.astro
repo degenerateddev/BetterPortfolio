@@ -1,3 +1,14 @@
-<div class="container max-w-fit h-full bg-white border border-black retro-shadow">
+---
+import Window from './Window.astro';
+
+interface Props {
+    title?: string;
+    variant?: 'light' | 'dark';
+}
+
+const { title = 'VIEWER', variant = 'light' } = Astro.props;
+---
+
+<Window title={title} variant={variant}>
     <slot />
-</div>
+</Window>

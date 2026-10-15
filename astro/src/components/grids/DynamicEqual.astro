@@ -5,18 +5,20 @@ import Equal from './Equal.astro';
 
 interface Props {
   cubes: ContentCube[];
+  variant?: 'light' | 'dark';
 }
 
-const { cubes } = Astro.props;
+const { cubes, variant } = Astro.props;
 
-const data: Record<number, { src: string; link?: string }> = {};
+const data: Record<number, { src: string; link?: string; title?: string }> = {};
 
 cubes.forEach((cube, index) => {
   data[index] = {
     src: strapiImageUrl(cube.image),
     link: cubeLink(cube),
+    title: cube.page?.header?.title || cube.image?.alternativeText,
   };
 });
 ---
 
-<Equal data={data} />
+<Equal data={data} variant={variant} />

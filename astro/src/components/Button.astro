@@ -2,11 +2,55 @@
 interface Props {
   text: string,
   type?: 'button' | 'submit' | 'reset',
+  variant?: 'light' | 'accent',
+  href?: string,
 };
-  
-const { text, type = 'button' } = Astro.props;
+
+const { text, type = 'button', variant = 'light', href } = Astro.props;
+const classes = ['btn hud w-full h-16 inline-flex items-center justify-center gap-3 disabled:opacity-50 disabled:pointer-events-none', `btn--${variant}`];
 ---
 
-<button type={type} class="ibm-semibold w-full h-16 bg-white duration-100 ease-in-out hover:bg-black border hover:border-white border-black  text-black hover:text-white disabled:opacity-50 disabled:pointer-events-none" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);">
-    {text}
-</button>
+{href ? (
+  <a href={href} class:list={classes}>{text}<slot /></a>
+) : (
+  <button type={type} class:list={classes}>{text}<slot /></button>
+)}
+
+<style>
+  .btn {
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-hard);
+    font-size: 1.1rem;
+    text-decoration: none;
+    transition: transform 60ms steps(2), box-shadow 60ms steps(2), background 100ms;
+  }
+
+  .btn--light {
+    background: #fff;
+    color: var(--ink);
+  }
+
+  .btn--light:hover {
+    background: var(--ink);
+    color: var(--accent);
+  }
+
+  .btn--accent {
+    background: var(--accent);
+    color: var(--ink);
+  }
+
+  .btn--accent:hover {
+    background: #fff;
+  }
+
+  .btn:hover {
+    text-decoration: none;
+  }
+
+  /* "button press": sink into the shadow */
+  .btn:active {
+    transform: translate(6px, 6px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+</style>

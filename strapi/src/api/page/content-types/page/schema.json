@@ -20,6 +20,7 @@
       "type": "enumeration",
       "required": true,
       "enum": [
+        "games",
         "programming",
         "design",
         "writing"

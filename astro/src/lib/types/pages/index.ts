@@ -20,7 +20,7 @@ export interface BaseStrapiResponse {
 // ── Page (project) ─────────────────────────────────────────
 export interface Page extends BaseStrapiResponse {
   slug: string;
-  category: 'programming' | 'design' | 'writing';
+  category: 'games' | 'programming' | 'design' | 'writing';
   header: ContentHeader;
   thumbnail?: StrapiImage | null;
   keywords?: ContentKeyword[];

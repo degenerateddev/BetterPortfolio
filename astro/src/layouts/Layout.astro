@@ -12,71 +12,80 @@ interface Props {
 const { title } = Astro.props;
 
 let url = Astro.url.href;
+
+const description = "I'm Tim, an indie game developer from Germany. I build games with Godot, Unreal, Blender and Aseprite, and on the side I do programming, design and fiction writing. Currently studying at the Technical University of Applied Sciences in Augsburg.";
 ---
 
 <!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <meta name="description" content="I'm a programmer and designer from Germany. My main focus is web development and design but I also have experience in cybersecurity and I'm a fiction writer. Currently I'm studying at the Technical University of Applied Sciences in Augsburg." />
+        <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width" />
         <meta name="generator" content={Astro.generator} />
 
-        <meta property="og:title" content="Tim Arnold - Portfolio" />
+        <meta property="og:title" content="Tim Arnold - Indie Game Dev" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://degenerated.dev" />
         <meta property="og:image" content="https://degenerated.dev/img/bg.webp" />
-        <meta property="og:description" content="I'm a programmer and designer from Germany. My main focus is web development and design but I also have experience in cybersecurity and I'm a fiction writer. Currently I'm studying at the Technical University of Applied Sciences in Augsburg." />
-        <meta name="theme-color" content="#FFFFFF">
+        <meta property="og:description" content={description} />
+        <meta name="theme-color" content="#0d0d0d">
 
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://degenerated.dev" />
-        <meta property="twitter:title" content="Tim Arnold - Portfolio" />
-        <meta property="twitter:description" content="I'm a programmer and designer from Germany. My main focus is web development and design but I also have experience in cybersecurity and I'm a fiction writer. Currently I'm studying at the Technical University of Applied Sciences in Augsburg." />
+        <meta property="twitter:title" content="Tim Arnold - Indie Game Dev" />
+        <meta property="twitter:description" content={description} />
         <meta property="twitter:image" content="https://degenerated.dev/img/bg.webp" />
 
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet" />
+
         <ClientRouter />
-        
+
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="sitemap" href="/sitemap-index.xml" />
-        
+
         <title>{title}</title>
     </head>
     <body>
-        <main class="flex flex-col gap-10 p-5 text-stone-900 ibm-plex-mono relative">
+        <main class="flex flex-col gap-10 p-5 text-stone-900 ibm-plex-mono relative overflow-x-clip">
             <Navigation client:only="vue" currentURL={url} />
-            
+
             <div class="min-h-screen pt-28">
                 <slot />
             </div>
 
-            <div class="flex justify-end">
-                <div class="flex flex-col gap-2 text-end p-5 text-xl ibm-base">
-                    <a href="/#Contact">CONTACT</a>
-                    <a href="/#About">ABOUT</a>
-                    <a href="/legal">LEGAL</a>
+            <footer class="band-dark tex-scan -mb-5">
+                <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-10 px-5 md:px-10 py-16">
+                    <div class="space-y-2">
+                        <p class="hud text-[var(--accent)] text-sm">GAME OVER?</p>
+                        <p class="text-3xl md:text-5xl ibm-semibold">THANKS FOR PLAYING<span class="blink">_</span></p>
+                        <p class="hud text-xs opacity-60">© {new Date().getFullYear()} TIM ARNOLD</p>
+                    </div>
+                    <nav class="flex flex-col gap-2 text-end text-xl ibm-base">
+                        <a href="/#contact">CONTACT</a>
+                        <a href="/#about">ABOUT</a>
+                        <a href="/legal">LEGAL</a>
+                    </nav>
                 </div>
-            </div>
-
-            <script>
-                import gsap from "gsap";
-                window.gsap = gsap;
-            </script>
+            </footer>
         </main>
+
+        <script>
+            import { initAnimations } from '../lib/animations';
+            document.addEventListener('astro:page-load', initAnimations);
+        </script>
     </body>
 </html>
 
 <style is:global>
     :root {
-        --accent: 136, 58, 234;
-        --accent-light: 224, 204, 250;
-        --accent-dark: 49, 10, 101;
-        --accent-gradient: linear-gradient(
-            45deg,
-            rgb(var(--accent)),
-            rgb(var(--accent-light)) 30%,
-            white 60%
-        );
+        --ink: #0d0d0d;
+        --paper: #f1efe8;
+        --accent: #d4ff00;
+        --accent-2: #ff3b2f;
+        --shadow-hard: 6px 6px 0 var(--ink);
     }
 
     .ibm-base {
@@ -86,13 +95,22 @@ let url = Astro.url.href;
 
     .ibm-semibold {
         font-family: 'IBM Plex Mono', monospace;
-        font-weight: 500;
+        font-weight: 600;
+    }
+
+    /* pixel font, reserved for small HUD labels */
+    .hud {
+        font-family: 'Silkscreen', 'IBM Plex Mono', monospace;
+        font-weight: 400;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
     }
 
     html {
         color: #F1F1F1;
         font-family: 'IBM Plex Mono', monospace;
         font-weight: 100;
+        background: var(--paper);
     }
 
     code {
@@ -158,21 +176,94 @@ let url = Astro.url.href;
     @media screen and (max-width: 1024px) {
         h1, h2 {
             font-size: 49px;
-            /* font-weight: 400; */
         }
 
         p {
             font-size: 15px;
         }
-        
+
         b {
             font-size: 15px;
         }
     }
 
     .retro-shadow {
-        box-shadow: 4px 4px 0 rgba(0, 0, 0, 1);
+        box-shadow: var(--shadow-hard);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
+    }
+
+    /* ── Full-bleed dark band (escapes the p-5 of <main>) ───────── */
+    .band-dark {
+        position: relative;
+        margin-left: -1.25rem;
+        margin-right: -1.25rem;
+        background: var(--ink);
+        color: var(--paper);
+        border-top: 2px solid var(--ink);
+        border-bottom: 2px solid var(--ink);
+    }
+
+    .band-dark a:hover {
+        color: var(--accent);
+    }
+
+    .accent {
+        color: var(--accent);
+    }
+
+    /* ── Placeholder textures ─────────────────────────────────── */
+    .tex-scan::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.04) 0 1px,
+            transparent 1px 3px
+        );
+    }
+
+    .tex-dither {
+        background-color: var(--paper);
+        background-image: repeating-conic-gradient(var(--ink) 0 25%, transparent 0 50%);
+        background-size: 4px 4px;
+    }
+
+    .tex-noise {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    }
+
+    .tex-hazard {
+        background: repeating-linear-gradient(
+            -45deg,
+            var(--accent) 0 18px,
+            var(--ink) 18px 36px
+        );
+    }
+
+    .tex-grid {
+        background-image:
+            linear-gradient(rgba(212, 255, 0, 0.12) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(212, 255, 0, 0.12) 1px, transparent 1px);
+        background-size: 32px 32px;
+    }
+
+    /* ── Small looping animations ─────────────────────────────── */
+    .blink {
+        animation: blink 1s steps(1) infinite;
+    }
+
+    @keyframes blink {
+        50% { opacity: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.001ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.001ms !important;
+        }
     }
 </style>
