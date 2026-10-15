@@ -6,6 +6,8 @@ import type {
   DynamicZoneItem,
   ContainerBento,
   Container2x2,
+  ContentCharacterSheet,
+  ContentGameShowcase,
 } from '../components';
 
 // ── Base Strapi response fields ────────────────────────────
@@ -33,8 +35,12 @@ export interface Home extends BaseStrapiResponse {
   headline: string;
   subheadline?: string;
   aboutText?: string;
-  aboutImage?: StrapiImage | null;  portfolio?: StrapiImage | null;
-  resume?: StrapiImage | null;  sections?: (ContainerBento | Container2x2)[];
+  aboutImage?: StrapiImage | null;
+  portfolio?: StrapiImage | null;
+  resume?: StrapiImage | null;
+  characterSheet?: ContentCharacterSheet | null;
+  gameShowcase?: ContentGameShowcase | null;
+  sections?: (ContainerBento | Container2x2)[];
 }
 
 // ── Strapi list response wrapper ───────────────────────────

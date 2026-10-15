@@ -1,0 +1,50 @@
+{
+  "collectionName": "components_content_character_sheets",
+  "info": {
+    "displayName": "Character Sheet",
+    "icon": "user",
+    "description": "The CHARACTER_SHEET window in the home hero"
+  },
+  "options": {},
+  "attributes": {
+    "windowTitle": {
+      "type": "string",
+      "default": "CHARACTER_SHEET"
+    },
+    "status": {
+      "type": "string",
+      "default": "SAVE OK"
+    },
+    "characterClass": {
+      "type": "string",
+      "default": "GAME DEV"
+    },
+    "level": {
+      "type": "string",
+      "default": "∞"
+    },
+    "stats": {
+      "type": "component",
+      "component": "content.stat-bar",
+      "repeatable": true
+    },
+    "skills": {
+      "type": "component",
+      "component": "content.stat-bar",
+      "repeatable": true
+    },
+    "inventoryLabel": {
+      "type": "string",
+      "default": "INVENTORY"
+    },
+    "resumeLabel": {
+      "type": "string",
+      "default": "RESUME"
+    },
+    "portfolioLabel": {
+      "type": "string",
+      "default": "PORTFOLIO"
+    }
+  },
+  "config": {}
+}

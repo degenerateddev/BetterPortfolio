@@ -2,7 +2,7 @@
 import Slot from './Slot.astro';
 
 interface Props {
-  data: Record<number, { src: string; link?: string; title?: string }>,
+  data: Record<number, { src: string; link?: string; title?: string; placeholderLabel?: string }>,
   variant?: 'light' | 'dark',
 };
 
@@ -20,7 +20,7 @@ const entries = Object.entries(data);
       <Slot item={data[4]} index={4} variant={variant} large />
     </div>
     <div class="grid grid-cols-2 grid-rows-2 gap-2 md:gap-5">
-      {entries.slice(0, 4).map(([key, value]) => (
+      {entries.filter(([key]) => Number(key) < 4).map(([key, value]) => (
         <Slot item={value} index={Number(key)} variant={variant} />
       ))}
     </div>

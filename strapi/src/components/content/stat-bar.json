@@ -1,0 +1,38 @@
+{
+  "collectionName": "components_content_stat_bars",
+  "info": {
+    "displayName": "Stat Bar",
+    "icon": "chartBubble",
+    "description": "Loading-bar style stat (0-100) with an optional icon"
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true
+    },
+    "value": {
+      "type": "integer",
+      "required": true,
+      "min": 0,
+      "max": 100,
+      "default": 50
+    },
+    "color": {
+      "type": "enumeration",
+      "enum": ["accent", "red"],
+      "default": "accent",
+      "required": true
+    },
+    "icon": {
+      "type": "enumeration",
+      "enum": ["arduino","aseprite","astro","audacity","aws","blender","django","figma","flutter","godot","maya","next","pocketbase","postgres","redis","sveltekit","tailwind","unreal","strapi","nuxt"]
+    },
+    "customIcon": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    }
+  },
+  "config": {}
+}

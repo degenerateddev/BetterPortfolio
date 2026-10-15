@@ -46,6 +46,16 @@
         "files"
       ]
     },
+    "characterSheet": {
+      "type": "component",
+      "component": "content.character-sheet",
+      "repeatable": false
+    },
+    "gameShowcase": {
+      "type": "component",
+      "component": "content.game-showcase",
+      "repeatable": false
+    },
     "sections": {
       "type": "dynamiczone",
       "components": [

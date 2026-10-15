@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_content_game_slots",
+  "info": {
+    "displayName": "Game Slot",
+    "icon": "puzzle",
+    "description": "One slot in the Select Game grid. Leave page and image empty for a placeholder."
+  },
+  "options": {},
+  "attributes": {
+    "page": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::page.page"
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "allowedTypes": ["images"]
+    },
+    "title": {
+      "type": "string"
+    },
+    "externalLink": {
+      "type": "string"
+    },
+    "placeholderLabel": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

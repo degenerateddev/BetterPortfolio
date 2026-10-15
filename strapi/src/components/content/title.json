@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_content_titles",
+  "info": {
+    "displayName": "Title",
+    "icon": "bold",
+    "description": "Section heading with an optional subtitle (rendered as a small HUD label above the title)"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "subtitle": {
+      "type": "string"
+    }
+  },
+  "config": {}
+}

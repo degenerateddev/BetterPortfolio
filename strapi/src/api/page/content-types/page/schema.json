@@ -54,6 +54,7 @@
       "components": [
         "container.bento",
         "container.2x2",
+        "content.title",
         "content.text-block",
         "content.image-block",
         "content.video-embed",

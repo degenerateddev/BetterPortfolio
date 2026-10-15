@@ -8,17 +8,14 @@ import DynamicBento from '../components/grids/DynamicBento.astro';
 import DynamicEqual from '../components/grids/DynamicEqual.astro';
 import Bento from '../components/grids/Bento.astro';
 import Button from '../components/Button.astro';
-import StatBar from '../components/StatBar.astro';
+import StatRow from '../components/StatRow.astro';
+import Title from '../components/Title.astro';
 import Marquee from '../components/Marquee.astro';
-import Godot from '../components/icons/Godot.astro';
-import Unreal from '../components/icons/Unreal.astro';
-import Blender from '../components/icons/Blender.astro';
-import Aseprite from '../components/icons/Aseprite.astro';
 import Equal from '../components/grids/Equal.astro';
 import { fetchHome, fetchGamePages } from '../lib/strapi';
 import type { Home, Page } from '../lib/types/pages';
-import type { ContainerBento, Container2x2 } from '../lib/types/components';
-import { strapiImageUrl } from '../lib/helpers';
+import type { ContainerBento, Container2x2, ContentGameSlot, ContentStatBar } from '../lib/types/components';
+import { strapiImageUrl, cubeLink } from '../lib/helpers';
 
 // ── Fetch data from Strapi ──────────────────────────────────
 let home: Home | null = null;
@@ -46,25 +43,48 @@ try {
 }
 
 const byTitle = (title: string) => sections.filter(s => s.title?.toLowerCase() === title);
-// curated Home sections titled "games" win; otherwise list every Page in the "games" category
+
+// ── Select Game ─────────────────────────────────────────────
+// Priority: Home → Game Showcase slots, then Home sections titled "games",
+// then every Page in the "games" category (newest first)
+const showcase = home?.gameShowcase;
+const gameHeading = showcase?.heading ?? { title: 'SELECT GAME', subtitle: 'WORLD 1' };
+const gameHint = showcase ? showcase.hint : '◀ ▶ BROWSE · ENTER TO PLAY';
+const fillWithPlaceholders = showcase?.fillWithPlaceholders ?? true;
 const gameSections = byTitle('games');
 
-type SlotItem = { src: string; link?: string; title?: string };
-const toSlotData = (pages: Page[], offset = 0) =>
-    Object.fromEntries(pages.map((page, i): [number, SlotItem] => [offset + i, {
-        src: strapiImageUrl(page.thumbnail),
-        link: `/project/${page.slug}`,
-        title: page.header?.title,
-    }]));
+type SlotItem = { src: string; link?: string; title?: string; placeholderLabel?: string };
+const fromGameSlot = (slot: ContentGameSlot): SlotItem => {
+    const image = slot.image ?? slot.page?.thumbnail;
+    return {
+        src: strapiImageUrl(image),
+        link: cubeLink({ page: slot.page, externalLink: slot.externalLink ?? undefined }),
+        title: slot.title || slot.page?.header?.title || image?.alternativeText,
+        placeholderLabel: slot.placeholderLabel ?? undefined,
+    };
+};
+const fromPage = (page: Page): SlotItem => ({
+    src: strapiImageUrl(page.thumbnail),
+    link: `/project/${page.slug}`,
+    title: page.header?.title,
+});
 
-// newest game takes the large bento slot (index 4), the next four fill the 2x2,
+const curatedGames = Boolean(showcase?.featured || showcase?.games?.length);
+const featuredGame = curatedGames
+    ? (showcase?.featured ? fromGameSlot(showcase.featured) : undefined)
+    : (gamePages[0] && fromPage(gamePages[0]));
+const otherGames = curatedGames
+    ? (showcase?.games ?? []).map(fromGameSlot)
+    : gamePages.slice(1).map(fromPage);
+
+// featured game takes the large bento slot (index 4), the next four fill the 2x2,
 // anything beyond that goes into equal rows below
-const [featuredGame, ...otherGames] = gamePages;
-const gameBento: Record<number, SlotItem> = featuredGame
-    ? { ...toSlotData(otherGames.slice(0, 4)), 4: toSlotData([featuredGame])[0] }
-    : {};
-for (let i = 0; i < 4; i++) gameBento[i] ??= { src: '/img/placeholder.webp' };
-const extraGames = toSlotData(otherGames.slice(4), 5);
+const gameBento: Record<number, SlotItem> = Object.fromEntries(otherGames.slice(0, 4).map((game, i) => [i, game]));
+if (featuredGame) gameBento[4] = featuredGame;
+if (fillWithPlaceholders) {
+    for (let i = 0; i < 4; i++) gameBento[i] ??= { src: '/img/placeholder.webp' };
+}
+const extraGames = Object.fromEntries(otherGames.slice(4).map((game, i) => [i + 5, game]));
 
 const sideQuests = [
     { id: 'programming', label: 'PROGRAMMING', sections: byTitle('programming') },
@@ -72,13 +92,26 @@ const sideQuests = [
     { id: 'writing', label: 'WRITING', sections: byTitle('writing') },
 ];
 
-// Character sheet skill levels: edit freely
-const skills = [
-    { label: 'GODOT', value: 85, icon: Godot },
-    { label: 'UNREAL', value: 60, icon: Unreal },
-    { label: 'BLENDER', value: 70, icon: Blender },
-    { label: 'ASEPRITE', value: 75, icon: Aseprite },
+// ── Character sheet ─────────────────────────────────────────
+// Edited in Strapi under Home → Character Sheet; these defaults apply until it is filled in
+type Stat = Omit<ContentStatBar, 'id'>;
+const sheet = home?.characterSheet;
+const stats: Stat[] = sheet ? sheet.stats ?? [] : [{ label: 'HP · COFFEE', value: 64, color: 'red' }];
+const skills: Stat[] = sheet ? sheet.skills ?? [] : [
+    { label: 'GODOT', value: 85, icon: 'godot' },
+    { label: 'UNREAL', value: 60, icon: 'unreal' },
+    { label: 'BLENDER', value: 70, icon: 'blender' },
+    { label: 'ASEPRITE', value: 75, icon: 'aseprite' },
 ];
+const sheetText = {
+    windowTitle: sheet?.windowTitle || 'CHARACTER_SHEET',
+    status: sheet?.status || 'SAVE OK',
+    characterClass: sheet?.characterClass || 'GAME DEV',
+    level: sheet?.level || '∞',
+    inventory: sheet?.inventoryLabel || 'INVENTORY',
+    resume: sheet?.resumeLabel || 'RESUME',
+    portfolio: sheet?.portfolioLabel || 'PORTFOLIO',
+};
 
 const tickerItems = ['NOW DEVELOPING', 'GODOT', 'GAME DESIGN', 'PIXEL ART', 'BLENDER', 'LEVEL DESIGN', 'SHADERS', 'GAME JAMS'];
 
@@ -109,33 +142,30 @@ const contactEndpoint = `${import.meta.env.PUBLIC_STRAPI_URL || import.meta.env.
                     </div>
                 </div>
 
-                <Window title="CHARACTER_SHEET" class="w-full xl:w-[420px]" status="SAVE OK">
+                <Window title={sheetText.windowTitle} class="w-full xl:w-[420px]" status={sheetText.status}>
                     <div class="p-6 space-y-6">
                         <div class="flex justify-between hud text-sm">
-                            <span>CLASS: GAME DEV</span>
-                            <span>LVL <span class="text-[var(--accent-2)]">∞</span></span>
+                            <span>CLASS: {sheetText.characterClass}</span>
+                            <span>LVL <span class="text-[var(--accent-2)]">{sheetText.level}</span></span>
                         </div>
-                        <StatBar label="HP · COFFEE" value={64} color="red" />
-                        <div class="space-y-4">
-                            {skills.map(({ label, value, icon: Icon }) => (
-                                <div class="flex items-center gap-4">
-                                    <div class="skill-icon shrink-0"><Icon /></div>
-                                    <div class="flex-grow"><StatBar label={label} value={value} /></div>
-                                </div>
-                            ))}
-                        </div>
+                        {stats.map((stat) => <StatRow stat={stat} />)}
+                        {skills.length > 0 && (
+                            <div class="space-y-4">
+                                {skills.map((skill) => <StatRow stat={skill} />)}
+                            </div>
+                        )}
                         {(portfolioUrl || resumeUrl) && (
                             <div class="space-y-2">
-                                <p class="hud text-xs">INVENTORY</p>
+                                <p class="hud text-xs">{sheetText.inventory}</p>
                                 <div class="grid grid-cols-2 gap-3">
                                     {resumeUrl && (
                                         <a href={resumeUrl} target="_blank" download="Resume_Tim_Arnold.pdf" class="item">
-                                            <span aria-hidden="true">⬇</span> RESUME
+                                            <span aria-hidden="true">⬇</span> {sheetText.resume}
                                         </a>
                                     )}
                                     {portfolioUrl && (
                                         <a href={portfolioUrl} target="_blank" download="Portfolio_Tim_Arnold.pdf" class="item">
-                                            <span aria-hidden="true">⬇</span> PORTFOLIO
+                                            <span aria-hidden="true">⬇</span> {sheetText.portfolio}
                                         </a>
                                     )}
                                 </div>
@@ -152,14 +182,11 @@ const contactEndpoint = `${import.meta.env.PUBLIC_STRAPI_URL || import.meta.env.
         <section id="games" class="band-dark tex-scan tex-noise py-24 md:py-40 -mt-2">
             <div class="relative z-10 px-5 md:px-10 space-y-12">
                 <div class="flex flex-wrap justify-between items-end gap-4">
-                    <div>
-                        <p class="hud text-sm accent">WORLD 1</p>
-                        <h2 class="ibm-semibold">SELECT GAME</h2>
-                    </div>
-                    <p class="hud text-xs opacity-70">◀ ▶ BROWSE · ENTER TO PLAY</p>
+                    <Title title={gameHeading.title} subtitle={gameHeading.subtitle} variant="dark" />
+                    {gameHint && <p class="hud text-xs opacity-70">{gameHint}</p>}
                 </div>
 
-                {gameSections.length > 0 ? (
+                {!curatedGames && gameSections.length > 0 ? (
                     <div class="space-y-10">
                         {gameSections.map((section) => (
                             section.__component === 'container.bento'
@@ -168,7 +195,7 @@ const contactEndpoint = `${import.meta.env.PUBLIC_STRAPI_URL || import.meta.env.
                         ))}
                     </div>
                 ) : (
-                    <!-- games from Strapi pages; empty slots render as placeholder cartridges -->
+                    <!-- games from Strapi; empty slots render as placeholder cartridges -->
                     <div class="space-y-10">
                         <Bento variant="dark" data={gameBento} />
                         <Equal variant="dark" data={extraGames} />
@@ -298,20 +325,6 @@ const contactEndpoint = `${import.meta.env.PUBLIC_STRAPI_URL || import.meta.env.
 </Layout>
 
 <style>
-    .skill-icon {
-        width: 2.5rem;
-        height: 2.5rem;
-        display: grid;
-        place-items: center;
-        border: 2px solid var(--ink);
-        background: var(--paper);
-    }
-
-    .skill-icon :global(svg) {
-        width: 1.75rem;
-        height: 1.75rem;
-    }
-
     .item {
         display: flex;
         align-items: center;

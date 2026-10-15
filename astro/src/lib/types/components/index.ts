@@ -82,6 +82,59 @@ export interface ContentImage {
   image: StrapiImage;
 }
 
+export interface ContentTitle {
+  id: number;
+  __component?: 'content.title';
+  title: string;
+  subtitle?: string | null;
+}
+
+export interface ContentStatBar {
+  id: number;
+  label: string;
+  value: number;
+  color?: 'accent' | 'red';
+  icon?: IconKey | null;
+  customIcon?: StrapiImage | null;
+}
+
+export interface ContentCharacterSheet {
+  id: number;
+  windowTitle?: string | null;
+  status?: string | null;
+  characterClass?: string | null;
+  level?: string | null;
+  stats?: ContentStatBar[];
+  skills?: ContentStatBar[];
+  inventoryLabel?: string | null;
+  resumeLabel?: string | null;
+  portfolioLabel?: string | null;
+}
+
+export interface ContentGameSlot {
+  id: number;
+  page?: {
+    id: number;
+    documentId: string;
+    slug: string;
+    header?: ContentHeader;
+    thumbnail?: StrapiImage | null;
+  } | null;
+  image?: StrapiImage | null;
+  title?: string | null;
+  externalLink?: string | null;
+  placeholderLabel?: string | null;
+}
+
+export interface ContentGameShowcase {
+  id: number;
+  heading?: ContentTitle | null;
+  hint?: string | null;
+  featured?: ContentGameSlot | null;
+  games?: ContentGameSlot[];
+  fillWithPlaceholders?: boolean | null;
+}
+
 export interface ContentVideoEmbed {
   id: number;
   __component: 'content.video-embed';
@@ -109,6 +162,7 @@ export type DynamicZoneItem =
   | ContainerBento
   | Container2x2
   | ContentIcon
+  | (ContentTitle & { __component: 'content.title' })
   | ContentTextBlock
   | ContentImageBlock
   | ContentImage

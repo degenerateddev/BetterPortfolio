@@ -1,0 +1,35 @@
+{
+  "collectionName": "components_content_game_showcases",
+  "info": {
+    "displayName": "Game Showcase",
+    "icon": "play",
+    "description": "The Select Game section on the home page"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "component",
+      "component": "content.title",
+      "repeatable": false
+    },
+    "hint": {
+      "type": "string",
+      "default": "◀ ▶ BROWSE · ENTER TO PLAY"
+    },
+    "featured": {
+      "type": "component",
+      "component": "content.game-slot",
+      "repeatable": false
+    },
+    "games": {
+      "type": "component",
+      "component": "content.game-slot",
+      "repeatable": true
+    },
+    "fillWithPlaceholders": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "config": {}
+}

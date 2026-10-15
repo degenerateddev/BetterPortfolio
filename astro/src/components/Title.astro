@@ -1,0 +1,22 @@
+---
+/**
+ * Section heading: an optional small HUD subtitle above a large title.
+ * Mirrors the Strapi `content.title` component.
+ */
+interface Props {
+    title: string;
+    subtitle?: string | null;
+    variant?: 'light' | 'dark';
+    as?: 'h1' | 'h2' | 'h3';
+    class?: string;
+}
+
+const { title, subtitle, variant = 'light', as: Heading = 'h2', class: className } = Astro.props;
+---
+
+<div class:list={[variant === 'light' && 'text-stone-900', className]}>
+    {subtitle && (
+        <p class:list={['hud text-sm', variant === 'dark' ? 'accent' : 'text-[var(--accent-2)]']}>{subtitle}</p>
+    )}
+    <Heading class:list={[variant === 'dark' && 'ibm-semibold']}>{title}</Heading>
+</div>

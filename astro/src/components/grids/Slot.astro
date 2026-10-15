@@ -4,7 +4,7 @@
  * hazard-striped "coming soon" placeholder.
  */
 interface Props {
-  item?: { src: string; link?: string; title?: string };
+  item?: { src: string; link?: string; title?: string; placeholderLabel?: string };
   index: number;
   variant?: 'light' | 'dark';
   large?: boolean;
@@ -29,7 +29,7 @@ const linkAttrs = item?.link
   {!large && <span class="block pb-[100%]" aria-hidden="true"></span>}
   {isPlaceholder ? (
     <div class="slot__placeholder tex-hazard absolute inset-0">
-      <span class="hud slot__placeholder-label">{large ? 'IN DEVELOPMENT' : 'COMING SOON'}</span>
+      <span class="hud slot__placeholder-label">{item?.placeholderLabel || (large ? 'IN DEVELOPMENT' : 'COMING SOON')}</span>
     </div>
   ) : (
     <img class="absolute inset-0 h-full w-full object-cover" src={item!.src} alt={item!.title || `Project ${label}`} loading="lazy" />

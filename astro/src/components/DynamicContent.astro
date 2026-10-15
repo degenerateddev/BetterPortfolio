@@ -8,6 +8,7 @@ import DynamicBento from './grids/DynamicBento.astro';
 import DynamicEqual from './grids/DynamicEqual.astro';
 import IconResolver from './IconResolver.astro';
 import Section from './Section.astro';
+import Title from './Title.astro';
 import { strapiImageUrl } from '../lib/helpers';
 import Text from './Text.vue';
 
@@ -34,6 +35,12 @@ const { content } = Astro.props;
   if (block.__component === 'content.icon') {
     return (
       <IconResolver iconKey={block.key} />
+    );
+  }
+
+  if (block.__component === 'content.title') {
+    return (
+      <Title title={block.title} subtitle={block.subtitle} />
     );
   }
 

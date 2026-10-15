@@ -1,0 +1,46 @@
+---
+/**
+ * StatBar with an optional icon box in front, driven by a Strapi `content.stat-bar`.
+ * An uploaded `customIcon` wins over the built-in `icon` key.
+ */
+import type { ContentStatBar } from '../lib/types/components';
+import { strapiImageUrl } from '../lib/helpers';
+import IconResolver from './IconResolver.astro';
+import StatBar from './StatBar.astro';
+
+interface Props {
+    stat: Omit<ContentStatBar, 'id'>;
+}
+
+const { stat } = Astro.props;
+const hasIcon = Boolean(stat.customIcon || stat.icon);
+---
+
+<div class="flex items-center gap-4">
+    {hasIcon && (
+        <div class="stat-icon shrink-0">
+            {stat.customIcon
+                ? <img src={strapiImageUrl(stat.customIcon)} alt={stat.customIcon.alternativeText || ''} />
+                : <IconResolver iconKey={stat.icon!} />}
+        </div>
+    )}
+    <div class="flex-grow"><StatBar label={stat.label} value={stat.value} color={stat.color || 'accent'} /></div>
+</div>
+
+<style>
+    .stat-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--ink);
+        background: var(--paper);
+    }
+
+    .stat-icon :global(svg),
+    .stat-icon img {
+        width: 1.75rem;
+        height: 1.75rem;
+        object-fit: contain;
+    }
+</style>

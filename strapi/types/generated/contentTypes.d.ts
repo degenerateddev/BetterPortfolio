@@ -484,9 +484,14 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
   attributes: {
     aboutImage: Schema.Attribute.Media<'images'> & Schema.Attribute.Required;
     aboutText: Schema.Attribute.RichText & Schema.Attribute.Required;
+    characterSheet: Schema.Attribute.Component<
+      'content.character-sheet',
+      false
+    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    gameShowcase: Schema.Attribute.Component<'content.game-showcase', false>;
     headline: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::home.home'> &
@@ -524,6 +529,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
       [
         'container.bento',
         'container.2x2',
+        'content.title',
         'content.text-block',
         'content.image-block',
         'content.video-embed',
