@@ -15,7 +15,8 @@ const entries = Object.entries(data);
   <div data-slot-grid class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5">
     <!-- the large slot is absolutely filled, so its image never drives the row height:
          it is square on mobile and stretches to match the 2x2 on desktop -->
-    <div class="relative aspect-square md:aspect-auto">
+    <div class="relative">
+      <div class="pb-[100%] md:hidden" aria-hidden="true"></div>
       <Slot item={data[4]} index={4} variant={variant} large />
     </div>
     <div class="grid grid-cols-2 grid-rows-2 gap-2 md:gap-5">

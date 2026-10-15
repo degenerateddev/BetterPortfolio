@@ -23,8 +23,10 @@ const linkAttrs = item?.link
 ---
 
 <!-- media is absolutely positioned so image dimensions never change the slot's size:
-     small slots are square, large slots fill their (sized) parent -->
-<Tag class:list={['slot group', `slot--${variant}`, item?.link && 'slot--link', large ? 'absolute inset-0' : 'relative aspect-square']} {...linkAttrs} data-slot>
+     small slots get their square height from a padding spacer (the aspect-ratio plugin
+     removes Tailwind's aspect-square), large slots fill their sized parent -->
+<Tag class:list={['slot group', `slot--${variant}`, item?.link && 'slot--link', large ? 'absolute inset-0' : 'relative']} {...linkAttrs} data-slot>
+  {!large && <span class="block pb-[100%]" aria-hidden="true"></span>}
   {isPlaceholder ? (
     <div class="slot__placeholder tex-hazard absolute inset-0">
       <span class="hud slot__placeholder-label">{large ? 'IN DEVELOPMENT' : 'COMING SOON'}</span>
