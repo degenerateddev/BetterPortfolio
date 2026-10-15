@@ -1,23 +1,19 @@
----
-interface props {
-  data: Object,
+﻿---
+import Slot from './Slot.astro';
+
+interface Props {
+  data: Record<number, { src: string; link?: string; title?: string }>,
+  variant?: 'light' | 'dark',
 };
-  
+
 const data = Astro.props.data || {};
+const variant = Astro.props.variant || 'light';
 ---
 
 {Object.entries(data).length > 0 && (
-  <div class="grid grid-cols-2 md:grid-cols-4">
+  <div data-slot-grid class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-5">
     {Object.entries(data).map(([key, value]) => (
-      <div class="border" key={key}>
-        {value.link ? (
-          <a href={value.link}>
-            <img src={value.src} />
-          </a>
-        ) : (
-          <img src={value.src} />
-        )}
-      </div>
+      <Slot item={value} index={Number(key)} variant={variant} />
     ))}
   </div>
 )}

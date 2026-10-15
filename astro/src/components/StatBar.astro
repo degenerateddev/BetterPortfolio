@@ -1,0 +1,52 @@
+---
+/**
+ * HP/XP style bar. `value` is 0-100; the fill animates in on scroll.
+ */
+interface Props {
+    label: string;
+    value: number;
+    color?: 'accent' | 'red';
+}
+
+const { label, value, color = 'accent' } = Astro.props;
+const clamped = Math.max(0, Math.min(100, value));
+---
+
+<div class="space-y-1">
+    <div class="flex justify-between hud text-xs">
+        <span>{label}</span>
+        <span>{clamped}/100</span>
+    </div>
+    <div class="statbar" role="meter" aria-label={label} aria-valuemin="0" aria-valuemax="100" aria-valuenow={clamped}>
+        <div
+            class:list={['statbar__fill', color === 'red' && 'statbar__fill--red']}
+            style={`width: ${clamped}%`}
+            data-statbar={clamped}
+        />
+    </div>
+</div>
+
+<style>
+    .statbar {
+        height: 14px;
+        border: 2px solid currentColor;
+        padding: 2px;
+    }
+
+    .statbar__fill {
+        height: 100%;
+        background: repeating-linear-gradient(
+            90deg,
+            var(--accent) 0 8px,
+            transparent 8px 10px
+        );
+    }
+
+    .statbar__fill--red {
+        background: repeating-linear-gradient(
+            90deg,
+            var(--accent-2) 0 8px,
+            transparent 8px 10px
+        );
+    }
+</style>

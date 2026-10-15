@@ -1,0 +1,47 @@
+---
+interface Props {
+    items: string[];
+}
+
+const { items } = Astro.props;
+// duplicated once so the -50% translate loops seamlessly
+const track = [...items, ...items];
+---
+
+<div class="marquee band-dark" aria-hidden="true">
+    <div class="marquee__track hud">
+        {track.map((item) => (
+            <span class="marquee__item">{item}<span class="accent px-6">✦</span></span>
+        ))}
+    </div>
+</div>
+
+<style>
+    .marquee {
+        overflow: hidden;
+        background: var(--accent);
+        color: var(--ink);
+        border-color: var(--ink);
+        padding: 0.75rem 0;
+        transform: rotate(-1deg);
+    }
+
+    .marquee .accent {
+        color: var(--ink);
+    }
+
+    .marquee__track {
+        display: flex;
+        width: max-content;
+        animation: marquee 30s linear infinite;
+        font-size: 1.25rem;
+    }
+
+    .marquee__item {
+        white-space: nowrap;
+    }
+
+    @keyframes marquee {
+        to { transform: translateX(-50%); }
+    }
+</style>

@@ -11,14 +11,13 @@ const props = withDefaults(defineProps<{
     currentURL: ''
 });
 
-const sections = {
-    0: "ABOUT",
-    1: "PROGRAMMING",
-    2: "DESIGN",
-    4: "WRITING"
-};
+const sections = [
+    { label: "GAMES", id: "games" },
+    { label: "SIDE QUESTS", id: "side-quests" },
+    { label: "ABOUT", id: "about" },
+    { label: "CONTACT", id: "contact" },
+];
 const selectedSection = ref<number>(props.selectedSection);
-const currentURL = ref<string>(props.currentURL);
 const menuExpanded = ref<boolean>(false);
 const lowerSectionRef = ref<HTMLElement | null>(null);
 
@@ -26,25 +25,22 @@ const selectSection = (index: number) => {
     selectedSection.value = index;
 };
 
-const scrollToSection = async (section: string, index: number) => {
-    if (currentURL.value !== '/') {
-        window.location.href = '/#' + section;
+const scrollToSection = (id: string, index: number) => {
+    const target = document.getElementById(id);
+    if (!target) {
+        // not on the home page: let the browser navigate there
+        window.location.href = '/#' + id;
+        return;
     }
 
-    const target = document.getElementById(section);
-    if (target) {
-        gsap.to(window, { scrollTo: target, duration: 1, ease: "expo.inOut" });
-    } else {
-        console.error(`Element with ID ${section} not found.`);
-    }
-    
+    gsap.to(window, { scrollTo: { y: target, offsetY: 120 }, duration: 1, ease: "expo.inOut" });
     closeMenu();
     selectSection(index);
 };
 
 const expandMenu = () => {
     if (!menuExpanded.value) {
-        gsap.to(lowerSectionRef.value, { height: '85vh', duration: 0.1, ease: "elastic" });
+        gsap.to(lowerSectionRef.value, { height: 'auto', duration: 0.25, ease: "steps(5)" });
         menuExpanded.value = true;
     } else {
         closeMenu();
@@ -52,7 +48,7 @@ const expandMenu = () => {
 };
 
 const closeMenu = () => {
-    gsap.to(lowerSectionRef.value, { height: "0", duration: 0.1, ease: "elastic" });
+    gsap.to(lowerSectionRef.value, { height: 0, duration: 0.15, ease: "steps(3)" });
     menuExpanded.value = false;
 };
 
@@ -68,36 +64,46 @@ watch(() => props.selectedSection, (newVal) => {
 
 <template>
     <div class="p-5 block z-50 fixed top-5 left-[50%] -translate-x-[50%] w-full">
-        <div class="w-full border border-black glassmorphism px-5 py-2">
-            <div class="flex justify-between items-center h-16">
-                <a href="/">
-                    <span class="text-2xl font-medium">TIM ARNOLD</span>
+        <div class="w-full hud-bar px-5 py-2">
+            <div class="flex justify-between items-center h-16 gap-4">
+                <a href="/" class="flex items-center gap-3">
+                    <span class="hud text-xs px-2 py-0.5 bg-[var(--accent)] text-[var(--ink)]">P1</span>
+                    <span class="text-xl md:text-2xl font-medium">TIM ARNOLD</span>
                 </a>
-                <div>
-                    <a @click.prevent="expandMenu()" class="bg-transparent hover:cursor-pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-10">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                        </svg>
-                    </a>
+                <div class="flex items-center gap-6">
+                    <span class="hidden md:inline hud text-xs">
+                        <span class="text-[var(--accent-2)] blink">●</span> NOW DEVELOPING
+                    </span>
+                    <button
+                        type="button"
+                        @click="expandMenu()"
+                        class="hud text-sm border-2 border-current px-3 py-1 hover:bg-[var(--accent)] hover:text-[var(--ink)] hover:border-[var(--accent)]"
+                        :aria-expanded="menuExpanded"
+                        aria-controls="pause-menu"
+                    >
+                        {{ menuExpanded ? 'RESUME' : 'MENU' }}
+                    </button>
                 </div>
             </div>
-            <div ref="lowerSectionRef" class="flex flex-col gap-1 md:gap-10 ibm-base text-center items-center justify-center h-0 overflow-hidden transition-all duration-100">
-                <div
-                    v-for="(section, index) in sections" 
-                    :key="index"
-                    :class="[ 
-                        'bg-transparent min-w-[1/4] text-2xl px-3 py-1'
-                    ]"
-                >
-                    <a 
-                        :class="[ 
-                            'bg-transparent',
-                            selectedSection === index ? 'ibm-semibold underline' : ''
+            <div
+                id="pause-menu"
+                ref="lowerSectionRef"
+                class="h-0 overflow-hidden"
+            >
+                <div class="flex flex-col gap-3 md:gap-6 py-10 items-center">
+                    <p class="hud text-sm text-[var(--accent)]">— PAUSED —</p>
+                    <a
+                        v-for="(section, index) in sections"
+                        :key="section.id"
+                        :class="[
+                            'menu-item text-2xl md:text-4xl ibm-base px-3 py-1',
+                            selectedSection === index ? 'menu-item--active' : ''
                         ]"
-                        :href="'/#' + section"
-                        @click.prevent="scrollToSection(section.toLowerCase(), index)"
+                        :href="'/#' + section.id"
+                        @click.prevent="scrollToSection(section.id, index)"
+                        @mouseenter="selectSection(index)"
                     >
-                        {{ section }}
+                        {{ section.label }}
                     </a>
                 </div>
             </div>
@@ -106,10 +112,30 @@ watch(() => props.selectedSection, (newVal) => {
 </template>
 
 <style scoped>
-    .glassmorphism {
-        background: rgba(255, 255, 255, 0.2);
-        box-shadow: 6px 6px 0 rgba(0, 0, 0, 1);
+    .hud-bar {
+        background: rgba(13, 13, 13, 0.92);
+        color: var(--paper);
+        border: 2px solid var(--ink);
+        box-shadow: 6px 6px 0 var(--accent);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
+    }
+
+    .menu-item {
+        text-decoration: none;
+    }
+
+    .menu-item::before {
+        content: '> ';
+        visibility: hidden;
+        color: var(--accent);
+    }
+
+    .menu-item--active {
+        color: var(--accent);
+    }
+
+    .menu-item--active::before {
+        visibility: visible;
     }
 </style>

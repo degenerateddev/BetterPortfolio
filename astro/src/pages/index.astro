@@ -1,14 +1,20 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import KeyWords from '../components/KeyWords.vue';
-import Section from '../components/Section.astro';
+import Window from '../components/Window.astro';
 import Highlight from '../components/Highlight.astro';
 import Socials from '../components/Socials.astro';
 import Text from '../components/Text.vue';
 import DynamicBento from '../components/grids/DynamicBento.astro';
 import DynamicEqual from '../components/grids/DynamicEqual.astro';
+import Bento from '../components/grids/Bento.astro';
 import Button from '../components/Button.astro';
-import { fetchHome, fetchAllPages } from '../lib/strapi';
+import StatBar from '../components/StatBar.astro';
+import Marquee from '../components/Marquee.astro';
+import Godot from '../components/icons/Godot.astro';
+import Unreal from '../components/icons/Unreal.astro';
+import Blender from '../components/icons/Blender.astro';
+import Aseprite from '../components/icons/Aseprite.astro';
+import { fetchHome } from '../lib/strapi';
 import type { Home } from '../lib/types/pages';
 import type { ContainerBento, Container2x2 } from '../lib/types/components';
 import { strapiImageUrl } from '../lib/helpers';
@@ -23,207 +29,305 @@ let resumeUrl = null;
 try {
     home = await fetchHome();
     sections = home?.sections || [];
-    
+
     aboutImage = strapiImageUrl(home?.aboutImage);
     portfolioUrl = strapiImageUrl(home?.portfolio);
     resumeUrl = strapiImageUrl(home?.resume);
-    console.log(aboutImage)
 } catch (e) {
     console.warn('Could not fetch Home from Strapi, falling back to static layout.', e);
 }
 
-let keyWordsCount: Record<string, number> = {};
-try {
-    const allPages = await fetchAllPages();
-    allPages.forEach(page => {
-        page.keywords?.forEach(kw => {
-            keyWordsCount[kw.keyword] = (keyWordsCount[kw.keyword] || 0) + 1;
-        });
-    });
-} catch (e) {
-    console.warn('Could not fetch pages for keywords.', e);
-}
+const byTitle = (title: string) => sections.filter(s => s.title?.toLowerCase() === title);
+const gameSections = byTitle('games');
 
-const programmingSections = sections.filter(s => s.title?.toLowerCase() === 'programming');
-const designSections = sections.filter(s => s.title?.toLowerCase() === 'design');
-const writingSections = sections.filter(s => s.title?.toLowerCase() === 'writing');
+const sideQuests = [
+    { id: 'programming', label: 'PROGRAMMING', sections: byTitle('programming') },
+    { id: 'design', label: 'DESIGN', sections: byTitle('design') },
+    { id: 'writing', label: 'WRITING', sections: byTitle('writing') },
+];
+
+// Character sheet skill levels: edit freely
+const skills = [
+    { label: 'GODOT', value: 85, icon: Godot },
+    { label: 'UNREAL', value: 60, icon: Unreal },
+    { label: 'BLENDER', value: 70, icon: Blender },
+    { label: 'ASEPRITE', value: 75, icon: Aseprite },
+];
+
+const tickerItems = ['NOW DEVELOPING', 'GODOT', 'GAME DESIGN', 'PIXEL ART', 'BLENDER', 'LEVEL DESIGN', 'SHADERS', 'GAME JAMS'];
 
 const contactEndpoint = `${import.meta.env.PUBLIC_STRAPI_URL || import.meta.env.STRAPI_URL}/api/contact-requests`;
 ---
 
-<Layout title="Tim Arnold">
-    <main>
-        <div class="flex flex-col gap-y-24 md:gap-y-96">
-            <section id="about" class="space-y-16 md:space-y-32">
-                <h1 class="text-[90px] md:text-[225px] leading-none md:leading-[225px] text-shadow-md mt-20">
-                    HI!
-                    <br />
-                    I'M TIM
-                </h1>
-                <Highlight text="Programmer, Designer, Writer" />
-    
-                <Section>
-                    <div class="flex flex-col md:flex-row items-center gap-10">
-                        { aboutImage && (
-                            <div class="hidden md:flex justify-center min-h-[20vh] w-full md:w-fit md:min-w-fit md:justify-start">
-                                <img src={aboutImage} alt={home?.aboutImage?.alternativeText || 'About Image'} class="object-fill w-full md:w-auto md:h-full md:object-cover" />
+<Layout title="Tim Arnold · Indie Game Dev">
+    <div class="flex flex-col">
+        <!-- ── HERO ─────────────────────────────────────────── -->
+        <section id="start" class="band-dark tex-scan -mt-28 pt-40 md:pt-48 pb-24 md:pb-40 overflow-hidden">
+            <div class="absolute inset-0 tex-grid opacity-60" aria-hidden="true"></div>
+            <div class="relative z-10 px-5 md:px-10 grid grid-cols-1 xl:grid-cols-[1fr_auto] gap-16 items-end">
+                <div class="space-y-10 md:space-y-16">
+                    <p class="hud text-sm accent">PLAYER 1 · READY</p>
+                    <h1 data-glitch class="text-[80px] md:text-[200px] leading-none md:leading-[190px] ibm-semibold">
+                        HI!
+                        <br />
+                        I'M TIM
+                    </h1>
+                    <div class="flex flex-wrap items-center gap-4">
+                        <Highlight text="INDIE GAME DEV" variant="accent" cursor />
+                        <span class="ibm-base text-base md:text-lg opacity-70">// also: code · design · writing</span>
+                    </div>
+                    <div class="max-w-xs">
+                        <Button text="PRESS START" variant="accent" href="#games">
+                            <span class="blink" aria-hidden="true">▶</span>
+                        </Button>
+                    </div>
+                </div>
+
+                <Window title="CHARACTER_SHEET" class="w-full xl:w-[420px]" status="SAVE OK">
+                    <div class="p-6 space-y-6">
+                        <div class="flex justify-between hud text-sm">
+                            <span>CLASS: GAME DEV</span>
+                            <span>LVL <span class="text-[var(--accent-2)]">∞</span></span>
+                        </div>
+                        <StatBar label="HP · COFFEE" value={64} color="red" />
+                        <div class="space-y-4">
+                            {skills.map(({ label, value, icon: Icon }) => (
+                                <div class="flex items-center gap-4">
+                                    <div class="skill-icon shrink-0"><Icon /></div>
+                                    <div class="flex-grow"><StatBar label={label} value={value} /></div>
+                                </div>
+                            ))}
+                        </div>
+                        {(portfolioUrl || resumeUrl) && (
+                            <div class="space-y-2">
+                                <p class="hud text-xs">INVENTORY</p>
+                                <div class="grid grid-cols-2 gap-3">
+                                    {resumeUrl && (
+                                        <a href={resumeUrl} target="_blank" download="Resume_Tim_Arnold.pdf" class="item">
+                                            <span aria-hidden="true">⬇</span> RESUME
+                                        </a>
+                                    )}
+                                    {portfolioUrl && (
+                                        <a href={portfolioUrl} target="_blank" download="Portfolio_Tim_Arnold.pdf" class="item">
+                                            <span aria-hidden="true">⬇</span> PORTFOLIO
+                                        </a>
+                                    )}
+                                </div>
                             </div>
                         )}
-                        <div class="p-10">
-                            <p class="flex-grow ibm-base">
-                                <Text text={home?.aboutText} />
-                            </p>
-                            <div class="flex gap-5 md:gap-20 justify-start md:justify-center items-center mt-10">
-                                {portfolioUrl && (
-                                    <a href={portfolioUrl} target="_blank" download="Portfolio_Tim_Arnold.pdf">
-                                        <div class="flex flex-col gap-2 items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                                            </svg>
-                                            <small class="ibm-base">Portfolio PDF</small>
-                                        </div>
-                                    </a>
-                                )}
-
-                                {resumeUrl && (
-                                    <a href={resumeUrl} target="_blank" download="Resume_Tim_Arnold.pdf">
-                                        <div class="flex flex-col gap-2 items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                                            </svg>
-                                            <small class="ibm-base">Resume</small>
-                                        </div>
-                                    </a>
-                                )}
-                            </div>
-                        </div>
                     </div>
-                </Section>
-            </section>
+                </Window>
+            </div>
+        </section>
 
-            <section id="programming" class="space-y-10">
-                <div class="flex justify-center md:justify-start items-baseline">
-                    <h2>Programming</h2>
+        <Marquee items={tickerItems} />
+
+        <!-- ── GAMES ────────────────────────────────────────── -->
+        <section id="games" class="band-dark tex-scan tex-noise py-24 md:py-40 -mt-2">
+            <div class="relative z-10 px-5 md:px-10 space-y-12">
+                <div class="flex flex-wrap justify-between items-end gap-4">
+                    <div>
+                        <p class="hud text-sm accent">WORLD 1</p>
+                        <h2 class="ibm-semibold">SELECT GAME</h2>
+                    </div>
+                    <p class="hud text-xs opacity-70">◀ ▶ BROWSE · ENTER TO PLAY</p>
                 </div>
 
-                {programmingSections.length > 0 && (
-                    programmingSections.map((section) => (
+                {gameSections.length > 0 ? (
+                    <div class="space-y-10">
+                        {gameSections.map((section) => (
+                            section.__component === 'container.bento'
+                                ? <DynamicBento cubes={section.cubes} variant="dark" />
+                                : <DynamicEqual cubes={section.cubes} variant="dark" />
+                        ))}
+                    </div>
+                ) : (
+                    <!-- no games in Strapi yet: show placeholder cartridges -->
+                    <Bento
+                        variant="dark"
+                        data={{
+                            0: { src: '/img/placeholder.webp' },
+                            1: { src: '/img/placeholder.webp' },
+                            2: { src: '/img/placeholder.webp' },
+                            3: { src: '/img/placeholder.webp' },
+                        }}
+                    />
+                )}
+            </div>
+        </section>
+
+        <!-- ── ABOUT ────────────────────────────────────────── -->
+        <section id="about" class="py-24 md:py-40 space-y-10">
+            <div class="text-stone-900">
+                <p class="hud text-sm text-[var(--accent-2)]">LORE</p>
+                <h2>ABOUT</h2>
+            </div>
+            <Window title="PLAYER_PROFILE.TXT">
+                <div class="flex flex-col md:flex-row items-stretch">
+                    {aboutImage && (
+                        <div class="hidden md:block md:w-1/3 shrink-0 border-r-2 border-[var(--ink)] tex-dither">
+                            <img src={aboutImage} alt={home?.aboutImage?.alternativeText || 'Portrait of Tim'} class="w-full h-full object-cover mix-blend-multiply grayscale contrast-125" />
+                        </div>
+                    )}
+                    <div class="p-6 md:p-10 ibm-base">
+                        <Text text={home?.aboutText} />
+                    </div>
+                </div>
+            </Window>
+        </section>
+
+        <!-- ── SIDE QUESTS ──────────────────────────────────── -->
+        <section id="side-quests" class="pb-24 md:pb-40 space-y-16">
+            <div class="flex flex-wrap items-end justify-between gap-4 text-stone-900 border-b-2 border-[var(--ink)] pb-4">
+                <div>
+                    <p class="hud text-sm text-[var(--accent-2)]">OPTIONAL</p>
+                    <h2>SIDE QUESTS</h2>
+                </div>
+                <p class="hud text-xs">{sideQuests.length} QUESTS AVAILABLE</p>
+            </div>
+
+            {sideQuests.map((quest, i) => (
+                <div id={quest.id} class="space-y-6">
+                    <h3 class="flex items-center gap-4 text-stone-900">
+                        <span class="hud text-xs px-2 py-1 bg-[var(--ink)] text-[var(--accent)]">QUEST {String(i + 1).padStart(2, '0')}</span>
+                        <span class="text-2xl md:text-4xl ibm-base">{quest.label}</span>
+                    </h3>
+                    {quest.sections.map((section) => (
                         section.__component === 'container.bento'
                             ? <DynamicBento cubes={section.cubes} />
                             : <DynamicEqual cubes={section.cubes} />
-                    ))
-                )}
-            </section>
-
-            <section id="design" class="space-y-10">
-                <div class="flex justify-center md:justify-start items-baseline">
-                    <h2>Design</h2>
+                    ))}
                 </div>
+            ))}
+        </section>
 
-                {designSections.length > 0 && (
-                    designSections.map((section) => (
-                        section.__component === 'container.bento'
-                            ? <DynamicBento cubes={section.cubes} />
-                            : <DynamicEqual cubes={section.cubes} />
-                    ))
-                )}
-            </section>
+        <!-- ── CONTACT ──────────────────────────────────────── -->
+        <section id="contact" class="pb-24 md:pb-40 space-y-10">
+            <div class="flex flex-wrap justify-between items-end gap-4 text-stone-900">
+                <div>
+                    <p class="hud text-sm text-[var(--accent-2)]">CO-OP</p>
+                    <h2>JOIN GAME</h2>
+                </div>
+                <Socials />
+            </div>
 
-            <section id="writing" class="space-y-10">
-                <div class="flex justify-center md:justify-start items-baseline">
-                    <h2>Writing</h2>
-                </div>
-
-                {writingSections.length > 0 && (
-                    writingSections.map((section) => (
-                        section.__component === 'container.bento'
-                            ? <DynamicBento cubes={section.cubes} />
-                            : <DynamicEqual cubes={section.cubes} />
-                    ))
-                )}
-            </section>
-    
-            <section id="contact" class="space-y-10">
-                <div class="flex flex-wrap justify-center md:justify-between items-center">
-                    <h2>Contact</h2>
-                    <Socials />
-                </div>
-                
-                <div class="flex justify-start">
-                    
-                </div>
-    
-                <form id="contact-form" method="POST" action={contactEndpoint} data-endpoint={contactEndpoint} novalidate>
-                    <div class="flex flex-col gap-10">
-                        <div class="flex flex-col md:flex-row gap-10">
-                            <input type="text" name="name" required maxlength="200" autocomplete="name" placeholder="Full name" aria-label="Full name" class="focus:outline-none w-full border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);" />
-                            <input type="email" name="email" required autocomplete="email" placeholder="E-Mail" aria-label="E-Mail" class="focus:outline-none w-full border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);" />
+            <Window title="NEW_MESSAGE" status="CONNECTED">
+                <form id="contact-form" class="p-6 md:p-10" method="POST" action={contactEndpoint} data-endpoint={contactEndpoint} novalidate>
+                    <div class="flex flex-col gap-8">
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <input type="text" name="name" required maxlength="200" autocomplete="name" placeholder="PLAYER NAME" aria-label="Full name" class="field" />
+                            <input type="email" name="email" required autocomplete="email" placeholder="E-MAIL" aria-label="E-Mail" class="field" />
                         </div>
                         <!-- honeypot: hidden from humans, bots tend to fill it -->
                         <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
-                        <textarea name="message" required maxlength="5000" placeholder="Request" aria-label="Request" class="focus:outline-none w-full h-64 border border-black p-5 text-black text-lg ibm-base" style="box-shadow: 4px 4px 0px rgb(0, 0, 0);"></textarea>
-                        <Button text="Submit" type="submit" />
-                        <p id="contact-status" class="ibm-base text-lg min-h-[1.75rem]" role="status" aria-live="polite"></p>
+                        <textarea name="message" required maxlength="5000" placeholder="YOUR MESSAGE" aria-label="Request" class="field h-64"></textarea>
+                        <Button text="SEND ▶" type="submit" variant="accent" />
+                        <p id="contact-status" class="hud text-sm min-h-[1.75rem]" role="status" aria-live="polite"></p>
                     </div>
                 </form>
-            </section>
-        </div>
+            </Window>
+        </section>
+    </div>
 
-        <script>
-            const form = document.getElementById('contact-form') as HTMLFormElement | null;
-            const status = document.getElementById('contact-status');
+    <script>
+        const form = document.getElementById('contact-form') as HTMLFormElement | null;
+        const status = document.getElementById('contact-status');
 
-            form?.addEventListener('submit', async (event) => {
-                event.preventDefault();
-                if (!status) return;
+        form?.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            if (!status) return;
 
-                if (!form.checkValidity()) {
-                    status.textContent = 'Please fill in your name, a valid e-mail address and your request.';
-                    form.reportValidity();
-                    return;
+            if (!form.checkValidity()) {
+                status.textContent = 'Please fill in your name, a valid e-mail address and your request.';
+                form.reportValidity();
+                return;
+            }
+
+            const button = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+            const fields = new FormData(form);
+            const data = {
+                name: String(fields.get('name') || '').trim(),
+                email: String(fields.get('email') || '').trim(),
+                message: String(fields.get('message') || '').trim(),
+                website: String(fields.get('website') || ''),
+            };
+
+            button?.setAttribute('disabled', '');
+            status.textContent = 'Sending...';
+
+            try {
+                const res = await fetch(form.dataset.endpoint!, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ data }),
+                });
+                if (!res.ok) {
+                    const body = await res.json().catch(() => null);
+                    throw new Error(body?.error?.message || `Request failed (${res.status})`);
                 }
-
-                const button = form.querySelector('button[type="submit"]') as HTMLButtonElement | null;
-                const fields = new FormData(form);
-                const data = {
-                    name: String(fields.get('name') || '').trim(),
-                    email: String(fields.get('email') || '').trim(),
-                    message: String(fields.get('message') || '').trim(),
-                    website: String(fields.get('website') || ''),
-                };
-
-                button?.setAttribute('disabled', '');
-                status.textContent = 'Sending...';
-
-                try {
-                    const res = await fetch(form.dataset.endpoint!, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ data }),
-                    });
-                    if (!res.ok) {
-                        const body = await res.json().catch(() => null);
-                        throw new Error(body?.error?.message || `Request failed (${res.status})`);
-                    }
-                    form.reset();
-                    status.textContent = 'Thanks! Your request has been sent.';
-                } catch (e) {
-                    status.textContent = e instanceof Error ? e.message : 'Something went wrong. Please try again later.';
-                } finally {
-                    button?.removeAttribute('disabled');
-                }
-            });
-
-            document.addEventListener(
-                "astro:page-load",
-                () => {
-                    const element = document.querySelector('[type="checkbox"]');
-                    element?.addEventListener("change", () => {
-                        gsap.to(".box", { x: 100 });
-                    })
-                },
-                { once: false }
-            )
-        </script>
-    </main>
+                form.reset();
+                status.textContent = 'Thanks! Your request has been sent.';
+            } catch (e) {
+                status.textContent = e instanceof Error ? e.message : 'Something went wrong. Please try again later.';
+            } finally {
+                button?.removeAttribute('disabled');
+            }
+        });
+    </script>
 </Layout>
+
+<style>
+    .skill-icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--ink);
+        background: var(--paper);
+    }
+
+    .skill-icon :global(svg) {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+
+    .item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.6rem 0.75rem;
+        font-family: 'Silkscreen', monospace;
+        font-size: 0.8rem;
+        border: 2px solid var(--ink);
+        box-shadow: 4px 4px 0 var(--ink);
+        background: var(--paper);
+    }
+
+    .item:hover {
+        background: var(--accent);
+        text-decoration: none;
+    }
+
+    .field {
+        width: 100%;
+        padding: 1.25rem;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 1.125rem;
+        color: var(--ink);
+        background: #fff;
+        border: 2px solid var(--ink);
+        box-shadow: 4px 4px 0 var(--ink);
+        outline: none;
+    }
+
+    .field:focus {
+        box-shadow: 4px 4px 0 var(--accent), 4px 4px 0 2px var(--ink);
+        background: #fffef2;
+    }
+
+    .field::placeholder {
+        font-family: 'Silkscreen', monospace;
+        font-size: 0.9rem;
+        color: #777;
+    }
+</style>

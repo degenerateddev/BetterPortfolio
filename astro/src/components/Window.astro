@@ -1,0 +1,93 @@
+---
+/**
+ * Game-UI style window: title bar, body slot and an optional status bar.
+ * Animated open on scroll via `data-window` (see lib/animations.ts).
+ */
+interface Props {
+    title?: string;
+    variant?: 'light' | 'dark';
+    status?: string;
+    class?: string;
+}
+
+const { title = 'WINDOW', variant = 'light', status, class: className = '' } = Astro.props;
+---
+
+<div class:list={['window', `window--${variant}`, 'h-full flex flex-col', className]} data-window>
+    <div class="window__bar hud">
+        <span class="truncate">[ {title} ]</span>
+        <span class="window__buttons" aria-hidden="true">
+            <span>_</span><span>□</span><span>x</span>
+        </span>
+    </div>
+    <div class="window__body flex-grow">
+        <slot />
+    </div>
+    {status && (
+        <div class="window__status hud">
+            <span>{status}</span>
+            <span class="blink" aria-hidden="true">■</span>
+        </div>
+    )}
+</div>
+
+<style>
+    .window {
+        border: 2px solid var(--ink);
+        box-shadow: var(--shadow-hard);
+        transform-origin: top center;
+    }
+
+    .window--light {
+        background: #fff;
+        color: var(--ink);
+    }
+
+    .window--dark {
+        background: var(--ink);
+        color: var(--paper);
+        border-color: var(--paper);
+        box-shadow: 6px 6px 0 var(--accent);
+    }
+
+    .window__bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.35rem 0.75rem;
+        font-size: 0.8rem;
+        background: var(--ink);
+        color: var(--paper);
+        border-bottom: 2px solid var(--ink);
+    }
+
+    .window--dark .window__bar {
+        background: var(--accent);
+        color: var(--ink);
+        border-bottom-color: var(--paper);
+    }
+
+    .window__buttons {
+        display: flex;
+        gap: 0.35rem;
+    }
+
+    .window__buttons span {
+        display: inline-grid;
+        place-items: center;
+        width: 1.1rem;
+        height: 1.1rem;
+        line-height: 1;
+        border: 1px solid currentColor;
+    }
+
+    .window__status {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.25rem 0.75rem;
+        font-size: 0.7rem;
+        border-top: 2px solid currentColor;
+        opacity: 0.8;
+    }
+</style>

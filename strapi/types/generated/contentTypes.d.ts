@@ -517,7 +517,7 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
   };
   attributes: {
     category: Schema.Attribute.Enumeration<
-      ['programming', 'design', 'writing']
+      ['games', 'programming', 'design', 'writing']
     > &
       Schema.Attribute.Required;
     content: Schema.Attribute.DynamicZone<

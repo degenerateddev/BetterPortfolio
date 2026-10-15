@@ -1,0 +1,121 @@
+---
+/**
+ * One inventory slot of a bento/equal grid. Missing items render as a
+ * hazard-striped "coming soon" placeholder.
+ */
+interface Props {
+  item?: { src: string; link?: string; title?: string };
+  index: number;
+  variant?: 'light' | 'dark';
+  large?: boolean;
+}
+
+const { item, index, variant = 'light', large = false } = Astro.props;
+
+// external links open in a new tab, internal ones (/project/...) stay relative
+const isExternal = (link: string) => /^https?:\/\//.test(link);
+const isPlaceholder = !item || item.src.endsWith('/img/placeholder.webp');
+const label = String(index + 1).padStart(2, '0');
+const Tag = item?.link ? 'a' : 'div';
+const linkAttrs = item?.link
+  ? { href: item.link, ...(isExternal(item.link) ? { target: '_blank', rel: 'noopener noreferrer' } : {}) }
+  : {};
+---
+
+<Tag class:list={['slot group', `slot--${variant}`, item?.link && 'slot--link']} {...linkAttrs} data-slot>
+  {isPlaceholder ? (
+    <div class:list={['slot__placeholder tex-hazard', large ? 'min-h-[240px] md:min-h-full' : 'aspect-square']}>
+      <span class="hud slot__placeholder-label">{large ? 'IN DEVELOPMENT' : 'COMING SOON'}</span>
+    </div>
+  ) : (
+    <img class="h-full w-full object-cover" src={item!.src} alt={item!.title || `Project ${label}`} loading="lazy" />
+  )}
+  <span class="slot__index hud" aria-hidden="true">{label}</span>
+  {item?.link && (
+    <span class="slot__cta hud" aria-hidden="true">▶ {isExternal(item.link) ? 'PLAY' : 'OPEN'}</span>
+  )}
+</Tag>
+
+<style>
+  .slot {
+    position: relative;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    border: 2px solid var(--ink);
+    box-shadow: var(--shadow-hard);
+    background: var(--ink);
+    transition: transform 120ms steps(3), box-shadow 120ms steps(3);
+  }
+
+  .slot--dark {
+    border-color: var(--paper);
+    box-shadow: 6px 6px 0 var(--accent);
+  }
+
+  .slot--link:hover,
+  .slot--link:focus-visible {
+    transform: translate(-4px, -4px);
+    box-shadow: 10px 10px 0 var(--ink);
+    outline: 3px solid var(--accent);
+    outline-offset: -3px;
+    text-decoration: none;
+  }
+
+  .slot--dark.slot--link:hover,
+  .slot--dark.slot--link:focus-visible {
+    box-shadow: 10px 10px 0 var(--accent);
+  }
+
+  .slot img {
+    transition: transform 300ms ease, filter 300ms ease;
+  }
+
+  .slot--link:hover img {
+    transform: scale(1.04);
+    filter: contrast(1.15) saturate(1.2);
+  }
+
+  .slot__index {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.7rem;
+    background: var(--ink);
+    color: var(--accent);
+  }
+
+  .slot__cta {
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.8rem;
+    background: var(--accent);
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 120ms, transform 120ms steps(2);
+  }
+
+  .slot--link:hover .slot__cta,
+  .slot--link:focus-visible .slot__cta {
+    opacity: 1;
+    transform: none;
+  }
+
+  .slot__placeholder {
+    display: grid;
+    place-items: center;
+    height: 100%;
+  }
+
+  .slot__placeholder-label {
+    padding: 0.25rem 0.6rem;
+    font-size: 0.75rem;
+    background: var(--ink);
+    color: var(--accent);
+  }
+</style>
