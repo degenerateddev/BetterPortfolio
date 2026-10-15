@@ -22,13 +22,15 @@ const linkAttrs = item?.link
   : {};
 ---
 
-<Tag class:list={['slot group', `slot--${variant}`, item?.link && 'slot--link']} {...linkAttrs} data-slot>
+<!-- media is absolutely positioned so image dimensions never change the slot's size:
+     small slots are square, large slots fill their (sized) parent -->
+<Tag class:list={['slot group', `slot--${variant}`, item?.link && 'slot--link', large ? 'absolute inset-0' : 'relative aspect-square']} {...linkAttrs} data-slot>
   {isPlaceholder ? (
-    <div class:list={['slot__placeholder tex-hazard', large ? 'min-h-[240px] md:min-h-full' : 'aspect-square']}>
+    <div class="slot__placeholder tex-hazard absolute inset-0">
       <span class="hud slot__placeholder-label">{large ? 'IN DEVELOPMENT' : 'COMING SOON'}</span>
     </div>
   ) : (
-    <img class="h-full w-full object-cover" src={item!.src} alt={item!.title || `Project ${label}`} loading="lazy" />
+    <img class="absolute inset-0 h-full w-full object-cover" src={item!.src} alt={item!.title || `Project ${label}`} loading="lazy" />
   )}
   <span class="slot__index hud" aria-hidden="true">{label}</span>
   {item?.link && (
@@ -38,9 +40,7 @@ const linkAttrs = item?.link
 
 <style>
   .slot {
-    position: relative;
     display: block;
-    height: 100%;
     overflow: hidden;
     border: 2px solid var(--ink);
     box-shadow: var(--shadow-hard);

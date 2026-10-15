@@ -101,6 +101,22 @@ export async function fetchAllPages(): Promise<Page[]> {
   });
 }
 
+export async function fetchGamePages(): Promise<Page[]> {
+  return fetchApi<Page[]>({
+    endpoint: 'pages',
+    query: {
+      'filters[category][$eq]': 'games',
+      'populate[header]': 'true',
+      'populate[thumbnail][fields][0]': 'url',
+      'populate[thumbnail][fields][1]': 'name',
+      'populate[thumbnail][fields][2]': 'alternativeText',
+      'sort': 'createdAt:desc',
+      'pagination[pageSize]': '100',
+    },
+    wrappedByKey: 'data',
+  });
+}
+
 export async function fetchPageBySlug(slug: string): Promise<Page | null> {
   const pages = await fetchApi<Page[]>({
     endpoint: 'pages',

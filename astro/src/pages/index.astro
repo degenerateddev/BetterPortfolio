@@ -14,8 +14,9 @@ import Godot from '../components/icons/Godot.astro';
 import Unreal from '../components/icons/Unreal.astro';
 import Blender from '../components/icons/Blender.astro';
 import Aseprite from '../components/icons/Aseprite.astro';
-import { fetchHome } from '../lib/strapi';
-import type { Home } from '../lib/types/pages';
+import Equal from '../components/grids/Equal.astro';
+import { fetchHome, fetchGamePages } from '../lib/strapi';
+import type { Home, Page } from '../lib/types/pages';
 import type { ContainerBento, Container2x2 } from '../lib/types/components';
 import { strapiImageUrl } from '../lib/helpers';
 
@@ -37,8 +38,33 @@ try {
     console.warn('Could not fetch Home from Strapi, falling back to static layout.', e);
 }
 
+let gamePages: Page[] = [];
+try {
+    gamePages = await fetchGamePages();
+} catch (e) {
+    console.warn('Could not fetch game pages from Strapi.', e);
+}
+
 const byTitle = (title: string) => sections.filter(s => s.title?.toLowerCase() === title);
+// curated Home sections titled "games" win; otherwise list every Page in the "games" category
 const gameSections = byTitle('games');
+
+type SlotItem = { src: string; link?: string; title?: string };
+const toSlotData = (pages: Page[], offset = 0) =>
+    Object.fromEntries(pages.map((page, i): [number, SlotItem] => [offset + i, {
+        src: strapiImageUrl(page.thumbnail),
+        link: `/project/${page.slug}`,
+        title: page.header?.title,
+    }]));
+
+// newest game takes the large bento slot (index 4), the next four fill the 2x2,
+// anything beyond that goes into equal rows below
+const [featuredGame, ...otherGames] = gamePages;
+const gameBento: Record<number, SlotItem> = featuredGame
+    ? { ...toSlotData(otherGames.slice(0, 4)), 4: toSlotData([featuredGame])[0] }
+    : {};
+for (let i = 0; i < 4; i++) gameBento[i] ??= { src: '/img/placeholder.webp' };
+const extraGames = toSlotData(otherGames.slice(4), 5);
 
 const sideQuests = [
     { id: 'programming', label: 'PROGRAMMING', sections: byTitle('programming') },
@@ -142,16 +168,11 @@ const contactEndpoint = `${import.meta.env.PUBLIC_STRAPI_URL || import.meta.env.
                         ))}
                     </div>
                 ) : (
-                    <!-- no games in Strapi yet: show placeholder cartridges -->
-                    <Bento
-                        variant="dark"
-                        data={{
-                            0: { src: '/img/placeholder.webp' },
-                            1: { src: '/img/placeholder.webp' },
-                            2: { src: '/img/placeholder.webp' },
-                            3: { src: '/img/placeholder.webp' },
-                        }}
-                    />
+                    <!-- games from Strapi pages; empty slots render as placeholder cartridges -->
+                    <div class="space-y-10">
+                        <Bento variant="dark" data={gameBento} />
+                        <Equal variant="dark" data={extraGames} />
+                    </div>
                 )}
             </div>
         </section>
