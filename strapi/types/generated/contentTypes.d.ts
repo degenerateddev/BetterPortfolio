@@ -557,6 +557,40 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiProjectOverviewProjectOverview
+  extends Struct.SingleTypeSchema {
+  collectionName: 'project_overviews';
+  info: {
+    description: 'Overview page listing every project page';
+    displayName: 'Projects';
+    pluralName: 'project-overviews';
+    singularName: 'project-overview';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    emptyLabel: Schema.Attribute.String;
+    heading: Schema.Attribute.Component<'content.title', false>;
+    intro: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::project-overview.project-overview'
+    > &
+      Schema.Attribute.Private;
+    metaTitle: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
+    showFilters: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<true>;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -1224,6 +1258,7 @@ declare module '@strapi/strapi' {
       'api::contact-request.contact-request': ApiContactRequestContactRequest;
       'api::home.home': ApiHomeHome;
       'api::page.page': ApiPagePage;
+      'api::project-overview.project-overview': ApiProjectOverviewProjectOverview;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
