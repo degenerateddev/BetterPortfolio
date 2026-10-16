@@ -1,4 +1,5 @@
 import type { Home, Page, ProjectOverview, StrapiListResponse, StrapiSingleResponse } from './types/pages';
+import { env } from './env';
 
 interface Props {
   endpoint: string;
@@ -25,7 +26,7 @@ export default async function fetchApi<T>({
     endpoint = endpoint.slice(1);
   }
 
-  const url = new URL(`${import.meta.env.STRAPI_URL}/api/${endpoint}`);
+  const url = new URL(`${env('STRAPI_URL')}/api/${endpoint}`);
 
   if (query) {
     Object.entries(query).forEach(([key, value]) => {
@@ -33,8 +34,9 @@ export default async function fetchApi<T>({
     });
   }
   const headers: Record<string, string> = {};
-  if (import.meta.env.STRAPI_TOKEN) {
-    headers.Authorization = `Bearer ${import.meta.env.STRAPI_TOKEN}`;
+  const token = env('STRAPI_TOKEN');
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
   }
 
   const res = await fetch(url.toString(), { headers });

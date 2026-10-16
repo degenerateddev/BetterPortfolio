@@ -13,6 +13,7 @@ import Title from '../components/Title.astro';
 import Marquee from '../components/Marquee.astro';
 import Equal from '../components/grids/Equal.astro';
 import { fetchHome, fetchGamePages } from '../lib/strapi';
+import { env } from '../lib/env';
 import type { Home, Page } from '../lib/types/pages';
 import type { ContainerBento, Container2x2, ContentGameSlot, ContentStatBar } from '../lib/types/components';
 import { strapiImageUrl, cubeLink } from '../lib/helpers';
@@ -115,7 +116,7 @@ const sheetText = {
 
 const tickerItems = ['NOW DEVELOPING', 'GODOT', 'GAME DESIGN', 'PIXEL ART', 'BLENDER', 'LEVEL DESIGN', 'SHADERS', 'GAME JAMS'];
 
-const contactEndpoint = `${import.meta.env.PUBLIC_STRAPI_URL || import.meta.env.STRAPI_URL}/api/contact-requests`;
+const contactEndpoint = `${env('PUBLIC_STRAPI_URL') || env('STRAPI_URL')}/api/contact-requests`;
 ---
 
 <Layout title="Tim Arnold · Indie Game Dev">

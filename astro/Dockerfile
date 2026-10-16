@@ -2,15 +2,6 @@ FROM node:20-bullseye AS builder
 
 WORKDIR /app
 
-# strapi URL at build time for static site generation
-ARG STRAPI_URL
-ARG STRAPI_TOKEN
-ARG PUBLIC_STRAPI_URL
-
-ENV STRAPI_URL=$STRAPI_URL
-ENV STRAPI_TOKEN=$STRAPI_TOKEN
-ENV PUBLIC_STRAPI_URL=$PUBLIC_STRAPI_URL
-
 COPY package.json package-lock.json ./
 RUN npm ci
 
@@ -18,10 +9,19 @@ COPY . .
 RUN npm run build
 
 
-FROM nginx:stable-alpine
+FROM node:20-bullseye-slim
 
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+WORKDIR /app
 
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=80
+
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev
+
+COPY --from=builder /app/dist ./dist
+
+# STRAPI_URL, STRAPI_TOKEN and PUBLIC_STRAPI_URL are read at runtime
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "./dist/server/entry.mjs"]

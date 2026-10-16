@@ -3,29 +3,14 @@ import Layout from '../../layouts/Layout.astro';
 import Section from '../../components/Section.astro';
 import DynamicContent from '../../components/DynamicContent.astro';
 import IconResolver from '../../components/IconResolver.astro';
-import { fetchAllPages, fetchPageBySlug } from '../../lib/strapi';
-import type { Page } from '../../lib/types/pages';
+import { fetchPageBySlug } from '../../lib/strapi';
 import Highlight from '../../components/Highlight.astro';
-
-export async function getStaticPaths() {
-    let pages: Page[] = [];
-    try {
-        pages = await fetchAllPages();
-    } catch (e) {
-        console.warn('Could not fetch pages for static paths:', e);
-    }
-
-    return pages.map((page) => ({
-        params: { slug: page.slug },
-    }));
-}
 
 const { slug } = Astro.params;
 const page = await fetchPageBySlug(slug as string);
-console.log(page)
 
 if (!page) {
-    return Astro.redirect('/404');
+    return Astro.rewrite('/404');
 }
 
 const { header, content, icons, keywords, category } = page;

@@ -1,4 +1,5 @@
 import type { StrapiImage } from './types/components';
+import { env } from './env';
 
 /**
  * Resolves a Strapi image URL to an absolute URL.
@@ -11,7 +12,7 @@ export function strapiImageUrl(image: StrapiImage | null | undefined): string {
   if (image.url.startsWith('http')) return image.url;
 
   // Relative path from Strapi
-  const base = import.meta.env.STRAPI_URL || 'http://127.0.0.1:1337';
+  const base = env('STRAPI_URL') || 'http://127.0.0.1:1337';
   return `${base}${image.url}`;
 }
 
