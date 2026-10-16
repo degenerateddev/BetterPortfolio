@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Title from '../components/Title.astro';
+import Slot from '../components/grids/Slot.astro';
+import { fetchAllPages, fetchProjectOverview } from '../lib/strapi';
+import type { Page, ProjectOverview } from '../lib/types/pages';
+import { strapiImageUrl } from '../lib/helpers';
+
+// ── Fetch data from Strapi ──────────────────────────────────
+// Texts are edited in Strapi under the "Projects" single type; the list itself is every Page
+let overview: ProjectOverview | null = null;
+try {
+    overview = await fetchProjectOverview();
+} catch (e) {
+    console.warn('Could not fetch Projects overview from Strapi, using defaults.', e);
+}
+
+let pages: Page[] = [];
+try {
+    pages = await fetchAllPages();
+} catch (e) {
+    console.warn('Could not fetch pages from Strapi.', e);
+}
+
+const heading = overview?.heading ?? { title: 'ALL PROJECTS', subtitle: 'LEVEL SELECT' };
+const showFilters = overview?.showFilters ?? true;
+const emptyLabel = overview?.emptyLabel || 'NO SAVE DATA FOUND';
+
+const categories = [
+    { id: 'games', label: 'GAMES' },
+    { id: 'programming', label: 'PROGRAMMING' },
+    { id: 'design', label: 'DESIGN' },
+    { id: 'writing', label: 'WRITING' },
+].filter((category) => pages.some((page) => page.category === category.id));
+---
+
+<Layout title={overview?.metaTitle || 'All Projects · Tim Arnold'}>
+    <div class="flex flex-col gap-10 md:gap-16 pb-24 md:pb-40">
+        <div class="flex flex-wrap justify-between items-end gap-4 border-b-2 border-[var(--ink)] pb-4">
+            <div class="space-y-4">
+                <Title title={heading.title} subtitle={heading.subtitle} as="h1" />
+                {overview?.intro && <p class="ibm-base text-base md:text-lg max-w-2xl">{overview.intro}</p>}
+            </div>
+            <p class="hud text-xs text-stone-900" data-project-count>{pages.length} {pages.length === 1 ? 'PROJECT' : 'PROJECTS'}</p>
+        </div>
+
+        {showFilters && categories.length > 1 && (
+            <div class="flex flex-wrap gap-3" role="group" aria-label="Filter projects by category" data-project-filters>
+                <button type="button" class="filter filter--active hud" data-filter="all" aria-pressed="true">ALL</button>
+                {categories.map((category) => (
+                    <button type="button" class="filter hud" data-filter={category.id} aria-pressed="false">{category.label}</button>
+                ))}
+            </div>
+        )}
+
+        {pages.length > 0 ? (
+            <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10" data-project-list>
+                {pages.map((page, i) => (
+                    <li class="flex flex-col gap-4" data-category={page.category}>
+                        <Slot
+                            item={{ src: strapiImageUrl(page.thumbnail), link: `/project/${page.slug}`, title: page.header?.title }}
+                            index={i}
+                        />
+                        <div class="space-y-2 text-stone-900">
+                            <p class="hud text-xs text-[var(--accent-2)]">{page.category === 'games' ? 'GAME' : `SIDE QUEST · ${page.category.toUpperCase()}`}</p>
+                            <h2 class="text-2xl md:text-3xl ibm-base leading-tight">
+                                <a href={`/project/${page.slug}`}>{page.header?.title}</a>
+                            </h2>
+                            {page.header?.description && <p class="ibm-base text-sm md:text-base opacity-80 line-clamp-3">{page.header.description}</p>}
+                            {page.keywords && page.keywords.length > 0 && (
+                                <div class="flex flex-wrap gap-2 pt-1">
+                                    {page.keywords.map((kw) => <span class="tag hud">{kw.keyword}</span>)}
+                                </div>
+                            )}
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        ) : (
+            <p class="hud text-sm text-stone-900">{emptyLabel}</p>
+        )}
+    </div>
+
+    <script>
+        // runs on every navigation since the layout uses Astro's ClientRouter
+        document.addEventListener('astro:page-load', () => {
+            const filters = document.querySelector('[data-project-filters]');
+            const items = document.querySelectorAll<HTMLElement>('[data-project-list] > li');
+            const count = document.querySelector('[data-project-count]');
+            if (!filters) return;
+
+            filters.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((button) => {
+                button.addEventListener('click', () => {
+                    const filter = button.dataset.filter;
+                    let visible = 0;
+                    items.forEach((item) => {
+                        const show = filter === 'all' || item.dataset.category === filter;
+                        // a class rather than [hidden], which the li's `flex` would override
+                        item.classList.toggle('hidden', !show);
+                        if (show) visible++;
+                    });
+                    filters.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((other) => {
+                        const active = other === button;
+                        other.classList.toggle('filter--active', active);
+                        other.setAttribute('aria-pressed', String(active));
+                    });
+                    if (count) count.textContent = `${visible} ${visible === 1 ? 'PROJECT' : 'PROJECTS'}`;
+                });
+            });
+        });
+    </script>
+</Layout>
+
+<style>
+    .filter {
+        padding: 0.4rem 0.9rem;
+        font-size: 0.8rem;
+        color: var(--ink);
+        background: var(--paper);
+        border: 2px solid var(--ink);
+        box-shadow: 4px 4px 0 var(--ink);
+        transition: transform 120ms steps(2), box-shadow 120ms steps(2);
+    }
+
+    .filter:hover,
+    .filter:focus-visible {
+        background: var(--accent);
+        outline: none;
+    }
+
+    .filter--active {
+        background: var(--ink);
+        color: var(--accent);
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0 var(--ink);
+    }
+
+    .tag {
+        padding: 0.1rem 0.45rem;
+        font-size: 0.7rem;
+        border: 1px solid var(--ink);
+    }
+</style>

@@ -81,13 +81,16 @@ const { content } = Astro.props;
 
   if (block.__component === 'content.video-embed') {
     return (
-      <div class="w-full aspect-video">
-        <iframe
-          src={block.url}
-          class="w-full h-full"
-          allowfullscreen
-          loading="lazy"
-        />
+      <div class="w-full">
+        <!-- 16:9 via a padding spacer: the aspect-ratio plugin turns `aspect-video` into a no-op -->
+        <div class="relative w-full pb-[56.25%]">
+          <iframe
+            src={block.url}
+            class="absolute inset-0 w-full h-full"
+            allowfullscreen
+            loading="lazy"
+          />
+        </div>
         <Text text={block.caption && `<p class="text-center py-2">${block.caption}</p>`} />
       </div>
     );

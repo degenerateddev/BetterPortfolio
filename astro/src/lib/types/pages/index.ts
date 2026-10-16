@@ -8,6 +8,7 @@ import type {
   Container2x2,
   ContentCharacterSheet,
   ContentGameShowcase,
+  ContentTitle,
 } from '../components';
 
 // ── Base Strapi response fields ────────────────────────────
@@ -41,6 +42,15 @@ export interface Home extends BaseStrapiResponse {
   characterSheet?: ContentCharacterSheet | null;
   gameShowcase?: ContentGameShowcase | null;
   sections?: (ContainerBento | Container2x2)[];
+}
+
+// ── Projects overview single type ──────────────────────────
+export interface ProjectOverview extends BaseStrapiResponse {
+  metaTitle?: string | null;
+  heading?: ContentTitle | null;
+  intro?: string | null;
+  showFilters?: boolean | null;
+  emptyLabel?: string | null;
 }
 
 // ── Strapi list response wrapper ───────────────────────────

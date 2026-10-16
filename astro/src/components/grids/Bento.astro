@@ -1,28 +1,57 @@
 ﻿---
 import Slot from './Slot.astro';
 
+type Item = { src: string; link?: string; title?: string; placeholderLabel?: string };
+
 interface Props {
-  data: Record<number, { src: string; link?: string; title?: string; placeholderLabel?: string }>,
+  data: Record<number, Item>,
   variant?: 'light' | 'dark',
 };
 
 const data = Astro.props.data || {};
 const variant = Astro.props.variant || 'light';
-const entries = Object.entries(data);
+const keys = Object.keys(data).map(Number);
+
+// every five items form one bento: keys 5g..5g+3 fill the 2x2, key 5g+4 takes the large slot.
+// The first bento always renders (empty slots become placeholders); later groups without a
+// large item (an incomplete trailing group) render as a plain row of small slots instead
+const groupCount = keys.length > 0 ? Math.floor(Math.max(...keys) / 5) + 1 : 0;
+const groups = Array.from({ length: groupCount }, (_, g) => {
+  const offset = g * 5;
+  const small = [0, 1, 2, 3].map((i) => offset + i);
+  const large = offset + 4;
+  return {
+    small,
+    large,
+    asBento: g === 0 || data[large] !== undefined,
+    // alternate the large slot's side so stacked bentos don't look repetitive
+    flipped: g % 2 === 1,
+  };
+}).filter((group) => group.asBento || group.small.some((i) => data[i] !== undefined));
 ---
 
-{entries.length > 0 && (
-  <div data-slot-grid class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5">
-    <!-- the large slot is absolutely filled, so its image never drives the row height:
-         it is square on mobile and stretches to match the 2x2 on desktop -->
-    <div class="relative">
-      <div class="pb-[100%] md:hidden" aria-hidden="true"></div>
-      <Slot item={data[4]} index={4} variant={variant} large />
-    </div>
-    <div class="grid grid-cols-2 grid-rows-2 gap-2 md:gap-5">
-      {entries.filter(([key]) => Number(key) < 4).map(([key, value]) => (
-        <Slot item={value} index={Number(key)} variant={variant} />
-      ))}
-    </div>
+{groups.length > 0 && (
+  <div class="flex flex-col gap-2 md:gap-5">
+    {groups.map((group) => group.asBento ? (
+      <div data-slot-grid class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-5">
+        <!-- the large slot is absolutely filled, so its image never drives the row height:
+             it is square on mobile and stretches to match the 2x2 on desktop -->
+        <div class:list={['relative', group.flipped && 'md:order-2']}>
+          <div class="pb-[100%] md:hidden" aria-hidden="true"></div>
+          <Slot item={data[group.large]} index={group.large} variant={variant} large />
+        </div>
+        <div class="grid grid-cols-2 grid-rows-2 gap-2 md:gap-5">
+          {group.small.map((i) => (
+            <Slot item={data[i]} index={i} variant={variant} />
+          ))}
+        </div>
+      </div>
+    ) : (
+      <div data-slot-grid class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-5">
+        {group.small.filter((i) => data[i] !== undefined).map((i) => (
+          <Slot item={data[i]} index={i} variant={variant} />
+        ))}
+      </div>
+    ))}
   </div>
 )}

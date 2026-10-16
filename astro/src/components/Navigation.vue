@@ -105,6 +105,16 @@ watch(() => props.selectedSection, (newVal) => {
                     >
                         {{ section.label }}
                     </a>
+                    <a
+                        href="/projects"
+                        :class="[
+                            'menu-item text-2xl md:text-4xl ibm-base px-3 py-1',
+                            selectedSection === sections.length ? 'menu-item--active' : ''
+                        ]"
+                        @mouseenter="selectSection(sections.length)"
+                    >
+                        ALL PROJECTS
+                    </a>
                 </div>
             </div>
         </div>

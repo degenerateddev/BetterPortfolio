@@ -1,4 +1,4 @@
-import type { Home, Page, StrapiListResponse, StrapiSingleResponse } from './types/pages';
+import type { Home, Page, ProjectOverview, StrapiListResponse, StrapiSingleResponse } from './types/pages';
 
 interface Props {
   endpoint: string;
@@ -115,6 +115,16 @@ export async function fetchAllPages(): Promise<Page[]> {
       'populate[icons]': 'true',
       'sort': 'createdAt:desc',
       'pagination[pageSize]': '100',
+    },
+    wrappedByKey: 'data',
+  });
+}
+
+export async function fetchProjectOverview(): Promise<ProjectOverview> {
+  return fetchApi<ProjectOverview>({
+    endpoint: 'project-overview',
+    query: {
+      'populate[heading]': 'true',
     },
     wrappedByKey: 'data',
   });
